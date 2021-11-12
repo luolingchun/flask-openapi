@@ -110,12 +110,16 @@ class APIBlueprint(Blueprint):
     ):
         """
         Based on Flask Blueprint
-        :param args: Flask Blueprint args
-        :param abp_tags: APIBlueprint tags for every api
-        :param abp_security: APIBlueprint security for every api
-        :param abp_responses: APIBlueprint response model
-        :param doc_ui: add openapi document UI(swagger and redoc). Defaults to True.
-        :param kwargs: Flask Blueprint kwargs
+
+        Arguments:
+            name: The name of the blueprint. Will be prepended to each endpoint name.
+            import_name: The name of the blueprint package, usually
+                         ``__name__``. This helps locate the ``root_path`` for the blueprint.
+            abp_tags: APIBlueprint tags for every api
+            abp_security: APIBlueprint security for every api
+            abp_responses: APIBlueprint response model
+            doc_ui: add openapi document UI(swagger and redoc). Defaults to True.
+            kwargs: Flask Blueprint kwargs
         """
         super(APIBlueprint, self).__init__(name, import_name, **kwargs)
         self.paths = dict()
@@ -194,6 +198,7 @@ class APIBlueprint(Blueprint):
             security: List[Dict[str, List[Any]]] = None,
             doc_ui: bool = True
     ):
+        """Decorator for rest api, like: app.route(methods=['GET'])"""
         def decorator(func):
             header, cookie, path, query, form, body, _responses = \
                 self._do_decorator(rule, func, tags, responses, security, doc_ui)
@@ -218,6 +223,7 @@ class APIBlueprint(Blueprint):
             security: List[Dict[str, List[Any]]] = None,
             doc_ui: bool = True
     ):
+        """Decorator for rest api, like: app.route(methods=['POST'])"""
         def decorator(func):
             header, cookie, path, query, form, body, _responses = \
                 self._do_decorator(rule, func, tags, responses, security, doc_ui, method="post")
@@ -242,6 +248,7 @@ class APIBlueprint(Blueprint):
             security: List[Dict[str, List[Any]]] = None,
             doc_ui: bool = True
     ):
+        """Decorator for rest api, like: app.route(methods=['PUT'])"""
         def decorator(func):
             header, cookie, path, query, form, body, _responses = \
                 self._do_decorator(rule, func, tags, responses, security, doc_ui, method="put")
@@ -266,6 +273,7 @@ class APIBlueprint(Blueprint):
             security: List[Dict[str, List[Any]]] = None,
             doc_ui: bool = True
     ):
+        """Decorator for rest api, like: app.route(methods=['DELETE'])"""
         def decorator(func):
             header, cookie, path, query, form, body, _responses = \
                 self._do_decorator(rule, func, tags, responses, security, doc_ui, method="delete")
@@ -290,6 +298,7 @@ class APIBlueprint(Blueprint):
             security: List[Dict[str, List[Any]]] = None,
             doc_ui: bool = True
     ):
+        """Decorator for rest api, like: app.route(methods=['PATCH'])"""
         def decorator(func):
             header, cookie, path, query, form, body, _responses = \
                 self._do_decorator(rule, func, tags, responses, security, doc_ui, method="patch")
@@ -320,17 +329,20 @@ class OpenAPI(Flask):
                  ) -> None:
         """
         Based on Flask. Provide REST api, swagger-ui and redoc.
-        :param import_name: just flask import_name
-        :param info: see https://spec.openapis.org/oas/v3.0.3#info-object
-        :param securitySchemes: see https://spec.openapis.org/oas/v3.0.3#security-scheme-object
-        :param oauth_config: OAuth 2.0 configuration, see https://github.com/swagger-api/swagger-ui/blob/master/docs/usage/oauth2.md
-        :param responses: OpenAPI response model
-        :param doc_ui: add openapi document UI(swagger and redoc). Defaults to True.
-        :param docExpansion: String=["list"*, "full", "none"].
-        Controls the default expansion setting for the operations and tags.
-        It can be 'list' (expands only the tags), 'full' (expands the tags and operations) or 'none' (expands nothing).
-        see https://github.com/swagger-api/swagger-ui/blob/master/docs/usage/configuration.md
-        :param kwargs: Flask kwargs
+
+        Arguments:
+            import_name: just flask import_name
+            info: see https://spec.openapis.org/oas/v3.0.3#info-object
+            securitySchemes: see https://spec.openapis.org/oas/v3.0.3#security-scheme-object
+            oauth_config: OAuth 2.0 configuration, see https://github.com/swagger-api/swagger-ui/blob/master/docs/usage/oauth2.md
+            responses: OpenAPI response model
+            doc_ui: add openapi document UI(swagger and redoc). Defaults to True.
+            docExpansion: String=["list"*, "full", "none"].
+                          Controls the default expansion setting for the operations and tags.
+                          It can be 'list' (expands only the tags),
+                         'full' (expands the tags and operations) or 'none' (expands nothing).
+                         see https://github.com/swagger-api/swagger-ui/blob/master/docs/usage/configuration.md
+            kwargs: Flask kwargs
         """
         super(OpenAPI, self).__init__(import_name, **kwargs)
 
@@ -359,7 +371,6 @@ class OpenAPI(Flask):
     def init_doc(self) -> None:
         """
         Provide swagger-ui and redoc
-        :return:
         """
         _here = os.path.dirname(__file__)
         template_folder = os.path.join(_here, 'templates')
@@ -506,6 +517,7 @@ class OpenAPI(Flask):
             security: List[Dict[str, List[Any]]] = None,
             doc_ui: bool = True
     ) -> Callable:
+        """Decorator for rest api, like: app.route(methods=['GET'])"""
         def decorator(func):
             header, cookie, path, query, form, body, _responses = \
                 self._do_decorator(rule, func, tags, responses, security, doc_ui)
@@ -530,6 +542,7 @@ class OpenAPI(Flask):
             security: List[Dict[str, List[Any]]] = None,
             doc_ui: bool = True
     ) -> Callable:
+        """Decorator for rest api, like: app.route(methods=['POST'])"""
         def decorator(func):
             header, cookie, path, query, form, body, _responses = \
                 self._do_decorator(rule, func, tags, responses, security, doc_ui, method="post")
@@ -554,6 +567,7 @@ class OpenAPI(Flask):
             security: List[Dict[str, List[Any]]] = None,
             doc_ui: bool = True
     ) -> Callable:
+        """Decorator for rest api, like: app.route(methods=['PUT'])"""
         def decorator(func):
             header, cookie, path, query, form, body, _responses = \
                 self._do_decorator(rule, func, tags, responses, security, doc_ui, method="put")
@@ -578,6 +592,7 @@ class OpenAPI(Flask):
             security: List[Dict[str, List[Any]]] = None,
             doc_ui: bool = True
     ) -> Callable:
+        """Decorator for rest api, like: app.route(methods=['DELETE'])"""
         def decorator(func):
             header, cookie, path, query, form, body, _responses = \
                 self._do_decorator(rule, func, tags, responses, security, doc_ui, method="delete")
@@ -602,6 +617,7 @@ class OpenAPI(Flask):
             security: List[Dict[str, List[Any]]] = None,
             doc_ui: bool = True
     ) -> Callable:
+        """Decorator for rest api, like: app.route(methods=['PATCH'])"""
         def decorator(func):
             header, cookie, path, query, form, body, _responses = \
                 self._do_decorator(rule, func, tags, responses, security, doc_ui, method="patch")
