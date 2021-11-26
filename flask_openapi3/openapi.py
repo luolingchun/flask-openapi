@@ -62,9 +62,11 @@ def _do_wrapper(
             args_dict = {}
             for k, v in query.schema().get('properties', {}).items():
                 if v.get('type') == 'array':
-                    args_dict[k] = args.getlist(k)
+                    value = args.getlist(k)
                 else:
-                    args_dict[k] = args.get(k)
+                    value = args.get(k)
+                if value is not None:
+                    args_dict[k] = value
             query_ = query(**args_dict)
             kwargs_.update({"query": query_})
         if form:
@@ -72,9 +74,11 @@ def _do_wrapper(
             form_dict = {}
             for k, v in form.schema().get('properties', {}).items():
                 if v.get('type') == 'array':
-                    form_dict[k] = req_form.getlist(k)
+                    value = req_form.getlist(k)
                 else:
-                    form_dict[k] = req_form.get(k)
+                    value = req_form.get(k)
+                if value is not None:
+                    form_dict[k] = value
             form_dict.update(**request.files.to_dict())
             form_ = form(**form_dict)
             kwargs_.update({"form": form_})
@@ -199,6 +203,7 @@ class APIBlueprint(Blueprint):
             doc_ui: bool = True
     ):
         """Decorator for rest api, like: app.route(methods=['GET'])"""
+
         def decorator(func):
             header, cookie, path, query, form, body, _responses = \
                 self._do_decorator(rule, func, tags, responses, security, doc_ui)
@@ -224,6 +229,7 @@ class APIBlueprint(Blueprint):
             doc_ui: bool = True
     ):
         """Decorator for rest api, like: app.route(methods=['POST'])"""
+
         def decorator(func):
             header, cookie, path, query, form, body, _responses = \
                 self._do_decorator(rule, func, tags, responses, security, doc_ui, method="post")
@@ -249,6 +255,7 @@ class APIBlueprint(Blueprint):
             doc_ui: bool = True
     ):
         """Decorator for rest api, like: app.route(methods=['PUT'])"""
+
         def decorator(func):
             header, cookie, path, query, form, body, _responses = \
                 self._do_decorator(rule, func, tags, responses, security, doc_ui, method="put")
@@ -274,6 +281,7 @@ class APIBlueprint(Blueprint):
             doc_ui: bool = True
     ):
         """Decorator for rest api, like: app.route(methods=['DELETE'])"""
+
         def decorator(func):
             header, cookie, path, query, form, body, _responses = \
                 self._do_decorator(rule, func, tags, responses, security, doc_ui, method="delete")
@@ -299,6 +307,7 @@ class APIBlueprint(Blueprint):
             doc_ui: bool = True
     ):
         """Decorator for rest api, like: app.route(methods=['PATCH'])"""
+
         def decorator(func):
             header, cookie, path, query, form, body, _responses = \
                 self._do_decorator(rule, func, tags, responses, security, doc_ui, method="patch")
@@ -518,6 +527,7 @@ class OpenAPI(Flask):
             doc_ui: bool = True
     ) -> Callable:
         """Decorator for rest api, like: app.route(methods=['GET'])"""
+
         def decorator(func):
             header, cookie, path, query, form, body, _responses = \
                 self._do_decorator(rule, func, tags, responses, security, doc_ui)
@@ -543,6 +553,7 @@ class OpenAPI(Flask):
             doc_ui: bool = True
     ) -> Callable:
         """Decorator for rest api, like: app.route(methods=['POST'])"""
+
         def decorator(func):
             header, cookie, path, query, form, body, _responses = \
                 self._do_decorator(rule, func, tags, responses, security, doc_ui, method="post")
@@ -568,6 +579,7 @@ class OpenAPI(Flask):
             doc_ui: bool = True
     ) -> Callable:
         """Decorator for rest api, like: app.route(methods=['PUT'])"""
+
         def decorator(func):
             header, cookie, path, query, form, body, _responses = \
                 self._do_decorator(rule, func, tags, responses, security, doc_ui, method="put")
@@ -593,6 +605,7 @@ class OpenAPI(Flask):
             doc_ui: bool = True
     ) -> Callable:
         """Decorator for rest api, like: app.route(methods=['DELETE'])"""
+
         def decorator(func):
             header, cookie, path, query, form, body, _responses = \
                 self._do_decorator(rule, func, tags, responses, security, doc_ui, method="delete")
@@ -618,6 +631,7 @@ class OpenAPI(Flask):
             doc_ui: bool = True
     ) -> Callable:
         """Decorator for rest api, like: app.route(methods=['PATCH'])"""
+
         def decorator(func):
             header, cookie, path, query, form, body, _responses = \
                 self._do_decorator(rule, func, tags, responses, security, doc_ui, method="patch")
