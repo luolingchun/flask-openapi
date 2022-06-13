@@ -8,7 +8,7 @@ from http import HTTPStatus
 from typing import Dict, Type, Callable, List, Tuple, Any, ForwardRef
 
 import pydantic.typing
-from flask import Response as _Response
+from flask import Response as _Response, current_app
 from pydantic import BaseModel
 from werkzeug.routing import parse_rule
 
