@@ -4,18 +4,16 @@
 
 import inspect
 import re
-from http import HTTPStatus
 from typing import Dict, Type, Callable, List, Tuple, Any, ForwardRef, Optional
 
 import pydantic.typing
-from flask import Response as _Response, current_app
 from pydantic import BaseModel
 
 from .http import HTTP_STATUS, HTTPMethod
 from .models import OPENAPI3_REF_TEMPLATE, OPENAPI3_REF_PREFIX, Tag
 from .models.common import Schema, MediaType
-from .models.path import ParameterInType, Parameter
 from .models.path import Operation, RequestBody, PathItem, Response
+from .models.path import ParameterInType, Parameter
 from .models.validation_error import UnprocessableEntity
 
 
