@@ -1,9 +1,6 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2024/11/10 12:17
 from pydantic import ValidationError
 
-from flask_openapi3 import Server, ServerVariable
+from flask_openapi import Server, ServerVariable
 
 
 def test_server_variable():

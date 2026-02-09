@@ -1,11 +1,7 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2024/11/20 14:45
-
 import pytest
 from pydantic import BaseModel, ConfigDict, Field
 
-from flask_openapi3 import OpenAPI
+from flask_openapi import OpenAPI
 
 app = OpenAPI(__name__)
 app.config["TESTING"] = True

@@ -12,4 +12,4 @@ Environment:
 - Python version:
 - Operating system:
 - Flask version:
-- flask-openapi3 version:
+- flask-openapi version:

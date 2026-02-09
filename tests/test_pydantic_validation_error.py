@@ -1,7 +1,7 @@
 import pytest
 from pydantic import BaseModel, Field
 
-from flask_openapi3 import OpenAPI
+from flask_openapi import OpenAPI
 
 app = OpenAPI(__name__)
 app.config["TESTING"] = True

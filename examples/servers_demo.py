@@ -1,9 +1,6 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2022/1/8 14:25
 from pydantic import BaseModel
 
-from flask_openapi3 import Info, OpenAPI, Server, Tag
+from flask_openapi import Info, OpenAPI, Server, Tag
 
 info = Info(title="book API", version="1.0.0")
 servers = [

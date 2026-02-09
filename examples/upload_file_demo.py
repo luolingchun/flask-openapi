@@ -1,9 +1,6 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2021/5/11 14:03
 from pydantic import BaseModel, Field
 
-from flask_openapi3 import FileStorage, OpenAPI
+from flask_openapi import FileStorage, OpenAPI
 
 app = OpenAPI(__name__)
 

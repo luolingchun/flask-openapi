@@ -1,9 +1,6 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2022/9/2 15:20
 import pytest
 
-from flask_openapi3 import OpenAPI
+from flask_openapi import OpenAPI
 
 # Basic Authentication Sample
 basic = {"type": "http", "scheme": "basic"}

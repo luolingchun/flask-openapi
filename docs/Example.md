@@ -3,8 +3,8 @@
 ```python
 from pydantic import BaseModel
 
-from flask_openapi3 import Info, Tag
-from flask_openapi3 import OpenAPI
+from flask_openapi import Info, Tag
+from flask_openapi import OpenAPI
 
 info = Info(title="book API", version="1.0.0")
 app = OpenAPI(__name__, info=info)
@@ -42,40 +42,39 @@ if __name__ == "__main__":
 from http import HTTPStatus
 from pydantic import BaseModel, Field
 
-from flask_openapi3 import Info, Tag
-from flask_openapi3 import OpenAPI
-
+from flask_openapi import Info, Tag
+from flask_openapi import OpenAPI
 
 info = Info(title="book API", version="1.0.0")
 # Basic Authentication Sample
 basic = {
-  "type": "http",
-  "scheme": "basic"
+    "type": "http",
+    "scheme": "basic"
 }
 # JWT Bearer Sample
 jwt = {
-  "type": "http",
-  "scheme": "bearer",
-  "bearerFormat": "JWT"
+    "type": "http",
+    "scheme": "bearer",
+    "bearerFormat": "JWT"
 }
 # API Key Sample
 api_key = {
-  "type": "apiKey",
-  "name": "api_key",
-  "in": "header"
+    "type": "apiKey",
+    "name": "api_key",
+    "in": "header"
 }
 # Implicit OAuth2 Sample
 oauth2 = {
-  "type": "oauth2",
-  "flows": {
-    "implicit": {
-      "authorizationUrl": "https://example.com/api/oauth/dialog",
-      "scopes": {
-        "write:pets": "modify pets in your account",
-        "read:pets": "read your pets"
-      }
+    "type": "oauth2",
+    "flows": {
+        "implicit": {
+            "authorizationUrl": "https://example.com/api/oauth/dialog",
+            "scopes": {
+                "write:pets": "modify pets in your account",
+                "read:pets": "read your pets"
+            }
+        }
     }
-  }
 }
 security_schemes = {"jwt": jwt, "api_key": api_key, "oauth2": oauth2, "basic": basic}
 
@@ -183,8 +182,8 @@ if __name__ == "__main__":
 ```python
 from pydantic import BaseModel, Field
 
-from flask_openapi3 import APIBlueprint, OpenAPI
-from flask_openapi3 import Tag, Info
+from flask_openapi import APIBlueprint, OpenAPI
+from flask_openapi import Tag, Info
 
 info = Info(title="book API", version="1.0.0")
 
@@ -257,7 +256,7 @@ if __name__ == "__main__":
 ```python
 from pydantic import BaseModel, Field
 
-from flask_openapi3 import OpenAPI, FileStorage
+from flask_openapi import OpenAPI, FileStorage
 
 app = OpenAPI(__name__)
 

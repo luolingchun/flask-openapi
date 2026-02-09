@@ -1,10 +1,6 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2022/10/18 9:00
-
 from pydantic import BaseModel, Field
 
-from flask_openapi3 import APIView, Info, OpenAPI, Tag
+from flask_openapi import APIView, Info, OpenAPI, Tag
 
 jwt = {"type": "http", "scheme": "bearer", "bearerFormat": "JWT"}
 security_schemes = {"jwt": jwt}

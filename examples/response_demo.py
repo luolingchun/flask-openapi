@@ -1,14 +1,10 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2021/6/22 9:32
-
 import json
 from http import HTTPStatus
 
 from flask import make_response
 from pydantic import BaseModel, Field
 
-from flask_openapi3 import APIBlueprint, Info, OpenAPI
+from flask_openapi import APIBlueprint, Info, OpenAPI
 
 app = OpenAPI(__name__, info=Info(title="Hello API", version="1.0.0"))
 

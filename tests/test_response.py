@@ -1,12 +1,9 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2023/7/9 11:23
 from http import HTTPStatus
 
 import pytest
 from pydantic import BaseModel, Field
 
-from flask_openapi3 import APIBlueprint, OpenAPI
+from flask_openapi import APIBlueprint, OpenAPI
 
 app = OpenAPI(__name__)
 app.config["TESTING"] = True

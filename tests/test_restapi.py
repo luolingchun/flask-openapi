@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2021/5/6 16:38
 from __future__ import annotations
 
 import json
@@ -10,7 +7,7 @@ import pytest
 from flask import Response
 from pydantic import BaseModel, Field, RootModel
 
-from flask_openapi3 import ExternalDocumentation, Info, OpenAPI, Tag
+from flask_openapi import ExternalDocumentation, Info, OpenAPI, Tag
 
 info = Info(title="book API", version="1.0.0")
 

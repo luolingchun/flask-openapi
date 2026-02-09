@@ -1,9 +1,6 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2025/1/15 9:58
 import pytest
 
-from flask_openapi3 import APIBlueprint, APIView, OpenAPI
+from flask_openapi import APIBlueprint, APIView, OpenAPI
 
 app = OpenAPI(
     __name__,

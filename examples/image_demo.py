@@ -1,10 +1,6 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2021/6/26 17:05
-
 from flask import make_response
 
-from flask_openapi3 import OpenAPI
+from flask_openapi import OpenAPI
 
 app = OpenAPI(__name__)
 

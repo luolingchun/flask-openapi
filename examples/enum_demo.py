@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2021/8/18 17:19
 from enum import Enum
 
 from pydantic import BaseModel, Field
 
-from flask_openapi3 import Info, OpenAPI
+from flask_openapi import Info, OpenAPI
 
 app = OpenAPI(__name__, info=Info(title="Enum demo", version="1.0.0"))
 

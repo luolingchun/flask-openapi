@@ -3,8 +3,8 @@ from __future__ import annotations
 import pytest
 from pydantic import BaseModel, ValidationError
 
-from flask_openapi3 import APIView, OpenAPI
-from flask_openapi3.blueprint import APIBlueprint
+from flask_openapi import APIView, OpenAPI
+from flask_openapi.blueprint import APIBlueprint
 
 
 class BaseRequest(BaseModel):

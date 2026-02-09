@@ -1,4 +1,4 @@
-**`flask_openapi3`** based on [Flask](https://github.com/pallets/flask/)
+**`flask_openapi`** based on [Flask](https://github.com/pallets/flask/)
 and [Pydantic](https://github.com/pydantic/pydantic), So you can use it like Flask.
 
 ## A Minimal Application
@@ -6,7 +6,7 @@ and [Pydantic](https://github.com/pydantic/pydantic), So you can use it like Fla
 Just like [Flask](https://flask.palletsprojects.com/en/latest/quickstart/#a-minimal-application), Create `hello.py`:
 
 ``` python
-from flask_openapi3 import OpenAPI
+from flask_openapi import OpenAPI
 
 app = OpenAPI(__name__)
 
@@ -40,10 +40,10 @@ You will see the output information:
 
 ## REST API
 
-You can use **`get`**, **`post`**, **`put`**, **`patch`**, **`delete`** REST API in `flask-openapi3`.
+You can use **`get`**, **`post`**, **`put`**, **`patch`**, **`delete`** REST API in `flask-openapi`.
 
 ```python
-from flask_openapi3 import OpenAPI
+from flask_openapi import OpenAPI
 
 app = OpenAPI(__name__)
 
@@ -68,7 +68,7 @@ if __name__ == '__main__':
 you should use **`register_api`** instead of  **`register_blueprint`**.
 
 ```python hl_lines="14"
-from flask_openapi3 import OpenAPI
+from flask_openapi import OpenAPI
 
 app = OpenAPI(__name__)
 
@@ -94,7 +94,7 @@ Allow an **API Blueprint** to be registered on another **API Blueprint**.
 For more information, please see [Flask Nesting Blueprints](https://flask.palletsprojects.com/en/latest/blueprints/#nesting-blueprints).
 
 ```python hl_lines="21 22"
-from flask_openapi3 import OpenAPI, APIBlueprint
+from flask_openapi import OpenAPI, APIBlueprint
 
 app = OpenAPI(__name__)
 
@@ -125,7 +125,7 @@ if __name__ == '__main__':
 
 ## APIView
 
-[Class-based API View](./Reference/APIView.md), click [here](https://github.com/luolingchun/flask-openapi3/blob/master/examples/api_view_demo.py) for the complete example:
+[Class-based API View](./Reference/APIView.md), click [here](https://github.com/luolingchun/flask-openapi/blob/master/examples/api_view_demo.py) for the complete example:
 
 ```python
 @api_view.route("/book")
@@ -189,7 +189,7 @@ Just use `async` when defining functions. More information goes to [Using async 
 
     You need to manually install `asgiref` using pip:
     ```bash
-    pip install flask-openapi3[async]
+    pip install flask-openapi[async]
     
     # or
     pip install asgiref

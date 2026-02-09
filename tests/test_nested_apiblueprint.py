@@ -1,11 +1,7 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2022/4/2 9:09
-
 import pytest
 from pydantic import BaseModel
 
-from flask_openapi3 import APIBlueprint, OpenAPI, Tag
+from flask_openapi import APIBlueprint, OpenAPI, Tag
 
 app = OpenAPI(__name__)
 

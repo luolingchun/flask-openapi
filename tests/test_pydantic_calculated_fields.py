@@ -1,12 +1,9 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2024/1/28 16:38
 from functools import cached_property
 
 import pytest
 from pydantic import BaseModel, Field, computed_field
 
-from flask_openapi3 import OpenAPI
+from flask_openapi import OpenAPI
 
 app = OpenAPI(__name__)
 app.config["TESTING"] = True

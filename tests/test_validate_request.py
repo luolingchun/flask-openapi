@@ -4,8 +4,8 @@ import pytest
 from flask import request
 from pydantic import BaseModel, Field
 
-from flask_openapi3 import APIView, Info, OpenAPI, Tag
-from flask_openapi3.request import validate_request
+from flask_openapi import APIView, Info, OpenAPI, Tag
+from flask_openapi.request import validate_request
 
 
 class BookNamePath(BaseModel):

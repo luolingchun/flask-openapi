@@ -2,7 +2,7 @@ name: mkdocs
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   docs:
@@ -16,12 +16,12 @@ jobs:
           enable-cache: true
 
       - name: Install dependencies
-        run: uv sync --upgrade --group doc --all-extras
+        run: uv sync
 
       - name: Build docs
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git fetch origin gh-pages:gh-pages
-          uv run mike deploy v4.x
+          uv run mike deploy v5.x latest --update-aliases
           git push origin gh-pages

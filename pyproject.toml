@@ -1,9 +1,11 @@
 [project]
-name = "flask-openapi3"
-description = "Generate REST API and OpenAPI documentation for your Flask project."
+name = "flask-openapi"
+dynamic = ["version"]
+description = "A simple API framework based on Flask."
 readme = "README.md"
-license = { text = "MIT" }
 maintainers = [{ name = "llc", email = "luolingchun@outlook.com" }]
+license = "MIT"
+license-files = ["LICENSE"]
 classifiers = [
     # "Development Status :: 1 - Planning",
     # "Development Status :: 2 - Pre-Alpha",
@@ -15,24 +17,21 @@ classifiers = [
     "Environment :: Web Environment",
     "Framework :: Flask",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = ["Flask>=2.0", "pydantic>=2.4"]
-dynamic = ["version"]
 
 [project.urls]
-Homepage = "https://github.com/luolingchun/flask-openapi3"
-Documentation = "https://luolingchun.github.io/flask-openapi3"
+Homepage = "https://github.com/luolingchun/flask-openapi"
+Documentation = "https://luolingchun.github.io/flask-openapi"
 
 [project.optional-dependencies]
 yaml = ["pyyaml"]
@@ -40,15 +39,17 @@ async = ["asgiref >= 3.2"]
 dotenv = ["python-dotenv"]
 email = ["email-validator"]
 # ui templates
-swagger = ["flask-openapi3-swagger"]
-redoc = ["flask-openapi3-redoc"]
-rapidoc = ["flask-openapi3-rapidoc"]
-rapipdf = ["flask-openapi3-rapipdf"]
-scalar = ["flask-openapi3-scalar"]
-elements = ["flask-openapi3-elements"]
+swagger = ["flask-openapi-swagger"]
+redoc = ["flask-openapi-redoc"]
+rapidoc = ["flask-openapi-rapidoc"]
+rapipdf = ["flask-openapi-rapipdf"]
+scalar = ["flask-openapi-scalar"]
+elements = ["flask-openapi-elements"]
 
 [dependency-groups]
-build = ["hatchling", "build", "twine"]
+ty = ["ty"]
+ruff = ["ruff"]
+test = ["pytest", "asgiref", "pyyaml"]
 doc = [
     "mkdocs-static-i18n>=1.0",
     "mkdocstrings[python]",
@@ -57,26 +58,25 @@ doc = [
     "pyyaml",
     "mike",
 ]
-mypy = ["mypy"]
-ruff = ["ruff"]
-test = ["pytest", "asgiref", "pyyaml"]
+dev = [
+    "flask-openapi-swagger",
+    "flask-openapi-redoc",
+    "flask-openapi-rapidoc",
+    "flask-openapi-rapipdf",
+    "flask-openapi-scalar",
+    "flask-openapi-elements"
+]
+
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.version]
-path = "flask_openapi3/__version__.py"
+path = "flask_openapi/__version__.py"
 
-[tool.hatch.build.targets.sdist]
-include = [
-    "/flask_openapi3",
-    "/examples",
-    "/tests",
-    "/CHANGELOG.md",
-    "/CONTRIBUTING.md",
-    "/LICENSE.rst"
-]
+[tool.uv]
+default-groups = "all"
 
 [tool.ruff]
 line-length = 120
@@ -93,15 +93,5 @@ select = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"flask_openapi3/__init__.py" = ["F401"]
-"flask_openapi3/models/__init__.py" = ["F401"]
-
-[tool.mypy]
-files = "src"
-plugins = ["pydantic.mypy"]
-
-[[tool.mypy.overrides]]
-module = ["pydantic_core.*", "devtools.*"]
-follow_imports = "skip"
-ignore_missing_imports = true
-
+"flask_openapi/__init__.py" = ["F401"]
+"flask_openapi/models/__init__.py" = ["F401"]

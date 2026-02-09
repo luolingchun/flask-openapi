@@ -1,1 +1,1 @@
-::: flask_openapi3.view.APIView
+::: flask_openapi.view.APIView

@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2023/7/21 10:32
 import pytest
 from flask import current_app, make_response
 from pydantic import BaseModel, Field, ValidationError
 
-from flask_openapi3 import OpenAPI
+from flask_openapi import OpenAPI
 
 
 class GenericTracebackError(BaseModel):

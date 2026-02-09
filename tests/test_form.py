@@ -1,13 +1,10 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2023/8/6 13:47
 from enum import Enum
 from typing import Any
 
 import pytest
 from pydantic import BaseModel
 
-from flask_openapi3 import FileStorage, OpenAPI
+from flask_openapi import FileStorage, OpenAPI
 
 app = OpenAPI(__name__)
 app.config["TESTING"] = True

@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2021/4/28 11:24
 from http import HTTPStatus
 
 from pydantic import BaseModel, Field
 
-from flask_openapi3 import ExternalDocumentation, Info, OpenAPI, Server, Tag
+from flask_openapi import ExternalDocumentation, Info, OpenAPI, Server, Tag
 
 info = Info(title="book API", version="1.0.0")
 
@@ -40,7 +37,7 @@ security = [{"jwt": []}, {"oauth2": ["write:pets", "read:pets"]}, {"basic": []}]
 
 
 class BookPath(BaseModel):
-    bid: int = Field(..., description="book id", json_schema_extra={"deprecated": True, "example": 100})
+    id: int = Field(..., description="book id", json_schema_extra={"deprecated": True, "example": 100})
 
 
 class BookQuery(BaseModel):
@@ -54,7 +51,7 @@ class BookBody(BaseModel):
 
 
 class BookBodyWithID(BaseModel):
-    bid: int = Field(..., description="book id")
+    id: int = Field(..., description="book id")
     age: int | None = Field(None, ge=2, le=4, description="Age")
     author: str = Field(None, min_length=2, max_length=4, description="Author")
 
@@ -66,7 +63,7 @@ class BookResponse(BaseModel):
 
 
 @app.get(
-    "/book/<int:bid>",
+    "/book/<id>",
     tags=[book_tag],
     summary="new summary",
     description="new description",
@@ -83,9 +80,9 @@ def get_book(path: BookPath):
     to Get some book by id, like:
     http://localhost:5000/book/3
     """
-    if path.bid == 4:
+    if path.id == 4:
         return NotFoundResponse().model_dump(), 404
-    return {"code": 0, "message": "ok", "data": {"bid": path.bid, "age": 3, "author": "no"}}
+    return {"code": 0, "message": "ok", "data": {"id": path.id, "age": 3, "author": "no"}}
 
 
 # set doc_ui False disable openapi UI
@@ -98,7 +95,7 @@ def get_books(query: BookQuery):
     return {
         "code": 0,
         "message": "ok",
-        "data": [{"bid": 1, "age": query.age, "author": "a1"}, {"bid": 2, "age": query.age, "author": "a2"}],
+        "data": [{"id": 1, "age": query.age, "author": "a1"}, {"id": 2, "age": query.age, "author": "a2"}],
     }
 
 
@@ -108,14 +105,14 @@ def create_book(body: BookBody):
     return {"code": 0, "message": "ok"}, HTTPStatus.OK
 
 
-@app.put("/book/<int:bid>", tags=[book_tag])
+@app.put("/book/<id>", tags=[book_tag])
 def update_book(path: BookPath, body: BookBody):
     print(path)
     print(body)
     return {"code": 0, "message": "ok"}
 
 
-@app.delete("/book/<int:bid>", tags=[book_tag], doc_ui=False)
+@app.delete("/book/<id>", tags=[book_tag], doc_ui=False)
 def delete_book(path: BookPath):
     print(path)
     return {"code": 0, "message": "ok"}

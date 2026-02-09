@@ -1,8 +1,4 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2022/12/19 10:34
-
-from flask_openapi3.utils import normalize_name
+from flask_openapi.utils import normalize_name
 
 
 def test_normalize_name():

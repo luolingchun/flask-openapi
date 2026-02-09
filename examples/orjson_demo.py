@@ -1,11 +1,7 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2022/12/9 17:50
-
 import orjson
 from flask.json.provider import JSONProvider
 
-from flask_openapi3 import Info, OpenAPI
+from flask_openapi import Info, OpenAPI
 
 
 class OrJSONProvider(JSONProvider):

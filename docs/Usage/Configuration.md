@@ -5,14 +5,14 @@ configurations in this library that can be used.
 
 You can customize the custom behavior of this template.
 
-[The default `SWAGGER_HTML_STRING` is here](https://github.com/luolingchun/flask-openapi3-plugins/blob/master/flask-openapi3-swagger/flask_openapi3_swagger/templates/__init__.py).
+[The default `SWAGGER_HTML_STRING` is here](https://github.com/luolingchun/flask-openapi-plugins/blob/master/flask-openapi-swagger/flask_openapi_swagger/templates/__init__.py).
 
 ## SWAGGER_CONFIG
 
 You can change the default behavior of the Swagger UI.
 
 ```python
-from flask_openapi3 import OpenAPI
+from flask_openapi import OpenAPI
 
 app = OpenAPI(__name__)
 
@@ -29,7 +29,7 @@ app.config["SWAGGER_CONFIG"] = {
 You can configure OAuth 2.0 authorization for Swagger UI.
 
 ```python
-from flask_openapi3 import OpenAPI
+from flask_openapi import OpenAPI
 
 app = OpenAPI(__name__)
 
@@ -42,7 +42,7 @@ app.config["OAUTH_CONFIG"] = {"clientId": "xxx", "clientSecret": "xxx"}
 
 You can customize the custom behavior of this template.
 
-[The default `SCALAR_HTML_STRING` is here](https://github.com/luolingchun/flask-openapi3-plugins/blob/master/flask-openapi3-scalar/flask_openapi3_scalar/templates/__init__.py).
+[The default `SCALAR_HTML_STRING` is here](https://github.com/luolingchun/flask-openapi-plugins/blob/master/flask-openapi-scalar/flask_openapi_scalar/templates/__init__.py).
 
 ## SCALAR_CONFIG
 
@@ -53,7 +53,7 @@ You can change the default behavior of the Scalar UI.
 ## REDOC_HTML_STRING
 You can customize the custom behavior of this template.
 
-[The default `REDOC_HTML_STRING` is here](https://github.com/luolingchun/flask-openapi3-plugins/blob/master/flask-openapi3-redoc/flask_openapi3_redoc/templates/__init__.py).
+[The default `REDOC_HTML_STRING` is here](https://github.com/luolingchun/flask-openapi-plugins/blob/master/flask-openapi-redoc/flask_openapi_redoc/templates/__init__.py).
 
 ## REDOC_CONFIG
 
@@ -65,7 +65,7 @@ You can change the default behavior of the Redoc UI.
 
 You can customize the custom behavior of this template.
 
-[The default `RAPIDOC_HTML_STRING` is here](https://github.com/luolingchun/flask-openapi3-plugins/blob/master/flask-openapi3-rapidoc/flask_openapi3_rapidoc/templates/__init__.py).
+[The default `RAPIDOC_HTML_STRING` is here](https://github.com/luolingchun/flask-openapi-plugins/blob/master/flask-openapi-rapidoc/flask_openapi_rapidoc/templates/__init__.py).
 
 ## RAPIDOC_CONFIG
 
@@ -77,7 +77,7 @@ You can change the default behavior of the Rapidoc UI.
 
 You can customize the custom behavior of this template.
 
-[The default `RAPIPDF_HTML_STRING` is here](https://github.com/luolingchun/flask-openapi3-plugins/blob/master/flask-openapi3-rapipdf/flask_openapi3_rapipdf/templates/__init__.py).
+[The default `RAPIPDF_HTML_STRING` is here](https://github.com/luolingchun/flask-openapi-plugins/blob/master/flask-openapi-rapipdf/flask_openapi_rapipdf/templates/__init__.py).
 
 ## RAPIPDF_CONFIG
 
@@ -89,7 +89,7 @@ You can change the default behavior of the Rapipdf UI.
 
 You can customize the custom behavior of this template.
 
-[The default `ELEMENTS_HTML_STRING` is here](https://github.com/luolingchun/flask-openapi3-plugins/blob/master/flask-openapi3-elements/flask_openapi3_elements/templates/__init__.py).
+[The default `ELEMENTS_HTML_STRING` is here](https://github.com/luolingchun/flask-openapi-plugins/blob/master/flask-openapi-elements/flask_openapi_elements/templates/__init__.py).
 
 
 ## ELEMENTS_CONFIG

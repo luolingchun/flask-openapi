@@ -1,11 +1,6 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2022/11/30 14:55
-
-
 from pydantic import BaseModel, Field
 
-from flask_openapi3 import APIView, OpenAPI
+from flask_openapi import APIView, OpenAPI
 
 app = OpenAPI(__name__)
 api_view = APIView(url_prefix="/api/v1")

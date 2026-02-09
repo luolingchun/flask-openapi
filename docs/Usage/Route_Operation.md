@@ -3,7 +3,7 @@
 You can also specify tag for apis like this:
 
 ```python hl_lines="3 6"
-from flask_openapi3 import Tag
+from flask_openapi import Tag
 
 book_tag = Tag(name='book', description='Some Book')
 
@@ -72,9 +72,10 @@ More information to
 see [External Documentation Object](https://spec.openapis.org/oas/v3.1.0#external-documentation-object).
 
 ```python hl_lines="10"
-from flask_openapi3 import OpenAPI, ExternalDocumentation
+from flask_openapi import OpenAPI, ExternalDocumentation
 
 app = OpenAPI(__name__, info=info)
+
 
 @app.get(
     '/book/<int:bid>',
@@ -218,9 +219,10 @@ An array of Server Objects, which provide connectivity information to a target s
 provided, or is an empty array, the default value would be a Server Object with an url value of /.
 
 ```python
-from flask_openapi3 import OpenAPI, Server
+from flask_openapi import OpenAPI, Server
 
 app = OpenAPI(__name__, info=info)
+
 
 @app.get(
     '/book/<int:bid>',
@@ -240,7 +242,7 @@ additional data can be added to extend the specification at certain points.
 See [Specification Extensions](https://spec.openapis.org/oas/v3.1.0#specification-extensions).
 
 ```python  hl_lines="3 12 19 28 42"
-from flask_openapi3 import OpenAPI, APIBlueprint, APIView
+from flask_openapi import OpenAPI, APIBlueprint, APIView
 
 app = OpenAPI(__name__, openapi_extensions={
     "x-google-endpoints": [
@@ -257,6 +259,7 @@ openapi_extensions = {
         "protocol": "h2"
     }
 }
+
 
 @app.get("/", openapi_extensions=openapi_extensions)
 def hello():

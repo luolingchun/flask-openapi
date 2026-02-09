@@ -83,32 +83,12 @@ Receive flask **`request.headers`**.
 
 Receive flask **`request.cookies`**.
 
-### raw
-
-Receive flask **`request`** and no data validation.
-
-```python
-from flask_openapi3 import RawModel
-
-
-class BookRaw(RawModel):
-    mimetypes = ["text/csv", "application/json"]
-
-
-@app.post("/book")
-def get_book(raw: BookRaw):
-    # raw equals to flask.request
-    print(raw.data)
-    print(raw.mimetype)
-    return "ok"
-```
-
 ## @validate_request
 
 Sometimes you want to delay the verification request parameters, such as after login verification:
 
 ```python
-from flask_openapi3 import validate_request
+from flask_openapi import validate_request
 
 
 def login_required():
@@ -135,12 +115,13 @@ def get_book(query: BookQuery):
 
 When your 'auth decorator' injects custom kwargs, these will be passed on to the final function for you to use.
 
-Any kwargs which are part of the 'path' will have been consumed at this point and can only be referenced using the `path`.
+Any kwargs which are part of the 'path' will have been consumed at this point and can only be referenced using the
+`path`.
 
 So avoid using kwarg-names which overlap with the path.
 
 ```python
-from flask_openapi3 import validate_request
+from flask_openapi import validate_request
 from functools import wraps
 
 
@@ -158,11 +139,10 @@ def login_required():
     return decorator
 
 
-
 @app.get("/book")
 @login_required()
 @validate_request()
-def get_book(query: BookQuery, client_id:str = None):
+def get_book(query: BookQuery, client_id: str = None):
     print(f"Current user identified as {client_id}")
     ...
 ```

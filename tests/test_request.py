@@ -1,13 +1,10 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2022/9/2 15:35
 from enum import Enum
 from functools import wraps
 
 import pytest
 from pydantic import BaseModel, Field
 
-from flask_openapi3 import FileStorage, OpenAPI, RawModel
+from flask_openapi import FileStorage, OpenAPI
 
 app = OpenAPI(__name__)
 app.config["TESTING"] = True
@@ -104,18 +101,6 @@ def api_cookie(cookie: BookCookie):
     return {"code": 0, "message": "ok"}
 
 
-class BookRaw(RawModel):
-    mimetypes = ["text/csv", "application/json"]
-
-
-@app.post("/raw")
-def api_raw(raw: BookRaw):
-    # raw equals to flask.request
-    assert raw.data == b"raw"
-    assert raw.mimetype == "text/plain"
-    return "ok"
-
-
 def test_query(client):
     r = client.get("/query?age=1")
     print(r.json)
@@ -173,8 +158,3 @@ def test_header(client):
     print(resp.json)
     assert resp.status_code == 200
     assert resp.json == headers
-
-
-def test_raw(client):
-    resp = client.post("/raw", data="raw", headers={"Content-Type": "text/plain"})
-    assert resp.status_code == 200

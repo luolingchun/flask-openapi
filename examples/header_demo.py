@@ -1,10 +1,6 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2021/12/26 15:07
-
 from pydantic import BaseModel, Field
 
-from flask_openapi3 import Info, OpenAPI, Tag
+from flask_openapi import Info, OpenAPI, Tag
 
 info = Info(title="header API", version="1.0.0")
 app = OpenAPI(__name__, info=info)

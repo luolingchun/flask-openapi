@@ -1,6 +1,6 @@
-Since version v4, a plugin repository has been added, supporting the following UI templates:
+Supporting the following UI templates:
 
-`pip install -U flask-openapi3[swagger,redoc,rapidoc,rapipdf,scalar,elements]`
+`pip install -U flask-openapi[swagger,redoc,rapidoc,rapipdf,scalar,elements]`
 
 - [Swagger](https://github.com/swagger-api/swagger-ui)
 - [Redoc](https://github.com/Redocly/redoc)
@@ -12,13 +12,12 @@ Since version v4, a plugin repository has been added, supporting the following U
 Manual Installation:
 
 ```bash
-pip install -U flask-openapi3-swagger
-pip install -U flask-openapi3-redoc
-pip install -U flask-openapi3-rapidoc
-pip install -U flask-openapi3-rapipdf
-pip install -U flask-openapi3-scalar
-pip install -U flask-openapi3-elements
+pip install -U flask-openapi-swagger
+pip install -U flask-openapi-redoc
+pip install -U flask-openapi-rapidoc
+pip install -U flask-openapi-rapipdf
+pip install -U flask-openapi-scalar
+pip install -U flask-openapi-elements
 ```
 
-
-For more UI templates, please check the [plugin repository](https://github.com/luolingchun/flask-openapi3-plugins).
+For more UI templates, please check the [plugin repository](https://github.com/luolingchun/flask-openapi-plugins).

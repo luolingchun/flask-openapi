@@ -1,9 +1,9 @@
-site_name: flask-openapi3
-site_url: https://luolingchun.github.io/flask-openapi3/
-site_description: Generate REST API and OpenAPI documentation for your Flask project.
+site_name: flask-openapi
+site_url: https://luolingchun.github.io/flask-openapi/
+site_description: A simple API framework based on Flask.
 site_author: llc
 
-repo_url: https://github.com/luolingchun/flask-openapi3
+repo_url: https://github.com/luolingchun/flask-openapi
 repo_name: 'GitHub'
 
 markdown_extensions:
@@ -20,7 +20,7 @@ markdown_extensions:
 
 theme:
   name: material
-  logo: images/logo.svg
+  logo: images/logo-white.svg
   favicon: images/logo-blue.svg
   palette:
     - media: "(prefers-color-scheme: light)"
@@ -90,11 +90,6 @@ extra:
   version:
     provider: mike
 
-extra_javascript:
-  - js/db.js
-
-extra_css:
-  - css/img.css
 
 nav:
   - Home: index.md
@@ -110,7 +105,6 @@ nav:
       - JSON: Usage/JSON.md
   - Example: Example.md
   - API Reference:
-      - APIScaffold: Reference/Scaffold.md
       - OpenAPI: Reference/OpenAPI.md
       - APIBlueprint: Reference/APIBlueprint.md
       - APIView: Reference/APIView.md

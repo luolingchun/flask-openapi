@@ -1,1 +1,0 @@
-::: flask_openapi3.scaffold.APIScaffold

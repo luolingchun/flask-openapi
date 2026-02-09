@@ -1,10 +1,6 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2022/5/15 14:19
-
 import pytest
 
-from flask_openapi3 import APIBlueprint, OpenAPI
+from flask_openapi import APIBlueprint, OpenAPI
 
 app = OpenAPI(__name__)
 app.config["TESTING"] = True

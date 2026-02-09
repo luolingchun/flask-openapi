@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2022/2/27 15:26
 from typing import Any
 
 from pydantic import BaseModel, RootModel
 
-from flask_openapi3 import OpenAPI, Tag
+from flask_openapi import OpenAPI, Tag
 
 app = OpenAPI(__name__)
 

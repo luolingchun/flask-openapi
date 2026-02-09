@@ -1,10 +1,6 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2022/5/5 13:28
-
 import pytest
 
-from flask_openapi3 import APIBlueprint, Info, OpenAPI
+from flask_openapi import APIBlueprint, Info, OpenAPI
 
 info = Info(title="book API", version="1.0.0")
 

@@ -1,1 +1,1 @@
-::: flask_openapi3.APIBlueprint
+::: flask_openapi.APIBlueprint

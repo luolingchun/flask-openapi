@@ -1,28 +1,28 @@
 <div align="center">
-    <a href="https://luolingchun.github.io/flask-openapi3/" target="_blank">
-        <img class="off-glb" src="https://raw.githubusercontent.com/luolingchun/flask-openapi3/master/docs/images/logo-text.svg" 
+    <a href="https://luolingchun.github.io/flask-openapi/" target="_blank">
+        <img class="off-glb" src="https://raw.githubusercontent.com/luolingchun/flask-openapi/main/docs/images/logo-text.svg" 
              width="60%" height="auto" alt="logo">
     </a>
 </div>
 <p align="center">
-    <em>Generate REST API and OpenAPI documentation for your Flask project.</em>
+    <em>A simple API framework based on Flask.</em>
 </p>
 <p align="center">
-    <a href="https://github.com/luolingchun/flask-openapi3/actions/workflows/tests.yml" target="_blank">
-        <img class="off-glb" src="https://img.shields.io/github/actions/workflow/status/luolingchun/flask-openapi3/tests.yml?branch=master" alt="test">
+    <a href="https://github.com/luolingchun/flask-openapi/actions/workflows/tests.yml" target="_blank">
+        <img class="off-glb" src="https://img.shields.io/github/actions/workflow/status/luolingchun/flask-openapi/tests.yml?branch=master" alt="test">
     </a>
-    <a href="https://pypi.org/project/flask-openapi3/" target="_blank">
-        <img class="off-glb" src="https://img.shields.io/pypi/v/flask-openapi3" alt="pypi">
+    <a href="https://pypi.org/project/flask-openapi/" target="_blank">
+        <img class="off-glb" src="https://img.shields.io/pypi/v/flask-openapi" alt="pypi">
     </a>
-    <a href="https://pypistats.org/packages/flask-openapi3" target="_blank">
-        <img class="off-glb" src="https://img.shields.io/pypi/dm/flask-openapi3" alt="pypistats">
+    <a href="https://pypistats.org/packages/flask-openapi" target="_blank">
+        <img class="off-glb" src="https://img.shields.io/pypi/dm/flask-openapi" alt="pypistats">
     </a>
-    <a href="https://pypi.org/project/flask-openapi3/" target="_blank">
-        <img class="off-glb" src="https://img.shields.io/pypi/pyversions/flask-openapi3" alt="pypi versions">
+    <a href="https://pypi.org/project/flask-openapi/" target="_blank">
+        <img class="off-glb" src="https://img.shields.io/pypi/pyversions/flask-openapi" alt="pypi versions">
     </a>
 </p>
 
-**Flask OpenAPI3** is a web API framework based on **Flask**. It uses **Pydantic** to verify data and automatic
+**Flask OpenAPI** is a simple web API framework based on **Flask**. It uses **Pydantic** to verify data and automatic
 generation of interaction documentation.
 
 The key features are:
@@ -37,9 +37,9 @@ The key features are:
 
 ## Requirements
 
-Python 3.10+
+Python 3.11+
 
-flask-openapi3 is dependent on the following libraries:
+flask-openapi is dependent on the following libraries:
 
 - [Flask](https://github.com/pallets/flask) for the web app.
 - [Pydantic](https://github.com/pydantic/pydantic) for the data validation.
@@ -47,13 +47,7 @@ flask-openapi3 is dependent on the following libraries:
 ## Installation
 
 ```bash
-pip install -U flask-openapi3[swagger]
-```
-
-or
-
-```bash
-conda install -c conda-forge flask-openapi3[swagger]
+pip install -U flask-openapi[swagger]
 ```
 
 <details markdown="block">
@@ -65,37 +59,37 @@ conda install -c conda-forge flask-openapi3[swagger]
   commands.
 - [pyyaml](https://github.com/yaml/pyyaml) is used to output the OpenAPI document in yaml format.
 - [asgiref](https://github.com/django/asgiref) allows views to be defined with `async def` and use `await`.
-- [flask-openapi3-plugins](https://github.com/luolingchun/flask-openapi3-plugins) Provide OpenAPI UI for flask-openapi3.
+- [flask-openapi-plugins](https://github.com/luolingchun/flask-openapi-plugins) Provide OpenAPI UI for flask-openapi.
 
-To install these dependencies with flask-openapi3:
+To install these dependencies with flask-openapi:
 
 ```bash
-pip install flask-openapi3[yaml]
+pip install flask-openapi[yaml]
 # or
-pip install flask-openapi3[async]
+pip install flask-openapi[async]
 # or
-pip install flask-openapi3[dotenv]
+pip install flask-openapi[dotenv]
 # or
-pip install flask-openapi3[email]
+pip install flask-openapi[email]
 # or all
-pip install flask-openapi3[yaml,async,dotenv,email]
+pip install flask-openapi[yaml,async,dotenv,email]
 # or manually
 pip install pyyaml asgiref python-dotenv email-validator
 # OpenAPI UI plugins
-pip install -U flask-openapi3[swagger,redoc,rapidoc,rapipdf,scalar,elements]
+pip install -U flask-openapi[swagger,redoc,rapidoc,rapipdf,scalar,elements]
 ```
 
 </details>
 
 ## A Simple Example
 
-Here's a simple example, further go to the [Example](https://luolingchun.github.io/flask-openapi3/latest/Example/).
+Here's a simple example, further go to the [Example](https://luolingchun.github.io/flask-openapi/latest/Example/).
 
 ```python
 from pydantic import BaseModel
 
-from flask_openapi3 import Info, Tag
-from flask_openapi3 import OpenAPI
+from flask_openapi import Info, Tag
+from flask_openapi import OpenAPI
 
 info = Info(title="book API", version="1.0.0")
 app = OpenAPI(__name__, info=info)
@@ -133,7 +127,7 @@ if __name__ == "__main__":
 ```python
 from pydantic import BaseModel, Field
 
-from flask_openapi3 import OpenAPI, Tag, Info, APIView
+from flask_openapi import OpenAPI, Tag, Info, APIView
 
 
 info = Info(title="book API", version="1.0.0")
@@ -198,13 +192,13 @@ if __name__ == "__main__":
 
 ## API Document
 
-Run the [simple example](https://github.com/luolingchun/flask-openapi3/blob/master/examples/simple_demo.py), and go to http://127.0.0.1:5000/openapi.
+Run the [simple example](https://github.com/luolingchun/flask-openapi/blob/master/examples/simple_demo.py), and go to http://127.0.0.1:5000/openapi.
 
 > OpenAPI UI plugins are optional dependencies that require manual installation.
 >
-> `pip install -U flask-openapi3[swagger,redoc,rapidoc,rapipdf,scalar,elements]`
+> `pip install -U flask-openapi[swagger,redoc,rapidoc,rapipdf,scalar,elements]`
 >
 > More optional ui templates goto the document
-> about [UI_Templates](https://luolingchun.github.io/flask-openapi3/latest/Usage/UI_Templates/).
+> about [UI_Templates](https://luolingchun.github.io/flask-openapi/latest/Usage/UI_Templates/).
 
-![openapi](https://raw.githubusercontent.com/luolingchun/flask-openapi3/master/docs/images/openapi-all.png)
+![openapi](https://raw.githubusercontent.com/luolingchun/flask-openapi/main/docs/images/openapi-all.png)

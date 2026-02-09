@@ -1,11 +1,6 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2021/6/6 14:05
-
-
 from pydantic import BaseModel, Field
 
-from flask_openapi3 import APIBlueprint, Info, OpenAPI, Tag
+from flask_openapi import APIBlueprint, Info, OpenAPI, Tag
 
 info = Info(title="book API", version="1.0.0")
 
@@ -36,12 +31,12 @@ api = APIBlueprint(
 
 
 class BookBody(BaseModel):
-    age: int | None = Field(..., ge=2, le=4, description="Age")
-    author: str = Field(None, min_length=2, max_length=4, description="Author")
+    age: int | None = Field(3, ge=2, le=4, description="Age")
+    author: str = Field("xxx", min_length=2, max_length=4, description="Author")
 
 
 class Path(BaseModel):
-    bid: int = Field(..., description="book id")
+    id: int = Field(1, description="book id")
 
 
 @api.get("/book", doc_ui=False)
@@ -55,9 +50,9 @@ def create_book(body: BookBody):
     return {"code": 0, "message": "ok"}
 
 
-@api.put("/book/<int:bid>", operation_id="update")
+@api.put("/book/<id>", operation_id="update")
 def update_book(path: Path, body: BookBody):
-    assert path.bid == 1
+    assert path.id == 1
     assert body.age == 3
     return {"code": 0, "message": "ok"}
 

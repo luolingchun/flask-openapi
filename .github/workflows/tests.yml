@@ -2,18 +2,16 @@ name: tests
 
 on:
   push:
-    branches: [ master ]
-    paths-ignore:
-      - "docs/**"
-      - "*.md"
-      - "*.rst"
+    branches: [ main ]
+    paths:
+      - "flask_openapi/**"
+      - "tests/**"
 
   pull_request:
-    branches: [ master ]
-    paths-ignore:
-      - "docs/**"
-      - "*.md"
-      - "*.rst"
+    branches: [ main ]
+    paths:
+      - "flask_openapi/**"
+      - "tests/**"
 
 jobs:
   tests:
@@ -22,8 +20,7 @@ jobs:
     strategy:
       max-parallel: 5
       matrix:
-        python-version: [ "3.10", "3.11", "3.12", "3.13", "3.14" ]
-        flask-version: [ "Flask>=2.0,<3.0", "Flask>=3.0" ]
+        python-version: [ "3.11", "3.12", "3.13", "3.14" ]
     env:
       PYTHONPATH: .
 
@@ -36,21 +33,16 @@ jobs:
           enable-cache: true
 
       - name: Install dependencies
-        run: |
-          uv sync --upgrade --all-extras --all-groups
-          uv add "${{ matrix.flask-version }}"
+        run: uv sync
 
       - name: Test with pytest
         run: uv run pytest tests
 
-      - name: ruff
-        run: uv run ruff check flask_openapi3 tests examples
+      - name: ruff check
+        run: uv run ruff check flask_openapi tests examples
 
-      - name: Cache mypy
-        uses: actions/cache@v5
-        with:
-          path: ./.mypy_cache
-          key: mypy|${{ matrix.python-version }}|${{ hashFiles('pyproject.toml') }}
+      - name: ruff format
+        run: uv run ruff format --check flask_openapi tests examples
 
-      - name: Run mypy
-        run: uv run mypy flask_openapi3
+      - name: Run ty
+        run: uv run ty check flask_openapi

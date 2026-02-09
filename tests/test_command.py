@@ -1,12 +1,9 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2024/7/3 9:44
 import os
 
 import pytest
 
-from flask_openapi3 import OpenAPI
-from flask_openapi3.commands import openapi_command
+from flask_openapi import OpenAPI
+from flask_openapi.commands import openapi_command
 
 
 @pytest.fixture

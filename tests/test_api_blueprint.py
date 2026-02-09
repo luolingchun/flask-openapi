@@ -1,12 +1,7 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2021/5/17 15:25
-
-
 import pytest
 from pydantic import BaseModel, Field
 
-from flask_openapi3 import APIBlueprint, Info, OpenAPI, Tag
+from flask_openapi import APIBlueprint, Info, OpenAPI, Tag
 
 info = Info(title="book API", version="1.0.0")
 

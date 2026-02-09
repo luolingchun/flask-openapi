@@ -1,12 +1,12 @@
-**`flask_openapi3`** 基于 [Flask](https://github.com/pallets/flask/)
-和 [Pydantic](https://github.com/pydantic/pydantic)，因此你可以像使用Flask一样使用 **`flask_openapi3`**。
+**`flask_openapi`** 基于 [Flask](https://github.com/pallets/flask/)
+和 [Pydantic](https://github.com/pydantic/pydantic)，因此你可以像使用Flask一样使用 **`flask_openapi`**。
 
 ## 最小应用
 
 像 [Flask](https://flask.palletsprojects.com/en/latest/quickstart/#a-minimal-application) 一样，创建 `hello.py`:
 
 ``` python
-from flask_openapi3 import OpenAPI
+from flask_openapi import OpenAPI
 
 app = OpenAPI(__name__)
 
@@ -40,10 +40,10 @@ python hello.py
 
 ## REST API
 
-你可以在 `flask-openapi3` 中使用 **`get`**，**`post`**，**`put`**，**`patch`**，**`delete`** 等 REST API 。
+你可以在 `flask-openapi` 中使用 **`get`**，**`post`**，**`put`**，**`patch`**，**`delete`** 等 REST API 。
 
 ```python
-from flask_openapi3 import OpenAPI
+from flask_openapi import OpenAPI
 
 app = OpenAPI(__name__)
 
@@ -69,7 +69,7 @@ if __name__ == '__main__':
 你应该使用 **`register_api`** 来代替 **`register_blueprint`**。
 
 ```python hl_lines="14"
-from flask_openapi3 import OpenAPI
+from flask_openapi import OpenAPI
 
 app = OpenAPI(__name__)
 
@@ -95,7 +95,7 @@ if __name__ == '__main__':
 更多信息请查看 [Flask Nesting Blueprints](https://flask.palletsprojects.com/en/latest/blueprints/#nesting-blueprints)。
 
 ```python hl_lines="21 22"
-from flask_openapi3 import OpenAPI, APIBlueprint
+from flask_openapi import OpenAPI, APIBlueprint
 
 app = OpenAPI(__name__)
 
@@ -126,7 +126,7 @@ if __name__ == '__main__':
 
 ## APIView
 
-[基于类的 API 视图](./Reference/APIView.md)， 点击[这里](https://github.com/luolingchun/flask-openapi3/blob/APIView/examples/api_view_demo.py) 查看完整示例:
+[基于类的 API 视图](./Reference/APIView.md)， 点击[这里](https://github.com/luolingchun/flask-openapi/blob/APIView/examples/api_view_demo.py) 查看完整示例:
 
 ```python
 @api_view.route("/book")
@@ -152,7 +152,7 @@ class BookListAPIView:
 
     你需要使用 pip 手动安装 `asgiref`:
     ```bash
-    pip install flask-openapi3[async]
+    pip install flask-openapi[async]
     
     # or
     pip install asgiref

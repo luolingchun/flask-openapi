@@ -9,13 +9,13 @@ The `flask openapi` command will export the OpenAPI Specification to console whe
 ```
 flask --app IMPORT openapi
 ```
+
 where `IMPORT` is the Flask application, in our case an OpenAPI application, to loan.
-For example, if your OpenAPI application is `app` defined in `hello.py`, 
+For example, if your OpenAPI application is `app` defined in `hello.py`,
 as in the example in [Quickstart](../Quickstart.md#rest-api), the command is
 `flask --app hello:app openapi `.
-(For more information about the command line interface of Flask, please check out 
+(For more information about the command line interface of Flask, please check out
 the [Flask CLI documentation](https://flask.palletsprojects.com/en/latest/cli/#application-discovery).)
-
 
 Execute `flask --app IMPORT openapi --help` for more information about the command:
 
@@ -40,8 +40,9 @@ Options:
 Please note, by default, the command will export the OpenAPI specification in JSON.
 If you want the OpenAPI specification in YAML, by running the command with the `-f yaml` option,
 you need to install the `pyyaml` package.
+
 ```bash
-pip install flask-openapi3[yaml]
+pip install flask-openapi[yaml]
 
 # or
 pip install pyyaml
@@ -49,14 +50,17 @@ pip install pyyaml
 
 ## info
 
-**`flask-openapi3`** provide [Swagger UI](https://github.com/swagger-api/swagger-ui), [Redoc](https://github.com/Redocly/redoc) and [RapiDoc](https://github.com/rapi-doc/RapiDoc) interactive documentation.
+**`flask-openapi`**
+provide [Swagger UI](https://github.com/swagger-api/swagger-ui), [Redoc](https://github.com/Redocly/redoc)
+and [RapiDoc](https://github.com/rapi-doc/RapiDoc) interactive documentation.
 Before that, you should know something about the [OpenAPI Specification](https://spec.openapis.org/oas/v3.1.0).
 
-You must import **`Info`** from **`flask-openapi3`**, it needs some parameters: **`title`**, **`version`**... , more information sees the [OpenAPI Specification Info Object](https://spec.openapis.org/oas/v3.1.0#info-object).
+You must import **`Info`** from **`flask-openapi`**, it needs some parameters: **`title`**, **`version`**... , more
+information sees the [OpenAPI Specification Info Object](https://spec.openapis.org/oas/v3.1.0#info-object).
 
 ```python hl_lines="4 5"
-from flask_openapi3 import Info
-from flask_openapi3 import OpenAPI, APIBlueprint
+from flask_openapi import Info
+from flask_openapi import OpenAPI, APIBlueprint
 
 info = Info(title='book API', version='1.0.0')
 app = OpenAPI(__name__, info=info)
@@ -68,13 +72,14 @@ if __name__ == '__main__':
 
 run it, and go to http://127.0.0.1:5000/openapi, you will see the documentation.
 
-![openapi](../images/openapi-all.png)
+![openapi](../assets/openapi-all.png)
 ![image-20210525160157057](../assets/image-20210525160157057.png)
 
 ## security_schemes
 
 There are some examples for Security Scheme Object,
-more features see the [OpenAPI Specification Security Scheme Object](https://spec.openapis.org/oas/v3.1.0#security-scheme-object).
+more features see
+the [OpenAPI Specification Security Scheme Object](https://spec.openapis.org/oas/v3.1.0#security-scheme-object).
 
 ```python
 # Basic Authentication Sample
@@ -143,10 +148,11 @@ You can add `responses` for each API under the `app` wrapper.
 
 ```python hl_lines="4"
 app = OpenAPI(
-    __name__, 
-    info=info, 
+    __name__,
+    info=info,
     responses={404: NotFoundResponse}
 )
+
 
 @app.get(...)
 def endpoint():
@@ -188,7 +194,8 @@ You can pass `doc_ui=False` to disable the `OpenAPI spec` when init [`OpenAPI`](
 app = OpenAPI(__name__, info=info, doc_ui=False)
 ```
 
-You can also use `doc_ui` in endpoint or when initializing [`APIBlueprint`](../Reference/APIBlueprint.md) or [`APIView`](../Reference/APIView.md).
+You can also use `doc_ui` in endpoint or when initializing [`APIBlueprint`](../Reference/APIBlueprint.md) or [
+`APIView`](../Reference/APIView.md).
 
 ```python hl_lines="4 9"
 api = APIBlueprint(
@@ -206,10 +213,11 @@ def get_book():
 
 ## servers
 
-An array of Server Objects, which provide connectivity information to a target server. If the server's property is not provided, or is an empty array, the default value would be a Server Object with an url value of /.
+An array of Server Objects, which provide connectivity information to a target server. If the server's property is not
+provided, or is an empty array, the default value would be a Server Object with an url value of /.
 
 ```python
-from flask_openapi3 import OpenAPI, Server
+from flask_openapi import OpenAPI, Server
 
 servers = [
     Server(url='http://127.0.0.1:5000'),
@@ -222,12 +230,13 @@ app = OpenAPI(__name__, info=info, servers=servers)
 
 Allows referencing an external resource for extended documentation.
 
-More information to see [External Documentation Object](https://spec.openapis.org/oas/v3.1.0#external-documentation-object).
+More information to
+see [External Documentation Object](https://spec.openapis.org/oas/v3.1.0#external-documentation-object).
 
 ```python
-from flask_openapi3 import OpenAPI, ExternalDocumentation
+from flask_openapi import OpenAPI, ExternalDocumentation
 
-external_docs=ExternalDocumentation(
+external_docs = ExternalDocumentation(
     url="https://www.openapis.org/",
     description="Something great got better, get excited!"
 )
@@ -236,14 +245,14 @@ app = OpenAPI(__name__, info=info, external_docs=external_docs)
 
 ## openapi_extensions
 
-While the OpenAPI Specification tries to accommodate most use cases, 
+While the OpenAPI Specification tries to accommodate most use cases,
 additional data can be added to extend the specification at certain points.
 See [Specification Extensions](https://spec.openapis.org/oas/v3.1.0#specification-extensions).
 
 It can also be available in **APIBlueprint** and **APIView**, goto [Operation](Route_Operation.md#openapi_extensions).
 
 ```python hl_lines="3"
-from flask_openapi3 import OpenAPI
+from flask_openapi import OpenAPI
 
 app = OpenAPI(__name__, openapi_extensions={
     "x-google-endpoints": [
@@ -254,6 +263,7 @@ app = OpenAPI(__name__, openapi_extensions={
     ]
 })
 
+
 @app.get("/")
 def hello():
     return "ok"
@@ -263,23 +273,21 @@ if __name__ == "__main__":
     app.run(debug=True)
 ```
 
-
 ## validation error
 
 You can override validation error response use `validation_error_status`, `validation_error_model`
-and `validation_error_callback`. 
+and `validation_error_callback`.
 
-
-- validation_error_status: HTTP Status of the response given when a validation error is detected by pydantic. 
-                           Defaults to 422.
+- validation_error_status: HTTP Status of the response given when a validation error is detected by pydantic.
+  Defaults to 422.
 - validation_error_model: Validation error response model for OpenAPI Specification.
-- validation_error_callback: Validation error response callback, the return format corresponds to 
-                             the validation_error_model. Receive `ValidationError` and return `Flask Response`.
-
+- validation_error_callback: Validation error response callback, the return format corresponds to
+  the validation_error_model. Receive `ValidationError` and return `Flask Response`.
 
 ```python
 from flask.wrappers import Response as FlaskResponse
 from pydantic import BaseModel, ValidationError
+
 
 class ValidationErrorModel(BaseModel):
     code: str

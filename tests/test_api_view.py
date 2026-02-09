@@ -1,12 +1,7 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2022/11/4 14:41
-
-
 import pytest
 from pydantic import BaseModel, Field
 
-from flask_openapi3 import APIView, Info, OpenAPI, Tag
+from flask_openapi import APIView, Info, OpenAPI, Tag
 
 info = Info(title="book API", version="1.0.0")
 jwt = {"type": "http", "scheme": "bearer", "bearerFormat": "JWT"}

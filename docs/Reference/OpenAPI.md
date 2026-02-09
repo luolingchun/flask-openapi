@@ -1,1 +1,1 @@
-::: flask_openapi3.OpenAPI
+::: flask_openapi.OpenAPI

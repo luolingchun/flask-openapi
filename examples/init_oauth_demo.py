@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-# @Author  : llc
-# @Time    : 2021/6/21 11:23
-from flask_openapi3 import Info, OpenAPI
+from flask_openapi import Info, OpenAPI
 
 info = Info(title="oauth API", version="1.0.0")
 
