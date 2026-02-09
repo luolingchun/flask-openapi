@@ -31,8 +31,8 @@ dependencies = ["Flask>=2.0", "pydantic>=2.4"]
 dynamic = ["version"]
 
 [project.urls]
-Homepage = "https://github.com/luolingchun/flask-openapi3"
-Documentation = "https://luolingchun.github.io/flask-openapi3"
+Homepage = "https://github.com/luolingchun/flask-openapi"
+Documentation = "https://luolingchun.github.io/flask-openapi"
 
 [project.optional-dependencies]
 yaml = ["pyyaml"]

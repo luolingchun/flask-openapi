@@ -100,7 +100,7 @@ a/x3gCx7M2rvrU8m3suK+3w+AcssZ50vnfwAAAABJRU5ErkJggg==
         $ pip install -U flask-openapi3[swagger,redoc,rapidoc,rapipdf,scalar,elements]
         </p>
         <p>More optional ui templates goto the document about
-        <a href="https://luolingchun.github.io/flask-openapi3/latest/Usage/UI_Templates/" style="color: #0969da">
+        <a href="https://luolingchun.github.io/flask-openapi/v4.x/Usage/UI_Templates/" style="color: #0969da">
         UI_Templates.
         </a>
         </p>

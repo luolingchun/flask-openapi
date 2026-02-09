@@ -2,7 +2,7 @@ name: mkdocs
 
 on:
   push:
-    branches: [ master ]
+    branches: [ v4.x ]
 
 jobs:
   docs:

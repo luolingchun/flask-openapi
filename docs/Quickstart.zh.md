@@ -126,7 +126,7 @@ if __name__ == '__main__':
 
 ## APIView
 
-[基于类的 API 视图](./Reference/APIView.md)， 点击[这里](https://github.com/luolingchun/flask-openapi3/blob/APIView/examples/api_view_demo.py) 查看完整示例:
+[基于类的 API 视图](./Reference/APIView.md)， 点击[这里](https://github.com/luolingchun/flask-openapi/blob/APIView/examples/api_view_demo.py) 查看完整示例:
 
 ```python
 @api_view.route("/book")

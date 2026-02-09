@@ -125,7 +125,7 @@ if __name__ == '__main__':
 
 ## APIView
 
-[Class-based API View](./Reference/APIView.md), click [here](https://github.com/luolingchun/flask-openapi3/blob/master/examples/api_view_demo.py) for the complete example:
+[Class-based API View](./Reference/APIView.md), click [here](https://github.com/luolingchun/flask-openapi/blob/main/examples/api_view_demo.py) for the complete example:
 
 ```python
 @api_view.route("/book")

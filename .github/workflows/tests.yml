@@ -2,14 +2,14 @@ name: tests
 
 on:
   push:
-    branches: [ master ]
+    branches: [ v4.x ]
     paths-ignore:
       - "docs/**"
       - "*.md"
       - "*.rst"
 
   pull_request:
-    branches: [ master ]
+    branches: [ v4.x ]
     paths-ignore:
       - "docs/**"
       - "*.md"
