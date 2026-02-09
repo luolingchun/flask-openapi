@@ -21,4 +21,4 @@ pip install -U flask-openapi3-elements
 ```
 
 
-For more UI templates, please check the [plugin repository](https://github.com/luolingchun/flask-openapi3-plugins).
+For more UI templates, please check the [plugin repository](https://github.com/luolingchun/flask-openapi-plugins).

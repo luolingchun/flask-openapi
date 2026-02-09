@@ -16,12 +16,11 @@ jobs:
           enable-cache: true
 
       - name: Install dependencies
-        run: uv sync --upgrade --group build --all-extras
+        run: uv sync
 
       - name: Build and publish
         env:
-          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
         run: |
-          uv run python -m build
-          uv run twine upload dist/*
+          uv build
+          uv publish

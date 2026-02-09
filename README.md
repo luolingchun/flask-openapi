@@ -1,6 +1,6 @@
 <div align="center">
-    <a href="https://luolingchun.github.io/flask-openapi3/" target="_blank">
-        <img class="off-glb" src="https://raw.githubusercontent.com/luolingchun/flask-openapi3/master/docs/images/logo-text.svg" 
+    <a href="https://luolingchun.github.io/flask-openapi/" target="_blank">
+        <img class="off-glb" src="https://raw.githubusercontent.com/luolingchun/flask-openapi/v4.x/docs/images/logo-text.svg" 
              width="60%" height="auto" alt="logo">
     </a>
 </div>
@@ -8,8 +8,8 @@
     <em>Generate REST API and OpenAPI documentation for your Flask project.</em>
 </p>
 <p align="center">
-    <a href="https://github.com/luolingchun/flask-openapi3/actions/workflows/tests.yml" target="_blank">
-        <img class="off-glb" src="https://img.shields.io/github/actions/workflow/status/luolingchun/flask-openapi3/tests.yml?branch=master" alt="test">
+    <a href="https://github.com/luolingchun/flask-openapi/actions/workflows/tests.yml" target="_blank">
+        <img class="off-glb" src="https://img.shields.io/github/actions/workflow/status/luolingchun/flask-openapi/tests.yml?branch=v4.x" alt="test">
     </a>
     <a href="https://pypi.org/project/flask-openapi3/" target="_blank">
         <img class="off-glb" src="https://img.shields.io/pypi/v/flask-openapi3" alt="pypi">
@@ -65,7 +65,7 @@ conda install -c conda-forge flask-openapi3[swagger]
   commands.
 - [pyyaml](https://github.com/yaml/pyyaml) is used to output the OpenAPI document in yaml format.
 - [asgiref](https://github.com/django/asgiref) allows views to be defined with `async def` and use `await`.
-- [flask-openapi3-plugins](https://github.com/luolingchun/flask-openapi3-plugins) Provide OpenAPI UI for flask-openapi3.
+- [flask-openapi-plugins](https://github.com/luolingchun/flask-openapi-plugins) Provide OpenAPI UI for flask-openapi3.
 
 To install these dependencies with flask-openapi3:
 
@@ -89,7 +89,7 @@ pip install -U flask-openapi3[swagger,redoc,rapidoc,rapipdf,scalar,elements]
 
 ## A Simple Example
 
-Here's a simple example, further go to the [Example](https://luolingchun.github.io/flask-openapi3/latest/Example/).
+Here's a simple example, further go to the [Example](https://luolingchun.github.io/flask-openapi/v4.x/Example/).
 
 ```python
 from pydantic import BaseModel
@@ -198,13 +198,13 @@ if __name__ == "__main__":
 
 ## API Document
 
-Run the [simple example](https://github.com/luolingchun/flask-openapi3/blob/master/examples/simple_demo.py), and go to http://127.0.0.1:5000/openapi.
+Run the [simple example](https://github.com/luolingchun/flask-openapi/blob/v4.x/examples/simple_demo.py), and go to http://127.0.0.1:5000/openapi.
 
 > OpenAPI UI plugins are optional dependencies that require manual installation.
 >
 > `pip install -U flask-openapi3[swagger,redoc,rapidoc,rapipdf,scalar,elements]`
 >
 > More optional ui templates goto the document
-> about [UI_Templates](https://luolingchun.github.io/flask-openapi3/latest/Usage/UI_Templates/).
+> about [UI_Templates](https://luolingchun.github.io/flask-openapi/v4.x/Usage/UI_Templates/).
 
-![openapi](https://raw.githubusercontent.com/luolingchun/flask-openapi3/master/docs/images/openapi-all.png)
+![openapi](https://raw.githubusercontent.com/luolingchun/flask-openapi/v4.x/docs/images/openapi-all.png)

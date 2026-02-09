@@ -1,5 +1,5 @@
 <div align="center">
-    <a href="https://luolingchun.github.io/flask-openapi3/" target="_blank">
+    <a href="https://luolingchun.github.io/flask-openapi/" target="_blank">
         <img class="off-glb" src="../images/logo-text.svg" width="60%" height="auto" alt="logo">
     </a>
 </div>
@@ -7,8 +7,8 @@
     <em>为你的 Flask 项目生成 REST API 和 OpenAPI 文档。</em>
 </p>
 <p align="center">
-    <a href="https://github.com/luolingchun/flask-openapi3/actions/workflows/tests.yml" target="_blank">
-        <img class="off-glb" src="https://img.shields.io/github/actions/workflow/status/luolingchun/flask-openapi3/tests.yml?branch=master" alt="test">
+    <a href="https://github.com/luolingchun/flask-openapi/actions/workflows/tests.yml" target="_blank">
+        <img class="off-glb" src="https://img.shields.io/github/actions/workflow/status/luolingchun/flask-openapi/tests.yml?branch=v4.x" alt="test">
     </a>
     <a href="https://pypi.org/project/flask-openapi3/" target="_blank">
         <img class="off-glb" src="https://img.shields.io/pypi/v/flask-openapi3" alt="pypi">
@@ -59,7 +59,7 @@ conda install -c conda-forge flask-openapi3
   命令时启用对[ dotenv 环境变量](https://flask.palletsprojects.com/en/latest/cli/#dotenv) 的支持；
 - [pyyaml](https://github.com/yaml/pyyaml) 用于输出 `yaml`格式的 OpenAPI 文档；
 - [asgiref](https://github.com/django/asgiref) 允许在定义视图函数时使用 `async def` 和 `await`；
-- [flask-openapi3-plugins](https://github.com/luolingchun/flask-openapi3-plugins) 为 Flask-OpenAPI3 提供 OpenAPI UI.
+- [flask-openapi-plugins](https://github.com/luolingchun/flask-openapi-plugins) 为 Flask-OpenAPI3 提供 OpenAPI UI.
 
 和 flask-openapi3 一起安装这些依赖:
 
@@ -83,7 +83,7 @@ pip install -U flask-openapi3[swagger,redoc,rapidoc,rapipdf,scalar,elements]
 
 ## 一个简单的示例
 
-这里有一个简单的示例，更多示例请查看[示例](https://luolingchun.github.io/flask-openapi3/latest/zh/Example/)。
+这里有一个简单的示例，更多示例请查看[示例](https://luolingchun.github.io/flask-openapi/v4.x/zh/Example/)。
 
 ```python
 from pydantic import BaseModel
@@ -192,13 +192,13 @@ if __name__ == "__main__":
 
 ## API 文档
 
-运行[简单示例](https://github.com/luolingchun/flask-openapi3/blob/master/examples/simple_demo.py)，然后访问 http://127.0.0.1:5000/openapi。
+运行[简单示例](https://github.com/luolingchun/flask-openapi/blob/v4.x/examples/simple_demo.py)，然后访问 http://127.0.0.1:5000/openapi。
 
 > OpenAPI UI插件是需要手动安装的可选依赖项。
 > 
 > `pip install -U flask-openapi3[swagger,redoc,rapidoc,rapipdf,scalar,elements]`
 > 
-> 更多可选[UI模板](https://luolingchun.github.io/flask-openapi3/latest/Usage/UI_Templates/)
+> 更多可选[UI模板](https://luolingchun.github.io/flask-openapi/v4.x/Usage/UI_Templates/)
 
 
 ![openapi](./images/openapi-all.png)
