@@ -201,4 +201,4 @@ Run the [simple example](https://github.com/luolingchun/flask-openapi/blob/maste
 > More optional ui templates goto the document
 > about [UI_Templates](https://luolingchun.github.io/flask-openapi/latest/Usage/UI_Templates/).
 
-![openapi](https://raw.githubusercontent.com/luolingchun/flask-openapi/main/docs/images/openapi-all.png)
+![openapi](https://raw.githubusercontent.com/luolingchun/flask-openapi/main/docs/assets/openapi-all.png)
