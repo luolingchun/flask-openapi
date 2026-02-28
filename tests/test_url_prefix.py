@@ -20,13 +20,11 @@ api2 = APIBlueprint("/book2", __name__)
 
 
 @api1.get("/book")
-def create_book1():
-    return "ok"
+def create_book1(): ...
 
 
 @api2.get("/book")
-def create_book2():
-    return "ok"
+def create_book2(): ...
 
 
 app.register_api(api1, url_prefix="/api1")
@@ -39,17 +37,13 @@ api_view2 = APIView()
 @api_view1.route("/book")
 class BookAPIView:
     @api_view1.doc(summary="get book")
-    def get(self):
-        return "ok"
+    def get(self): ...
 
 
 @api_view2.route("/book")
 class BookAPIView2:
     @api_view2.doc(summary="get book")
-    def get(
-        self,
-    ):
-        return "ok"
+    def get(self): ...
 
 
 app.register_api_view(api_view1, url_prefix="/api3")

@@ -102,8 +102,7 @@ def test_openapi(client):
         "number_list": ["3.4", "5.6"],
         "obj": '{"a": 2}',
         "parameter": '{"tag": "string"}',
-        "parameter_dict": '{"additionalProp1": {"tag": "string"}, "additionalProp2": {"tag": "string"},'
-        '"additionalProp3": {"tag": "string"}}',
+        "parameter_dict": '{"additionalProp1": {"tag": "string"}, "additionalProp2": {"tag": "string"},"additionalProp3": {"tag": "string"}}',
         "parameter_list": ['{"tag": "string"}', '{"tag": "string"}'],
         "parameter_list_union": ["ok", '{"tag": "string"}', "7.8"],
         "parameter_union": '{"tag2": "string"}',
@@ -112,7 +111,6 @@ def test_openapi(client):
         "string_list": ["a", "b", "c"],
     }
     resp = client.post("/example", data=data, content_type="multipart/form-data")
-    print(resp.text)
     assert resp.status_code == 200
 
 

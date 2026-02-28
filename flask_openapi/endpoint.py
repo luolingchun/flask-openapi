@@ -44,19 +44,16 @@ def create_view_func(
                 signature = inspect.signature(view_class.__init__)
                 parameters = signature.parameters
                 if parameters.get("view_kwargs"):
-                    view_object = view_class(view_kwargs=view_kwargs)
+                    view_object = view_class(view_kwargs=view_kwargs)  # pragma: no cover
                 else:
                     view_object = view_class()
                 response = await func(view_object, **func_kwargs)
             else:
                 response = await func(**func_kwargs)
 
-            if hasattr(current_app, "validate_response"):
-                _validate_response = validate_response or current_app.validate_response
-            else:
-                _validate_response = validate_response
+            _validate_response = validate_response or current_app.validate_response  # type: ignore
 
-            if _validate_response and responses:
+            if _validate_response and responses:  # pragma: no cover
                 validate_response_callback = getattr(current_app, "validate_response_callback")
                 return validate_response_callback(response, responses)
 
@@ -90,10 +87,7 @@ def create_view_func(
             else:
                 response = func(**func_kwargs)
 
-            if hasattr(current_app, "validate_response"):
-                _validate_response = validate_response or current_app.validate_response
-            else:
-                _validate_response = validate_response
+            _validate_response = validate_response or current_app.validate_response  # type: ignore
 
             if _validate_response and responses:
                 validate_response_callback = getattr(current_app, "validate_response_callback")

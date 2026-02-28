@@ -57,7 +57,7 @@ def _validate_header(header: Type[BaseModel], func_kwargs: dict):
             value = request_headers.get(key_alias_title)
         else:
             key = model_field_key
-            value = request_headers[key_title]
+            value = request_headers.get(key_title)
         if value is not None:
             header_dict[key] = value
         if model_field_schema.get("type") == "null":

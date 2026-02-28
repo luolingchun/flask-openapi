@@ -105,12 +105,12 @@ class APIView:
         tags: list[Tag | dict[str, Any]] | None = None,
         summary: str | None = None,
         description: str | None = None,
-        external_docs: ExternalDocumentation | None = None,
+        external_docs: ExternalDocumentation | dict[str, Any] | None = None,
         operation_id: str | None = None,
         responses: ResponseDict | None = None,
         deprecated: bool | None = None,
         security: list[dict[str, list[Any]]] | None = None,
-        servers: list[Server] | None = None,
+        servers: list[Server | dict[str, Any]] | None = None,
         openapi_extensions: dict[str, Any] | None = None,
         validate_response: bool | None = None,
         doc_ui: bool = True,
@@ -188,15 +188,12 @@ class APIView:
 
         return decorator
 
-    def register(
-        self, app: "OpenAPI", url_prefix: str | None = None, view_kwargs: dict[Any, Any] | None = None
-    ) -> None:
+    def register(self, app: "OpenAPI", view_kwargs: dict[Any, Any] | None = None) -> None:
         """
         Register the API views with the given OpenAPI app.
 
         Args:
             app: An instance of the OpenAPI app.
-            url_prefix: A path to prepend to all the APIView's urls
             view_kwargs: Additional keyword arguments to pass to the API views.
         """
         for rule, (cls, methods) in self.views.items():
@@ -214,14 +211,9 @@ class APIView:
                     body,
                     view_class=cls,
                     view_kwargs=view_kwargs,
-                    responses=func.responses,
+                    responses=getattr(func, "responses", None),
                     validate_response=_validate_response,
                 )
-
-                if url_prefix and self.url_prefix and url_prefix != self.url_prefix:
-                    rule = url_prefix + rule.removeprefix(self.url_prefix)
-                elif url_prefix and not self.url_prefix:
-                    rule = url_prefix.rstrip("/") + "/" + rule.lstrip("/")
 
                 options: dict[str, Any] = {"endpoint": cls.__name__ + "." + method.lower(), "methods": [method.upper()]}
                 app.add_url_rule(rule, view_func=view_func, **options)

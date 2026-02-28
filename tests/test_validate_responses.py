@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+from http import HTTPStatus
+
 import pytest
+from flask import make_response
 from pydantic import BaseModel, ValidationError
 
 from flask_openapi import APIView, OpenAPI
@@ -14,7 +17,9 @@ class BaseRequest(BaseModel):
     test_str: str
 
 
-class GoodResponse(BaseRequest): ...
+class GoodResponse(BaseRequest):
+    test_int: int
+    test_str: str
 
 
 class BadResponse(BaseModel):
@@ -46,9 +51,9 @@ def test_app_level_validate_response(request):
     test_app = OpenAPI(request.node.name, validate_response=True)
     test_app.config["TESTING"] = True
 
-    @test_app.post("/test", responses={201: BadResponse})
+    @test_app.post("/test", responses={200: BadResponse})
     def endpoint_test(body: BaseRequest):
-        return body.model_dump(), 201
+        return body.model_dump_json()
 
     with test_app.test_client() as client:
         with pytest.raises(ValidationError):
@@ -62,9 +67,9 @@ def test_app_api_level_validate_response(request):
     test_app = OpenAPI(request.node.name)
     test_app.config["TESTING"] = True
 
-    @test_app.post("/test", responses={201: BadResponse}, validate_response=True)
+    @test_app.post("/test", responses={HTTPStatus.CREATED: BadResponse}, validate_response=True)
     def endpoint_test(body: BaseRequest):
-        return body.model_dump(), 201
+        return body.model_dump(), HTTPStatus.CREATED
 
     with test_app.test_client() as client:
         with pytest.raises(ValidationError):
@@ -192,3 +197,40 @@ def test_apiview_api_level_validate_response(request):
     with test_app.test_client() as client:
         with pytest.raises(ValidationError):
             _ = client.post("/test", json={"test_int": 1, "test_str": "s"})
+
+
+def test_validate_response_with_make_response(request):
+    test_app = OpenAPI(request.node.name, validate_response=True)
+    test_app.config["TESTING"] = True
+
+    @test_app.post("/test1", responses={200: GoodResponse})
+    def endpoint_test1():
+        r = make_response({"test_int": 1, "test_str": "string"}, 200)
+        r.headers["Content-Type"] = "application/json"
+        return r
+
+    @test_app.post("/test2", responses={200: GoodResponse})
+    def endpoint_test2():
+        r = make_response({"test_int": 1, "test_str": "string"}, 200)
+        r.headers["Content-Type"] = "application/csv"
+        return r
+
+    with test_app.test_client() as client:
+        resp = client.post("/test1")
+        assert resp.status_code == 200
+
+        resp = client.post("/test2")
+        assert resp.status_code == 200
+
+
+def test_validate_response_with_none(request):
+    test_app = OpenAPI(request.node.name, validate_response=True)
+    test_app.config["TESTING"] = True
+
+    @test_app.post("/test", responses={204: None})
+    def endpoint_test1():
+        return "", 204
+
+    with test_app.test_client() as client:
+        resp = client.post("/test")
+        assert resp.status_code == 204

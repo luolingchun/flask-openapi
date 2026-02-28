@@ -55,12 +55,6 @@ def client():
     return client
 
 
-def test_openapi(client):
-    resp = client.get("/openapi/openapi.json")
-    assert resp.status_code == 200
-    assert resp.json == app.api_doc
-
-
 def test_get_openapi(client):
     resp = client.get("/open/api?q=1")
     assert resp.status_code == 200

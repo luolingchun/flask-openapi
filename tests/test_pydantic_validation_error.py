@@ -20,7 +20,7 @@ class LoginRequest(BaseModel):
 
 @app.post("/login")
 def login(body: LoginRequest):
-    return {"message": f"Login successful for {body.email}"}
+    return {"message": f"Login successful for {body.email}"}  # pragma: no cover
 
 
 def test_pydantic_validation_error_schema(client):

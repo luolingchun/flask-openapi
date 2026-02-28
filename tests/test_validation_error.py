@@ -73,5 +73,4 @@ def test_openapi(client):
 
 def test_api_query(client):
     resp = client.get("/query?age=abc")
-    print(resp.json)
     assert resp.status_code == 400

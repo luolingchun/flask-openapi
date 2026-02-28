@@ -3,7 +3,9 @@ from typing import Any, Type
 
 from pydantic import BaseModel
 
-_ResponseDictValue = Type[BaseModel] | dict[Any, Any] | None
+from .models import Response
+
+_ResponseDictValue = Type[BaseModel] | Response | dict[Any, Any] | None
 
 ResponseDict = dict[str | int | HTTPStatus, _ResponseDictValue]
 

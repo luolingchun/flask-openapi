@@ -293,6 +293,8 @@ def get_responses(responses: ResponseStrKeyDict, components_schemas: dict, opera
         elif isinstance(response, dict):
             response["description"] = response.get("description", HTTP_STATUS.get(key, ""))
             _responses[key] = Response(**response)
+        elif isinstance(response, Response):
+            _responses[key] = response
         else:
             # OpenAPI 3 support ^[a-zA-Z0-9\.\-_]+$ so we should normalize __name__
             schema = get_model_schema(response, mode="serialization")
@@ -477,18 +479,16 @@ def make_validation_error_response(e: ValidationError) -> FlaskResponse:
     return response
 
 
-def run_validate_response(response: Any, responses: ResponseDict | None = None) -> Any:
+def run_validate_response(response: Any, responses: ResponseDict) -> Any:
     """Validate response"""
-    if responses is None:
-        return response
 
-    if isinstance(response, tuple):  # noqa
+    if isinstance(response, tuple):
         _resp, status_code = response[:2]
     elif isinstance(response, FlaskResponse):
         if response.mimetype != "application/json":
             # only application/json
             return response
-        _resp, status_code = response.json, response.status_code  # noqa
+        _resp, status_code = response.json, response.status_code
     else:
         _resp, status_code = response, 200
 
