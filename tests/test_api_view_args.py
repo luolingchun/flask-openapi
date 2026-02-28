@@ -6,7 +6,7 @@ from flask_openapi import APIView, OpenAPI
 app = OpenAPI(__name__)
 app.config["TESTING"] = True
 
-api_view = APIView(url_prefix="/api/v1")
+api_view = APIView(url_prefix="/api/v1", doc_ui=False)
 
 
 class BookPath(BaseModel):
@@ -29,8 +29,8 @@ class BookAPIView:
         self.b = view_kwargs.get("b")
 
     @api_view.doc(summary="get book list")
-    async def get(self, path: BookPath):
-        print(path)
+    def get(self, path: BookPath):
+        assert path.id == 1
         return {"b": self.b}
 
 

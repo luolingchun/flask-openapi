@@ -1,10 +1,11 @@
+import inspect
 from functools import wraps
 
 import pytest
 from flask import request
 from pydantic import BaseModel, Field
 
-from flask_openapi import APIView, Info, OpenAPI, Tag
+from flask_openapi import APIView, OpenAPI, Tag
 from flask_openapi.request import validate_request
 
 
@@ -20,14 +21,27 @@ class BookBody(BaseModel):
 
 def login_required():
     def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            if not request.headers.get("Authorization"):
-                return {"error": "Unauthorized"}, 401
-            kwargs["client_id"] = "client1234565"
-            return func(*args, **kwargs)
+        is_coroutine_function = inspect.iscoroutinefunction(func)
+        if is_coroutine_function:
 
-        return wrapper
+            @wraps(func)
+            async def wrapper(*args, **kwargs):
+                if not request.headers.get("Authorization"):
+                    return {"error": "Unauthorized"}, 401  # pragma: no cover
+                kwargs["client_id"] = "client1234565"
+                return await func(*args, **kwargs)
+
+            return wrapper
+        else:
+
+            @wraps(func)
+            def wrapper(*args, **kwargs):
+                if not request.headers.get("Authorization"):
+                    return {"error": "Unauthorized"}, 401
+                kwargs["client_id"] = "client1234565"
+                return func(*args, **kwargs)
+
+            return wrapper
 
     return decorator
 
@@ -37,15 +51,7 @@ def app():
     app = OpenAPI(__name__)
     app.config["TESTING"] = True
 
-    info = Info(title="book API", version="1.0.0")
-    jwt = {"type": "http", "scheme": "bearer", "bearerFormat": "JWT"}
-    security_schemes = {"jwt": jwt}
-
-    app = OpenAPI(__name__, info=info, security_schemes=security_schemes)
-    app.config["TESTING"] = True
-    security = [{"jwt": []}]
-
-    api_view = APIView(url_prefix="/v1/books", view_tags=[Tag(name="book")], view_security=security)
+    api_view = APIView(url_prefix="/v1/books", view_tags=[Tag(name="book")])
 
     @api_view.route("")
     class BookListAPIView:
@@ -53,13 +59,14 @@ def app():
         @login_required()
         @validate_request()
         def get(self, client_id: str):
-            return {"books": ["book1", "book2"], "client_id": client_id}
+            return {"books": ["book1", "book2"], "client_id": client_id}  # pragma: no cover
 
         @api_view.doc(summary="create book")
         @login_required()
         @validate_request()
-        def post(self, body: BookBody, client_id):
+        async def post(self, body: BookBody, client_id):
             """description for a created book"""
+            print(client_id)
             return body.model_dump_json()
 
     @api_view.route("/<name>")

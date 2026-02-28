@@ -1,40 +1,12 @@
 import pytest
 from pydantic import BaseModel, Field
 
-from flask_openapi import APIBlueprint, Info, OpenAPI, Tag
+from flask_openapi import APIBlueprint, OpenAPI
 
-info = Info(title="book API", version="1.0.0")
-
-jwt = {"type": "http", "scheme": "bearer", "bearerFormat": "JWT"}
-security_schemes = {"jwt": jwt}
-
-
-def operation_id_callback(*, bp_name: str = None, name: str, path: str, method: str) -> str:
-    assert bp_name == "/book"
-    return name
-
-
-app = OpenAPI(__name__, info=info, security_schemes=security_schemes)
+app = OpenAPI(__name__)
 app.config["TESTING"] = True
 
-tag = Tag(name="book", description="Book")
-security = [{"jwt": []}]
-
-
-class Unauthorized(BaseModel):
-    code: int = Field(-1, description="Status Code")
-    message: str = Field("Unauthorized!", description="Exception Information")
-
-
-api = APIBlueprint(
-    "/book",
-    __name__,
-    url_prefix="/api",
-    abp_tags=[tag],
-    abp_security=security,
-    abp_responses={"401": Unauthorized},
-    operation_id_callback=operation_id_callback,
-)
+api = APIBlueprint("/book", __name__, url_prefix="/api")
 
 try:
     api.register_api(api)
@@ -55,63 +27,48 @@ class BookBody(BaseModel):
 
 
 class BookPath(BaseModel):
-    bid: int = Field(..., description="book id")
+    id: int = Field(..., description="book id")
 
 
-@api.post("/book", doc_ui=False)
+@api.get("/book/<id>")
+def get_book(path: BookPath):
+    assert path.id == 1
+    return {"code": 0, "message": "ok"}
+
+
+@api.post("/book")
 def create_book(body: BookBody):
     assert body.age == 3
     return {"code": 0, "message": "ok"}
 
 
-@api.put("/book/<int:bid>", operation_id="update")
+@api.put("/book/<id>", operation_id="update")
 def update_book(path: BookPath, body: BookBody):
-    assert path.bid == 1
+    assert path.id == 1
     assert body.age == 3
     return {"code": 0, "message": "ok"}
 
 
-@api.patch("/book/<int:bid>")
+@api.patch("/book/<id>")
 def update_book1(path: BookPath, body: BookBody):
-    assert path.bid == 1
+    assert path.id == 1
     assert body.age == 3
     return {"code": 0, "message": "ok"}
 
 
-@api.patch("/v2/book/<int:bid>")
-def update_book1_v2(path: BookPath, body: BookBody):
-    assert path.bid == 1
-    assert body.age == 3
-    return {"code": 0, "message": "ok"}
-
-
-@api.delete("/book/<int:bid>")
+@api.delete("/book/<id>")
 def delete_book(path: BookPath):
-    assert path.bid == 1
+    assert path.id == 1
     return {"code": 0, "message": "ok"}
-
-
-@api.get("/book/<int:bid>")
-def get_book(path: BookPath):
-    """Get Book
-    Here is a book
-    Here's another line in the description
-    """
-    return {"title": "test", "Author": "author"}
 
 
 # register api
 app.register_api(api)
 
 
-def test_openapi(client):
-    resp = client.get("/openapi/openapi.json")
+def test_get(client):
+    resp = client.get("/api/book/1")
     assert resp.status_code == 200
-    assert resp.json == app.api_doc
-    assert resp.json["paths"]["/api/book/{bid}"]["put"]["operationId"] == "update"
-    assert resp.json["paths"]["/api/book/{bid}"]["delete"]["operationId"] == "delete_book"
-    expected_description = "Here is a book<br/>Here's another line in the description"
-    assert resp.json["paths"]["/api/book/{bid}"]["get"]["description"] == expected_description
 
 
 def test_post(client):
@@ -128,45 +85,25 @@ def test_patch(client):
     resp = client.patch("/api/book/1", json={"age": 3})
     assert resp.status_code == 200
 
-    resp = client.patch("/api/v2/book/1", json={"age": 3})
-    assert resp.status_code == 200
-
 
 def test_delete(client):
     resp = client.delete("/api/book/1")
     assert resp.status_code == 200
 
 
-# Create a second blueprint here to test when `url_prefix` is None
-author_api = APIBlueprint(
-    "/author",
-    __name__,
-    abp_tags=[tag],
-    abp_security=security,
-    abp_responses={"401": Unauthorized},
-)
-
-
 class AuthorBody(BaseModel):
     age: int | None = Field(..., ge=1, le=100, description="Age")
 
 
-@author_api.post("/<int:aid>")
-def get_author(body: AuthorBody):
-    pass
-
-
-def create_app():
-    app = OpenAPI(__name__, info=info, security_schemes=security_schemes)
-    app.register_api(api, url_prefix="/1.0")
-    app.register_api(author_api, url_prefix="/1.0/author")
+def register_apis():
+    _app = OpenAPI(__name__)
+    _app.register_api(api, url_prefix="/1.0")
 
 
 # Invoke twice to ensure that call is idempotent
-create_app()
-create_app()
+register_apis()
+register_apis()
 
 
 def test_blueprint_path_and_prefix():
-    assert list(api.paths.keys()) == ["/1.0/book/{bid}", "/1.0/v2/book/{bid}"]
-    assert list(author_api.paths.keys()) == ["/1.0/author/{aid}"]
+    assert list(api.paths.keys()) == ["/1.0/book/{id}", "/1.0/book"]

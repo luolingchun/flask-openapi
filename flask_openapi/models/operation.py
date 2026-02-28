@@ -1,3 +1,5 @@
+from typing import Any
+
 from pydantic import BaseModel
 
 from .callback import Callback
@@ -18,7 +20,7 @@ class Operation(BaseModel):
     tags: list[str] | None = None
     summary: str | None = None
     description: str | None = None
-    externalDocs: ExternalDocumentation | None = None
+    externalDocs: ExternalDocumentation | dict[str, Any] | None = None
     operationId: str | None = None
     parameters: list[Parameter] | None = None
     requestBody: RequestBody | Reference | None = None
@@ -27,6 +29,6 @@ class Operation(BaseModel):
 
     deprecated: bool | None = False
     security: list[SecurityRequirement] | None = None
-    servers: list[Server] | None = None
+    servers: list[Server | dict[str, Any]] | None = None
 
     model_config = {"extra": "allow"}

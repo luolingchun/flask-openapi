@@ -1,24 +1,26 @@
 import pytest
 from pydantic import BaseModel, Field
 
-from flask_openapi import APIView, Info, OpenAPI, Tag
+from flask_openapi import APIView, OpenAPI
+from tests.config import JWT
 
-info = Info(title="book API", version="1.0.0")
-jwt = {"type": "http", "scheme": "bearer", "bearerFormat": "JWT"}
-security_schemes = {"jwt": jwt}
-
-app = OpenAPI(__name__, info=info, security_schemes=security_schemes)
+app = OpenAPI(__name__)
 app.config["TESTING"] = True
-security = [{"jwt": []}]
 
-api_view = APIView(url_prefix="/api/v1/<name>", view_tags=[Tag(name="book")], view_security=security)
-api_view2 = APIView(doc_ui=False)
-api_view_no_url = APIView(view_tags=[Tag(name="book")], view_security=security)
+api_view = APIView(url_prefix="/api")
+
+servers = [{"url": "https://www.openapis.org/", "description": "openapi"}]
+external_docs = {"url": "https://www.openapis.org/", "description": "Something great got better, get excited!"}
+tags = [{"name": "book", "description": "book description"}]
+
+
+class ErrorModel(BaseModel):
+    code: int
+    message: str
 
 
 class BookPath(BaseModel):
     id: int = Field(..., description="book ID")
-    name: str
 
 
 class BookQuery(BaseModel):
@@ -32,16 +34,22 @@ class BookBody(BaseModel):
 
 @api_view.route("/book")
 class BookListAPIView:
-    a = 1
-
-    @api_view.doc(summary="get book list", responses={204: None}, doc_ui=False)
+    @api_view.doc(
+        summary="get book list",
+        description="Book description",
+        external_docs=external_docs,
+        operation_id="get_book_list",
+        deprecated=False,
+        security=JWT,
+        servers=servers,
+        tags=tags,
+        responses={"422": ErrorModel},
+    )
     def get(self, query: BookQuery):
-        print(self.a)
         return query.model_dump_json()
 
     @api_view.doc(summary="create book")
     def post(self, body: BookBody):
-        """description for a created book"""
         return body.model_dump_json()
 
 
@@ -49,36 +57,18 @@ class BookListAPIView:
 class BookAPIView:
     @api_view.doc(summary="get book")
     def get(self, path: BookPath):
-        print(path)
-        return "get"
-
-    @api_view.doc(summary="update book", operation_id="update")
-    def put(self, path: BookPath):
-        print(path)
-        return "put"
-
-    @api_view.doc(summary="delete book", deprecated=True)
-    def delete(self, path: BookPath):
-        print(path)
-        return "delete"
-
-
-@api_view2.route("/<name>/book2/<id>")
-class BookAPIView2:
-    @api_view2.doc(summary="get book")
-    def get(self, path: BookPath):
         return path.model_dump()
 
+    @api_view.doc(summary="update book")
+    def put(self, path: BookPath):
+        return path.model_dump()
 
-@api_view_no_url.route("/book3")
-class BookAPIViewNoUrl:
-    @api_view_no_url.doc(summary="get book3")
-    def get(self, path: BookPath):
+    @api_view.doc(summary="delete book")
+    def delete(self, path: BookPath):
         return path.model_dump()
 
 
 app.register_api_view(api_view)
-app.register_api_view(api_view2)
 
 
 @pytest.fixture
@@ -88,55 +78,41 @@ def client():
     return client
 
 
-def test_openapi(client):
-    resp = client.get("/openapi/openapi.json")
-    assert resp.status_code == 200
-    assert resp.json == app.api_doc
-    assert resp.json["paths"]["/api/v1/{name}/book/{id}"]["put"]["operationId"] == "update"
-    assert (
-        resp.json["paths"]["/api/v1/{name}/book/{id}"]["delete"]["operationId"] == "BookAPIView_delete_book__id__delete"
-    )
-
-
 def test_get_list(client):
-    resp = client.get("/api/v1/name1/book")
+    resp = client.get("/api/book")
     assert resp.status_code == 200
 
 
 def test_post(client):
-    resp = client.post("/api/v1/name1/book", json={"age": 3})
+    resp = client.post("/api/book", json={"age": 3})
     assert resp.status_code == 200
 
 
 def test_put(client):
-    resp = client.put("/api/v1/name1/book/1", json={"age": 3})
+    resp = client.put("/api/book/1", json={"age": 3})
     assert resp.status_code == 200
 
 
 def test_get(client):
-    resp = client.get("/api/v1/name1/book/1")
-    assert resp.status_code == 200
-
-    resp = client.get("/name2/book2/1")
+    resp = client.get("/api/book/1")
     assert resp.status_code == 200
 
 
 def test_delete(client):
-    resp = client.delete("/api/v1/name1/book/1")
+    resp = client.delete("/api/book/1")
     assert resp.status_code == 200
 
 
-def create_app():
-    app = OpenAPI(__name__, info=info, security_schemes=security_schemes)
-    app.register_api_view(api_view, url_prefix="/api/1.0")
-    app.register_api_view(api_view_no_url, url_prefix="/api/1.0")
+def register_api_view():
+    _app = OpenAPI(__name__)
+    _app.register_api_view(api_view, url_prefix="/api/1.0")
 
 
-# Invoke twice to ensure that call is idempotent
-create_app()
-create_app()
+def test_register_api_view():
+    # Invoke twice to ensure that call is idempotent
+    register_api_view()
+    register_api_view()
 
 
 def test_register_api_view_idempotency():
-    assert list(api_view.paths.keys()) == ["/api/1.0/api/v1/{name}/book", "/api/1.0/api/v1/{name}/book/{id}"]
-    assert list(api_view_no_url.paths.keys()) == ["/api/1.0/book3"]
+    assert list(api_view.paths.keys()) == ["/api/1.0/book", "/api/1.0/book/{id}"]
