@@ -1,2 +1,2 @@
 
---8<-- "LICENSE.rst"
+--8<-- "LICENSE"

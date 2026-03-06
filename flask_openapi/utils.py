@@ -355,24 +355,9 @@ def parse_parameters(
     *,
     components_schemas: dict | None = None,
     operation: Operation | None = None,
+    request_body: RequestBody | None = None,
     doc_ui: bool = True,
 ) -> ParametersTuple:
-    """
-    Parses the parameters of a given function and returns the types for header, cookie, path,
-    query, form, and body parameters. Also populates the Operation object with the parsed parameters.
-
-    Args:
-        func: The function to parse the parameters from.
-        components_schemas: Dictionary to store the parsed components schemas (default: None).
-        operation: Operation object to populate with parsed parameters (default: None).
-        doc_ui: Flag indicating whether to return types for documentation UI (default: True).
-
-    Returns:
-        tuple[Type[BaseModel], Type[BaseModel], Type[BaseModel], Type[BaseModel], Type[BaseModel], Type[BaseModel]]:
-        The types for header, cookie, path, query, form, and body parameters respectively.
-
-    """
-
     # If components_schemas is None, initialize it as an empty dictionary
     if components_schemas is None:
         components_schemas = dict()
@@ -397,6 +382,7 @@ def parse_parameters(
         return header, cookie, path, query, form, body
 
     parameters = []
+    _request_body = None
 
     if header:
         _parameters, _components_schemas = parse_header(header)
@@ -421,18 +407,18 @@ def parse_parameters(
     if form:
         _content, _components_schemas = parse_form(form)
         components_schemas.update(**_components_schemas)
-        request_body = RequestBody(content=_content, required=True)
-        operation.requestBody = request_body
+        _request_body = RequestBody(content=_content, required=True)
 
     if body:
         _content, _components_schemas = parse_body(body)
         components_schemas.update(**_components_schemas)
-        request_body = RequestBody(content=_content, required=True)
-        operation.requestBody = request_body
+        _request_body = RequestBody(content=_content, required=True)
 
     if parameters:
         # Set the parsed parameters in the operation object
         operation.parameters = parameters
+
+    operation.requestBody = request_body or _request_body
 
     return header, cookie, path, query, form, body
 

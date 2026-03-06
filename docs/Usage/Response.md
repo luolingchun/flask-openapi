@@ -19,7 +19,6 @@ class BookResponse(BaseModel):
          tags=[book_tag], 
          responses={
              200: BookResponse, 
-             # Version 2.4.0 starts supporting response for dictionary types
              201: {"content": {"text/csv": {"schema": {"type": "string"}}}}
          })
 def get_book(path: BookPath, query: BookBody):
