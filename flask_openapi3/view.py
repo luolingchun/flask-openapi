@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Author  : llc
 # @Time    : 2022/10/14 16:09
+import posixpath
 import typing
 from typing import Any, Callable
 
@@ -224,7 +225,7 @@ class APIView:
                 if url_prefix and self.url_prefix and url_prefix != self.url_prefix:
                     rule = url_prefix + rule.removeprefix(self.url_prefix)
                 elif url_prefix and not self.url_prefix:
-                    rule = url_prefix.rstrip("/") + "/" + rule.lstrip("/")
+                    rule = posixpath.join(url_prefix, rule.lstrip("/"))
 
                 options = {"endpoint": cls.__name__ + "." + method.lower(), "methods": [method.upper()]}
                 app.add_url_rule(rule, view_func=view_func, **options)

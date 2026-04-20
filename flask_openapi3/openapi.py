@@ -2,6 +2,7 @@
 # @Author  : llc
 # @Time    : 2021/4/30 14:25
 import os
+import posixpath
 import re
 from importlib import import_module
 from importlib.metadata import entry_points
@@ -304,7 +305,9 @@ class OpenAPI(APIScaffold, Flask):
             api.paths = {url_prefix + k.removeprefix(api.url_prefix): v for k, v in api.paths.items()}
             api.url_prefix = url_prefix
         elif url_prefix and not api.url_prefix:
-            api.paths = {url_prefix.rstrip("/") + "/" + k.lstrip("/"): v for k, v in api.paths.items()}
+            api.paths = {
+                posixpath.join(url_prefix, k.lstrip("/")) if k else url_prefix: v for k, v in api.paths.items()
+            }
             api.url_prefix = url_prefix
         self.paths.update(**api.paths)
 
@@ -342,7 +345,9 @@ class OpenAPI(APIScaffold, Flask):
             api_view.paths = {url_prefix + k.removeprefix(api_view.url_prefix): v for k, v in api_view.paths.items()}
             api_view.url_prefix = url_prefix
         elif url_prefix and not api_view.url_prefix:
-            api_view.paths = {url_prefix.rstrip("/") + "/" + k.lstrip("/"): v for k, v in api_view.paths.items()}
+            api_view.paths = {
+                posixpath.join(url_prefix, k.lstrip("/")) if k else url_prefix: v for k, v in api_view.paths.items()
+            }
             api_view.url_prefix = url_prefix
         self.paths.update(**api_view.paths)
 
