@@ -26,6 +26,9 @@ api2 = APIBlueprint("/book2", __name__)
 def create_book1():
     return "ok"
 
+@api2.get("")
+def get_book():
+    return "ok"
 
 @api2.get("/book")
 def create_book2():
@@ -62,7 +65,9 @@ app.register_api_view(api_view2, url_prefix="/api4")
 def test_openapi(client):
     resp = client.get("/openapi/openapi.json")
     _json = resp.json
-    assert "/api1/book" in _json["paths"].keys()
-    assert "/api2/book" in _json["paths"].keys()
-    assert "/api3/book" in _json["paths"].keys()
-    assert "/api4/book" in _json["paths"].keys()
+    paths = _json["paths"].keys()
+    assert "/api1/book" in paths
+    assert "/api2" in paths
+    assert "/api2/book" in paths
+    assert "/api3/book" in paths
+    assert "/api4/book" in paths

@@ -610,7 +610,6 @@ def run_validate_response(response: Any, responses: ResponseDict | None = None) 
 
 
 def parse_rule(rule: str, url_prefix=None) -> str:
-
     # Merge url_prefix and uri
     if rule:
         uri = posixpath.join(url_prefix, rule.lstrip("/")) if url_prefix else rule
