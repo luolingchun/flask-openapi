@@ -37,6 +37,24 @@ def get_book2():
     return {"code": 0, "message": "ok"}  # pragma: no cover
 
 
+@app.get("/book3", summary="new summary")
+def get_book3():
+    """Get a book
+    to get some book by id, like:
+    http://localhost:5000/book/3
+    """
+    return {"code": 0, "message": "ok"}  # pragma: no cover
+
+
+@app.get("/book4")
+def get_book4():
+    """Get a book
+    to get some book by id, like:
+    http://localhost:5000/book/3
+    """
+    return {"code": 0, "message": "ok"}  # pragma: no cover
+
+
 def test_openapi(client):
     resp = client.get("/openapi/openapi.json")
     _json = resp.json
@@ -45,3 +63,12 @@ def test_openapi(client):
     assert _json["paths"]["/book"]["get"]["description"] == "new description"
     assert _json["paths"]["/book2"]["get"]["summary"] == "Get a book"
     assert _json["paths"]["/book2"]["get"]["description"] == "new description"
+    assert (
+        _json["paths"]["/book3"]["get"]["description"]
+        == "Get a book<br/>to get some book by id, like:<br/>http://localhost:5000/book/3"
+    )
+    assert _json["paths"]["/book4"]["get"]["summary"] == "Get a book"
+    assert (
+        _json["paths"]["/book4"]["get"]["description"]
+        == "to get some book by id, like:<br/>http://localhost:5000/book/3"
+    )
