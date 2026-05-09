@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 from .models import Response
 
-_ResponseDictValue = Type[BaseModel] | Response | dict[Any, Any] | None
+_ResponseDictValue = Type[BaseModel] | Response | dict[str, Any] | None
 
 ResponseDict = dict[str | int | HTTPStatus, _ResponseDictValue]
 

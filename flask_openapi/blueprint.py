@@ -5,7 +5,7 @@ from typing import Any, Callable
 from flask import Blueprint
 
 from .endpoint import create_view_func
-from .models import ExternalDocumentation, Server, Tag
+from .models import ExternalDocumentation, RequestBody, Server, Tag
 from .types import ParametersTuple, ResponseDict
 from .utils import (
     HTTPMethod,
@@ -110,11 +110,12 @@ class APIBlueprint(Blueprint):
         description: str | None = None,
         external_docs: ExternalDocumentation | dict[str, Any] | None = None,
         operation_id: str | None = None,
-        responses: ResponseDict | None = None,
         deprecated: bool | None = None,
         security: list[dict[str, list[Any]]] | None = None,
         servers: list[Server | dict[str, Any]] | None = None,
         openapi_extensions: dict[str, Any] | None = None,
+        request_body: RequestBody | dict[str, Any] | None = None,
+        responses: ResponseDict | None = None,
         doc_ui: bool = True,
         method: str = HTTPMethod.GET,
     ) -> ParametersTuple:
@@ -129,11 +130,12 @@ class APIBlueprint(Blueprint):
             description: A verbose explanation of the operation behavior.
             external_docs: Additional external documentation for this operation.
             operation_id: Unique string used to identify the operation.
-            responses: API responses should be either a subclass of BaseModel, a dictionary, or None.
             deprecated: Declares this operation to be deprecated.
             security: A declaration of which security mechanisms can be used for this operation.
             servers: An alternative server array to service this operation.
             openapi_extensions: Allows extensions to the OpenAPI Schema.
+            request_body: Advanced configuration in OpenAPI.
+            responses: API responses should be either a subclass of BaseModel, a dictionary, or None.
             doc_ui: Declares this operation to be shown. Default to True.
         """
         if self.doc_ui is True and doc_ui is True:
@@ -175,6 +177,10 @@ class APIBlueprint(Blueprint):
             tags = (tags or []) + self.abp_tags
             parse_and_store_tags(tags, self.tags, self.tag_names, operation)
 
+            # Parse request body
+            if isinstance(request_body, dict):
+                request_body = RequestBody(**request_body)
+
             # Parse response
             get_responses(combine_responses, self.components_schemas, operation)
 
@@ -185,7 +191,12 @@ class APIBlueprint(Blueprint):
             parse_method(uri, method, self.paths, operation)
 
             # Parse parameters
-            return parse_parameters(func, components_schemas=self.components_schemas, operation=operation)
+            return parse_parameters(
+                func,
+                components_schemas=self.components_schemas,
+                operation=operation,
+                request_body=request_body,
+            )
         else:
             return parse_parameters(func, doc_ui=False)
 
@@ -236,11 +247,11 @@ class APIBlueprint(Blueprint):
                 description=description,
                 external_docs=external_docs,
                 operation_id=operation_id,
-                responses=responses,
                 deprecated=deprecated,
                 security=security,
                 servers=servers,
                 openapi_extensions=openapi_extensions,
+                responses=responses,
                 doc_ui=doc_ui,
                 method=HTTPMethod.GET,
             )
@@ -277,6 +288,7 @@ class APIBlueprint(Blueprint):
         security: list[dict[str, list[Any]]] | None = None,
         servers: list[Server | dict[str, Any]] | None = None,
         openapi_extensions: dict[str, Any] | None = None,
+        request_body: RequestBody | dict[str, Any] | None = None,
         responses: ResponseDict | None = None,
         validate_response: bool | None = None,
         doc_ui: bool = True,
@@ -297,6 +309,7 @@ class APIBlueprint(Blueprint):
             security: A declaration of which security mechanisms can be used for this operation.
             servers: An alternative server array to service this operation.
             openapi_extensions: Allows extensions to the OpenAPI Schema.
+            request_body: Advanced configuration in OpenAPI.
             responses: API responses should be either a subclass of BaseModel, a dictionary, or None.
             validate_response: Verify the response body.
             doc_ui: Declares this operation to be shown. Default to True.
@@ -311,11 +324,12 @@ class APIBlueprint(Blueprint):
                 description=description,
                 external_docs=external_docs,
                 operation_id=operation_id,
-                responses=responses,
                 deprecated=deprecated,
                 security=security,
                 servers=servers,
                 openapi_extensions=openapi_extensions,
+                request_body=request_body,
+                responses=responses,
                 doc_ui=doc_ui,
                 method=HTTPMethod.POST,
             )
@@ -352,6 +366,7 @@ class APIBlueprint(Blueprint):
         security: list[dict[str, list[Any]]] | None = None,
         servers: list[Server | dict[str, Any]] | None = None,
         openapi_extensions: dict[str, Any] | None = None,
+        request_body: RequestBody | dict[str, Any] | None = None,
         responses: ResponseDict | None = None,
         validate_response: bool | None = None,
         doc_ui: bool = True,
@@ -372,6 +387,7 @@ class APIBlueprint(Blueprint):
             security: A declaration of which security mechanisms can be used for this operation.
             servers: An alternative server array to service this operation.
             openapi_extensions: Allows extensions to the OpenAPI Schema.
+            request_body: Advanced configuration in OpenAPI.
             responses: API responses should be either a subclass of BaseModel, a dictionary, or None.
             validate_response: Verify the response body.
             doc_ui: Declares this operation to be shown. Default to True.
@@ -386,11 +402,12 @@ class APIBlueprint(Blueprint):
                 description=description,
                 external_docs=external_docs,
                 operation_id=operation_id,
-                responses=responses,
                 deprecated=deprecated,
                 security=security,
                 servers=servers,
                 openapi_extensions=openapi_extensions,
+                request_body=request_body,
+                responses=responses,
                 doc_ui=doc_ui,
                 method=HTTPMethod.PUT,
             )
@@ -427,6 +444,7 @@ class APIBlueprint(Blueprint):
         security: list[dict[str, list[Any]]] | None = None,
         servers: list[Server | dict[str, Any]] | None = None,
         openapi_extensions: dict[str, Any] | None = None,
+        request_body: RequestBody | dict[str, Any] | None = None,
         responses: ResponseDict | None = None,
         validate_response: bool | None = None,
         doc_ui: bool = True,
@@ -447,6 +465,7 @@ class APIBlueprint(Blueprint):
             security: A declaration of which security mechanisms can be used for this operation.
             servers: An alternative server array to service this operation.
             openapi_extensions: Allows extensions to the OpenAPI Schema.
+            request_body: Advanced configuration in OpenAPI.
             responses: API responses should be either a subclass of BaseModel, a dictionary, or None.
             validate_response: Verify the response body.
             doc_ui: Declares this operation to be shown. Default to True.
@@ -461,11 +480,12 @@ class APIBlueprint(Blueprint):
                 description=description,
                 external_docs=external_docs,
                 operation_id=operation_id,
-                responses=responses,
                 deprecated=deprecated,
                 security=security,
                 servers=servers,
                 openapi_extensions=openapi_extensions,
+                request_body=request_body,
+                responses=responses,
                 doc_ui=doc_ui,
                 method=HTTPMethod.DELETE,
             )
@@ -502,6 +522,7 @@ class APIBlueprint(Blueprint):
         security: list[dict[str, list[Any]]] | None = None,
         servers: list[Server | dict[str, Any]] | None = None,
         openapi_extensions: dict[str, Any] | None = None,
+        request_body: RequestBody | dict[str, Any] | None = None,
         responses: ResponseDict | None = None,
         validate_response: bool | None = None,
         doc_ui: bool = True,
@@ -522,6 +543,7 @@ class APIBlueprint(Blueprint):
             security: A declaration of which security mechanisms can be used for this operation.
             servers: An alternative server array to service this operation.
             openapi_extensions: Allows extensions to the OpenAPI Schema.
+            request_body: Advanced configuration in OpenAPI.
             responses: API responses should be either a subclass of BaseModel, a dictionary, or None.
             validate_response: Verify the response body.
             doc_ui: Declares this operation to be shown. Default to True.
@@ -536,11 +558,12 @@ class APIBlueprint(Blueprint):
                 description=description,
                 external_docs=external_docs,
                 operation_id=operation_id,
-                responses=responses,
                 deprecated=deprecated,
                 security=security,
                 servers=servers,
                 openapi_extensions=openapi_extensions,
+                request_body=request_body,
+                responses=responses,
                 doc_ui=doc_ui,
                 method=HTTPMethod.PATCH,
             )

@@ -17,6 +17,7 @@ from .models import (
     ExternalDocumentation,
     Info,
     OpenAPISpec,
+    RequestBody,
     Schema,
     SecurityScheme,
     Server,
@@ -364,29 +365,11 @@ class OpenAPI(Flask):
         deprecated: bool | None = None,
         security: list[dict[str, list[Any]]] | None = None,
         servers: list[Server | dict[str, Any]] | None = None,
+        request_body: RequestBody | dict[str, Any] | None = None,
         openapi_extensions: dict[str, Any] | None = None,
         doc_ui: bool = True,
         method: str = HTTPMethod.GET,
     ) -> ParametersTuple:
-        """
-        Collects OpenAPI specification information for Flask routes and view functions.
-
-        Args:
-            rule: Flask route.
-            func: Flask view_func.
-            tags: Adds metadata to a single tag.
-            summary: A short summary of what the operation does.
-            description: A verbose explanation of the operation behavior.
-            external_docs: Additional external documentation for this operation.
-            operation_id: Unique string used to identify the operation.
-            responses: API responses should be either a subclass of BaseModel, a dictionary, or None.
-            deprecated: Declares this operation to be deprecated.
-            security: A declaration of which security mechanisms can be used for this operation.
-            servers: An alternative server array to service this operation.
-            openapi_extensions: Allows extensions to the OpenAPI Schema.
-            doc_ui: Declares this operation to be shown. Default to True.
-            method: HTTP method for the operation. Defaults to GET.
-        """
         if doc_ui:
             # Convert key to string
             new_responses = convert_responses_key_to_string(responses or {})
@@ -422,6 +405,10 @@ class OpenAPI(Flask):
             # Store tags
             parse_and_store_tags(tags or [], self.tags, self.tag_names, operation)
 
+            # Parse request body
+            if isinstance(request_body, dict):
+                request_body = RequestBody(**request_body)
+
             # Parse response
             get_responses(combine_responses, self.components_schemas, operation)
 
@@ -432,7 +419,12 @@ class OpenAPI(Flask):
             parse_method(uri, method, self.paths, operation)
 
             # Parse parameters
-            return parse_parameters(func, components_schemas=self.components_schemas, operation=operation)
+            return parse_parameters(
+                func,
+                components_schemas=self.components_schemas,
+                operation=operation,
+                request_body=request_body,
+            )
         else:
             return parse_parameters(func, doc_ui=False)
 
@@ -483,11 +475,11 @@ class OpenAPI(Flask):
                 description=description,
                 external_docs=external_docs,
                 operation_id=operation_id,
-                responses=responses,
                 deprecated=deprecated,
                 security=security,
                 servers=servers,
                 openapi_extensions=openapi_extensions,
+                responses=responses,
                 doc_ui=doc_ui,
                 method=HTTPMethod.GET,
             )
@@ -524,6 +516,7 @@ class OpenAPI(Flask):
         security: list[dict[str, list[Any]]] | None = None,
         servers: list[Server | dict[str, Any]] | None = None,
         openapi_extensions: dict[str, Any] | None = None,
+        request_body: RequestBody | dict[str, Any] | None = None,
         responses: ResponseDict | None = None,
         validate_response: bool | None = None,
         doc_ui: bool = True,
@@ -544,6 +537,7 @@ class OpenAPI(Flask):
             security: A declaration of which security mechanisms can be used for this operation.
             servers: An alternative server array to service this operation.
             openapi_extensions: Allows extensions to the OpenAPI Schema.
+            request_body: Advanced configuration in OpenAPI.
             responses: API responses should be either a subclass of BaseModel, a dictionary, or None.
             validate_response: Verify the response body.
             doc_ui: Declares this operation to be shown. Default to True.
@@ -558,11 +552,12 @@ class OpenAPI(Flask):
                 description=description,
                 external_docs=external_docs,
                 operation_id=operation_id,
-                responses=responses,
                 deprecated=deprecated,
                 security=security,
                 servers=servers,
                 openapi_extensions=openapi_extensions,
+                request_body=request_body,
+                responses=responses,
                 doc_ui=doc_ui,
                 method=HTTPMethod.POST,
             )
@@ -599,6 +594,7 @@ class OpenAPI(Flask):
         security: list[dict[str, list[Any]]] | None = None,
         servers: list[Server | dict[str, Any]] | None = None,
         openapi_extensions: dict[str, Any] | None = None,
+        request_body: RequestBody | dict[str, Any] | None = None,
         responses: ResponseDict | None = None,
         validate_response: bool | None = None,
         doc_ui: bool = True,
@@ -619,6 +615,7 @@ class OpenAPI(Flask):
             security: A declaration of which security mechanisms can be used for this operation.
             servers: An alternative server array to service this operation.
             openapi_extensions: Allows extensions to the OpenAPI Schema.
+            request_body: Advanced configuration in OpenAPI.
             responses: API responses should be either a subclass of BaseModel, a dictionary, or None.
             validate_response: Verify the response body.
             doc_ui: Declares this operation to be shown. Default to True.
@@ -633,11 +630,12 @@ class OpenAPI(Flask):
                 description=description,
                 external_docs=external_docs,
                 operation_id=operation_id,
-                responses=responses,
                 deprecated=deprecated,
                 security=security,
                 servers=servers,
                 openapi_extensions=openapi_extensions,
+                request_body=request_body,
+                responses=responses,
                 doc_ui=doc_ui,
                 method=HTTPMethod.PUT,
             )
@@ -674,6 +672,7 @@ class OpenAPI(Flask):
         security: list[dict[str, list[Any]]] | None = None,
         servers: list[Server | dict[str, Any]] | None = None,
         openapi_extensions: dict[str, Any] | None = None,
+        request_body: RequestBody | dict[str, Any] | None = None,
         responses: ResponseDict | None = None,
         validate_response: bool | None = None,
         doc_ui: bool = True,
@@ -694,6 +693,7 @@ class OpenAPI(Flask):
             security: A declaration of which security mechanisms can be used for this operation.
             servers: An alternative server array to service this operation.
             openapi_extensions: Allows extensions to the OpenAPI Schema.
+            request_body: Advanced configuration in OpenAPI.
             responses: API responses should be either a subclass of BaseModel, a dictionary, or None.
             validate_response: Verify the response body.
             doc_ui: Declares this operation to be shown. Default to True.
@@ -708,11 +708,12 @@ class OpenAPI(Flask):
                 description=description,
                 external_docs=external_docs,
                 operation_id=operation_id,
-                responses=responses,
                 deprecated=deprecated,
                 security=security,
                 servers=servers,
                 openapi_extensions=openapi_extensions,
+                request_body=request_body,
+                responses=responses,
                 doc_ui=doc_ui,
                 method=HTTPMethod.DELETE,
             )
@@ -749,6 +750,7 @@ class OpenAPI(Flask):
         security: list[dict[str, list[Any]]] | None = None,
         servers: list[Server | dict[str, Any]] | None = None,
         openapi_extensions: dict[str, Any] | None = None,
+        request_body: RequestBody | dict[str, Any] | None = None,
         responses: ResponseDict | None = None,
         validate_response: bool | None = None,
         doc_ui: bool = True,
@@ -769,6 +771,7 @@ class OpenAPI(Flask):
             security: A declaration of which security mechanisms can be used for this operation.
             servers: An alternative server array to service this operation.
             openapi_extensions: Allows extensions to the OpenAPI Schema.
+            request_body: Advanced configuration in OpenAPI.
             responses: API responses should be either a subclass of BaseModel, a dictionary, or None.
             validate_response: Verify the response body.
             doc_ui: Declares this operation to be shown. Default to True.
@@ -783,11 +786,12 @@ class OpenAPI(Flask):
                 description=description,
                 external_docs=external_docs,
                 operation_id=operation_id,
-                responses=responses,
                 deprecated=deprecated,
                 security=security,
                 servers=servers,
                 openapi_extensions=openapi_extensions,
+                request_body=request_body,
+                responses=responses,
                 doc_ui=doc_ui,
                 method=HTTPMethod.PATCH,
             )

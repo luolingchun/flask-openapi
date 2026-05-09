@@ -176,3 +176,65 @@ Magic:
 ![](../assets/Snipaste_2022-09-04_10-10-03.png)
 
 More available fields to see [Parameter Object Fixed Fields](https://spec.openapis.org/oas/v3.1.0#fixed-fields-9).
+
+
+## RequestBody
+
+Sometimes, you may need to customize the Content-Type in the request body.
+
+!!! warning
+
+    `request_body` may conflict with the `body` and `form` keyword, so try not to use them together unless the 
+    content type wants to be the same.
+
+```python
+from flask import request
+from pydantic import BaseModel
+
+from flask_openapi import OpenAPI, RequestBody
+from flask_openapi.utils import get_model_schema
+
+app = OpenAPI(__name__)
+
+
+class BookModel(BaseModel):
+    name: str
+    age: int
+
+
+request_body_json = RequestBody(
+    description="The json request body",
+    content={"application/custom+json": {"schema": get_model_schema(BookModel)}},
+)
+
+
+@app.post("/json", request_body=request_body_json)
+def post_json(body: BookModel):
+    print(request.headers.get("content-type"))
+    print(body.model_json_schema())
+    return {"message": "Hello World"}
+
+
+request_body = RequestBody(
+    description="The multi request body",
+    content={
+        "text/plain": {"schema": {"type": "string"}},
+        "text/html": {"schema": {"type": "string"}},
+        "image/png": {"schema": {"type": "string", "format": "binary"}},
+    },
+)
+
+
+@app.post("/text", request_body=request_body)
+def post_csv():
+    print(request.headers.get("content-type"))
+    data = request.data
+    print(data)
+    return {"message": "Hello World"}
+
+
+if __name__ == "__main__":
+    print(app.url_map)
+    app.run()
+
+```
