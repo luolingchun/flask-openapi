@@ -620,6 +620,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#requestbody" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RequestBody
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1224,6 +1235,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#requestbody" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RequestBody
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1463,6 +1485,109 @@ Here is an example:</p>
 <p>Magic:</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/Snipaste_2022-09-04_10-10-03.png" data-desc-position="bottom"><img alt="" src="../../../assets/Snipaste_2022-09-04_10-10-03.png"></a></p>
 <p>More available fields to see <a href="https://spec.openapis.org/oas/v3.1.0#fixed-fields-9">Parameter Object Fixed Fields</a>.</p>
+<h2 id="requestbody">RequestBody<a class="headerlink" href="#requestbody" title="Permanent link">⚓︎</a></h2>
+<p>Sometimes, you may need to customize the Content-Type in the request body.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code>request_body</code> may conflict with the <code>body</code> and <code>form</code> keyword, so try not to use them together unless the 
+content type wants to be the same.</p>
+</div>
+<div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">request</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">flask_openapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAPI</span><span class="p">,</span> <span class="n">RequestBody</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">flask_openapi.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_model_schema</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">OpenAPI</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">BookModel</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">age</span><span class="p">:</span> <span class="nb">int</span>
+
+
+<span class="n">request_body_json</span> <span class="o">=</span> <span class="n">RequestBody</span><span class="p">(</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">"The json request body"</span><span class="p">,</span>
+    <span class="n">content</span><span class="o">=</span><span class="p">{</span><span class="s2">"application/custom+json"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"schema"</span><span class="p">:</span> <span class="n">get_model_schema</span><span class="p">(</span><span class="n">BookModel</span><span class="p">)}},</span>
+<span class="p">)</span>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">"/json"</span><span class="p">,</span> <span class="n">request_body</span><span class="o">=</span><span class="n">request_body_json</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">post_json</span><span class="p">(</span><span class="n">body</span><span class="p">:</span> <span class="n">BookModel</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"content-type"</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">body</span><span class="o">.</span><span class="n">model_json_schema</span><span class="p">())</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Hello World"</span><span class="p">}</span>
+
+
+<span class="n">request_body</span> <span class="o">=</span> <span class="n">RequestBody</span><span class="p">(</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">"The multi request body"</span><span class="p">,</span>
+    <span class="n">content</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">"text/plain"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"schema"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">}},</span>
+        <span class="s2">"text/html"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"schema"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">}},</span>
+        <span class="s2">"image/png"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"schema"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">,</span> <span class="s2">"format"</span><span class="p">:</span> <span class="s2">"binary"</span><span class="p">}},</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">"/text"</span><span class="p">,</span> <span class="n">request_body</span><span class="o">=</span><span class="n">request_body</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">post_csv</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"content-type"</span><span class="p">))</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">data</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Hello World"</span><span class="p">}</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">url_map</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</code></pre></div></td></tr></tbody></table></div>
 
 
 

@@ -1271,8 +1271,7 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>flask_openapi/openapi.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 45</span>
-<span class="normal"> 46</span>
+                <div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 46</span>
 <span class="normal"> 47</span>
 <span class="normal"> 48</span>
 <span class="normal"> 49</span>
@@ -2038,7 +2037,11 @@
 <span class="normal">809</span>
 <span class="normal">810</span>
 <span class="normal">811</span>
-<span class="normal">812</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">OpenAPI</span><span class="p">(</span><span class="n">Flask</span><span class="p">):</span>
+<span class="normal">812</span>
+<span class="normal">813</span>
+<span class="normal">814</span>
+<span class="normal">815</span>
+<span class="normal">816</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">OpenAPI</span><span class="p">(</span><span class="n">Flask</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">import_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -2360,29 +2363,11 @@
         <span class="n">deprecated</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">security</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">servers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Server</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">request_body</span><span class="p">:</span> <span class="n">RequestBody</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">openapi_extensions</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">doc_ui</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">HTTPMethod</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParametersTuple</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""</span>
-<span class="sd">        Collects OpenAPI specification information for Flask routes and view functions.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            rule: Flask route.</span>
-<span class="sd">            func: Flask view_func.</span>
-<span class="sd">            tags: Adds metadata to a single tag.</span>
-<span class="sd">            summary: A short summary of what the operation does.</span>
-<span class="sd">            description: A verbose explanation of the operation behavior.</span>
-<span class="sd">            external_docs: Additional external documentation for this operation.</span>
-<span class="sd">            operation_id: Unique string used to identify the operation.</span>
-<span class="sd">            responses: API responses should be either a subclass of BaseModel, a dictionary, or None.</span>
-<span class="sd">            deprecated: Declares this operation to be deprecated.</span>
-<span class="sd">            security: A declaration of which security mechanisms can be used for this operation.</span>
-<span class="sd">            servers: An alternative server array to service this operation.</span>
-<span class="sd">            openapi_extensions: Allows extensions to the OpenAPI Schema.</span>
-<span class="sd">            doc_ui: Declares this operation to be shown. Default to True.</span>
-<span class="sd">            method: HTTP method for the operation. Defaults to GET.</span>
-<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">doc_ui</span><span class="p">:</span>
             <span class="c1"># Convert key to string</span>
             <span class="n">new_responses</span> <span class="o">=</span> <span class="n">convert_responses_key_to_string</span><span class="p">(</span><span class="n">responses</span> <span class="ow">or</span> <span class="p">{})</span>
@@ -2418,6 +2403,10 @@
             <span class="c1"># Store tags</span>
             <span class="n">parse_and_store_tags</span><span class="p">(</span><span class="n">tags</span> <span class="ow">or</span> <span class="p">[],</span> <span class="bp">self</span><span class="o">.</span><span class="n">tags</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag_names</span><span class="p">,</span> <span class="n">operation</span><span class="p">)</span>
 
+            <span class="c1"># Parse request body</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">request_body</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">request_body</span> <span class="o">=</span> <span class="n">RequestBody</span><span class="p">(</span><span class="o">**</span><span class="n">request_body</span><span class="p">)</span>
+
             <span class="c1"># Parse response</span>
             <span class="n">get_responses</span><span class="p">(</span><span class="n">combine_responses</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">components_schemas</span><span class="p">,</span> <span class="n">operation</span><span class="p">)</span>
 
@@ -2428,7 +2417,12 @@
             <span class="n">parse_method</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">,</span> <span class="n">operation</span><span class="p">)</span>
 
             <span class="c1"># Parse parameters</span>
-            <span class="k">return</span> <span class="n">parse_parameters</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">components_schemas</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">components_schemas</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="n">operation</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">parse_parameters</span><span class="p">(</span>
+                <span class="n">func</span><span class="p">,</span>
+                <span class="n">components_schemas</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">components_schemas</span><span class="p">,</span>
+                <span class="n">operation</span><span class="o">=</span><span class="n">operation</span><span class="p">,</span>
+                <span class="n">request_body</span><span class="o">=</span><span class="n">request_body</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">parse_parameters</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">doc_ui</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
@@ -2479,11 +2473,11 @@
                 <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
                 <span class="n">external_docs</span><span class="o">=</span><span class="n">external_docs</span><span class="p">,</span>
                 <span class="n">operation_id</span><span class="o">=</span><span class="n">operation_id</span><span class="p">,</span>
-                <span class="n">responses</span><span class="o">=</span><span class="n">responses</span><span class="p">,</span>
                 <span class="n">deprecated</span><span class="o">=</span><span class="n">deprecated</span><span class="p">,</span>
                 <span class="n">security</span><span class="o">=</span><span class="n">security</span><span class="p">,</span>
                 <span class="n">servers</span><span class="o">=</span><span class="n">servers</span><span class="p">,</span>
                 <span class="n">openapi_extensions</span><span class="o">=</span><span class="n">openapi_extensions</span><span class="p">,</span>
+                <span class="n">responses</span><span class="o">=</span><span class="n">responses</span><span class="p">,</span>
                 <span class="n">doc_ui</span><span class="o">=</span><span class="n">doc_ui</span><span class="p">,</span>
                 <span class="n">method</span><span class="o">=</span><span class="n">HTTPMethod</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span>
             <span class="p">)</span>
@@ -2520,6 +2514,7 @@
         <span class="n">security</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">servers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Server</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">openapi_extensions</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">request_body</span><span class="p">:</span> <span class="n">RequestBody</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">responses</span><span class="p">:</span> <span class="n">ResponseDict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">validate_response</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">doc_ui</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -2540,6 +2535,7 @@
 <span class="sd">            security: A declaration of which security mechanisms can be used for this operation.</span>
 <span class="sd">            servers: An alternative server array to service this operation.</span>
 <span class="sd">            openapi_extensions: Allows extensions to the OpenAPI Schema.</span>
+<span class="sd">            request_body: Advanced configuration in OpenAPI.</span>
 <span class="sd">            responses: API responses should be either a subclass of BaseModel, a dictionary, or None.</span>
 <span class="sd">            validate_response: Verify the response body.</span>
 <span class="sd">            doc_ui: Declares this operation to be shown. Default to True.</span>
@@ -2554,11 +2550,12 @@
                 <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
                 <span class="n">external_docs</span><span class="o">=</span><span class="n">external_docs</span><span class="p">,</span>
                 <span class="n">operation_id</span><span class="o">=</span><span class="n">operation_id</span><span class="p">,</span>
-                <span class="n">responses</span><span class="o">=</span><span class="n">responses</span><span class="p">,</span>
                 <span class="n">deprecated</span><span class="o">=</span><span class="n">deprecated</span><span class="p">,</span>
                 <span class="n">security</span><span class="o">=</span><span class="n">security</span><span class="p">,</span>
                 <span class="n">servers</span><span class="o">=</span><span class="n">servers</span><span class="p">,</span>
                 <span class="n">openapi_extensions</span><span class="o">=</span><span class="n">openapi_extensions</span><span class="p">,</span>
+                <span class="n">request_body</span><span class="o">=</span><span class="n">request_body</span><span class="p">,</span>
+                <span class="n">responses</span><span class="o">=</span><span class="n">responses</span><span class="p">,</span>
                 <span class="n">doc_ui</span><span class="o">=</span><span class="n">doc_ui</span><span class="p">,</span>
                 <span class="n">method</span><span class="o">=</span><span class="n">HTTPMethod</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span>
             <span class="p">)</span>
@@ -2595,6 +2592,7 @@
         <span class="n">security</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">servers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Server</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">openapi_extensions</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">request_body</span><span class="p">:</span> <span class="n">RequestBody</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">responses</span><span class="p">:</span> <span class="n">ResponseDict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">validate_response</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">doc_ui</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -2615,6 +2613,7 @@
 <span class="sd">            security: A declaration of which security mechanisms can be used for this operation.</span>
 <span class="sd">            servers: An alternative server array to service this operation.</span>
 <span class="sd">            openapi_extensions: Allows extensions to the OpenAPI Schema.</span>
+<span class="sd">            request_body: Advanced configuration in OpenAPI.</span>
 <span class="sd">            responses: API responses should be either a subclass of BaseModel, a dictionary, or None.</span>
 <span class="sd">            validate_response: Verify the response body.</span>
 <span class="sd">            doc_ui: Declares this operation to be shown. Default to True.</span>
@@ -2629,11 +2628,12 @@
                 <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
                 <span class="n">external_docs</span><span class="o">=</span><span class="n">external_docs</span><span class="p">,</span>
                 <span class="n">operation_id</span><span class="o">=</span><span class="n">operation_id</span><span class="p">,</span>
-                <span class="n">responses</span><span class="o">=</span><span class="n">responses</span><span class="p">,</span>
                 <span class="n">deprecated</span><span class="o">=</span><span class="n">deprecated</span><span class="p">,</span>
                 <span class="n">security</span><span class="o">=</span><span class="n">security</span><span class="p">,</span>
                 <span class="n">servers</span><span class="o">=</span><span class="n">servers</span><span class="p">,</span>
                 <span class="n">openapi_extensions</span><span class="o">=</span><span class="n">openapi_extensions</span><span class="p">,</span>
+                <span class="n">request_body</span><span class="o">=</span><span class="n">request_body</span><span class="p">,</span>
+                <span class="n">responses</span><span class="o">=</span><span class="n">responses</span><span class="p">,</span>
                 <span class="n">doc_ui</span><span class="o">=</span><span class="n">doc_ui</span><span class="p">,</span>
                 <span class="n">method</span><span class="o">=</span><span class="n">HTTPMethod</span><span class="o">.</span><span class="n">PUT</span><span class="p">,</span>
             <span class="p">)</span>
@@ -2670,6 +2670,7 @@
         <span class="n">security</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">servers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Server</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">openapi_extensions</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">request_body</span><span class="p">:</span> <span class="n">RequestBody</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">responses</span><span class="p">:</span> <span class="n">ResponseDict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">validate_response</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">doc_ui</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -2690,6 +2691,7 @@
 <span class="sd">            security: A declaration of which security mechanisms can be used for this operation.</span>
 <span class="sd">            servers: An alternative server array to service this operation.</span>
 <span class="sd">            openapi_extensions: Allows extensions to the OpenAPI Schema.</span>
+<span class="sd">            request_body: Advanced configuration in OpenAPI.</span>
 <span class="sd">            responses: API responses should be either a subclass of BaseModel, a dictionary, or None.</span>
 <span class="sd">            validate_response: Verify the response body.</span>
 <span class="sd">            doc_ui: Declares this operation to be shown. Default to True.</span>
@@ -2704,11 +2706,12 @@
                 <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
                 <span class="n">external_docs</span><span class="o">=</span><span class="n">external_docs</span><span class="p">,</span>
                 <span class="n">operation_id</span><span class="o">=</span><span class="n">operation_id</span><span class="p">,</span>
-                <span class="n">responses</span><span class="o">=</span><span class="n">responses</span><span class="p">,</span>
                 <span class="n">deprecated</span><span class="o">=</span><span class="n">deprecated</span><span class="p">,</span>
                 <span class="n">security</span><span class="o">=</span><span class="n">security</span><span class="p">,</span>
                 <span class="n">servers</span><span class="o">=</span><span class="n">servers</span><span class="p">,</span>
                 <span class="n">openapi_extensions</span><span class="o">=</span><span class="n">openapi_extensions</span><span class="p">,</span>
+                <span class="n">request_body</span><span class="o">=</span><span class="n">request_body</span><span class="p">,</span>
+                <span class="n">responses</span><span class="o">=</span><span class="n">responses</span><span class="p">,</span>
                 <span class="n">doc_ui</span><span class="o">=</span><span class="n">doc_ui</span><span class="p">,</span>
                 <span class="n">method</span><span class="o">=</span><span class="n">HTTPMethod</span><span class="o">.</span><span class="n">DELETE</span><span class="p">,</span>
             <span class="p">)</span>
@@ -2745,6 +2748,7 @@
         <span class="n">security</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">servers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Server</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">openapi_extensions</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">request_body</span><span class="p">:</span> <span class="n">RequestBody</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">responses</span><span class="p">:</span> <span class="n">ResponseDict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">validate_response</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">doc_ui</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -2765,6 +2769,7 @@
 <span class="sd">            security: A declaration of which security mechanisms can be used for this operation.</span>
 <span class="sd">            servers: An alternative server array to service this operation.</span>
 <span class="sd">            openapi_extensions: Allows extensions to the OpenAPI Schema.</span>
+<span class="sd">            request_body: Advanced configuration in OpenAPI.</span>
 <span class="sd">            responses: API responses should be either a subclass of BaseModel, a dictionary, or None.</span>
 <span class="sd">            validate_response: Verify the response body.</span>
 <span class="sd">            doc_ui: Declares this operation to be shown. Default to True.</span>
@@ -2779,11 +2784,12 @@
                 <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
                 <span class="n">external_docs</span><span class="o">=</span><span class="n">external_docs</span><span class="p">,</span>
                 <span class="n">operation_id</span><span class="o">=</span><span class="n">operation_id</span><span class="p">,</span>
-                <span class="n">responses</span><span class="o">=</span><span class="n">responses</span><span class="p">,</span>
                 <span class="n">deprecated</span><span class="o">=</span><span class="n">deprecated</span><span class="p">,</span>
                 <span class="n">security</span><span class="o">=</span><span class="n">security</span><span class="p">,</span>
                 <span class="n">servers</span><span class="o">=</span><span class="n">servers</span><span class="p">,</span>
                 <span class="n">openapi_extensions</span><span class="o">=</span><span class="n">openapi_extensions</span><span class="p">,</span>
+                <span class="n">request_body</span><span class="o">=</span><span class="n">request_body</span><span class="p">,</span>
+                <span class="n">responses</span><span class="o">=</span><span class="n">responses</span><span class="p">,</span>
                 <span class="n">doc_ui</span><span class="o">=</span><span class="n">doc_ui</span><span class="p">,</span>
                 <span class="n">method</span><span class="o">=</span><span class="n">HTTPMethod</span><span class="o">.</span><span class="n">PATCH</span><span class="p">,</span>
             <span class="p">)</span>
@@ -3181,8 +3187,7 @@ Defaults to True.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>flask_openapi/openapi.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 46</span>
-<span class="normal"> 47</span>
+              <div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 47</span>
 <span class="normal"> 48</span>
 <span class="normal"> 49</span>
 <span class="normal"> 50</span>
@@ -3288,7 +3293,8 @@ Defaults to True.</p>
 <span class="normal">150</span>
 <span class="normal">151</span>
 <span class="normal">152</span>
-<span class="normal">153</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+<span class="normal">153</span>
+<span class="normal">154</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">import_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
@@ -3406,7 +3412,7 @@ Defaults to True.</p>
 
 
 <h3 id="flask_openapi.OpenAPI.delete" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">delete</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">summary</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">external_docs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">operation_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">deprecated</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">security</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">servers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">openapi_extensions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">responses</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validate_response</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">doc_ui</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">delete</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">summary</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">external_docs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">operation_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">deprecated</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">security</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">servers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">openapi_extensions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">request_body</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">responses</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validate_response</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">doc_ui</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span></code>
 
 <a href="#flask_openapi.OpenAPI.delete" class="headerlink" title="Permanent link">⚓︎</a></h3>
 
@@ -3590,6 +3596,22 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
           </tr>
           <tr class="doc-section-item">
             <td>
+                <code>request_body</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="RequestBody (flask_openapi.models.RequestBody)" href="../Models/#flask_openapi.models.RequestBody">RequestBody</a> | <span title="dict">dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>] | None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Advanced configuration in OpenAPI.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
                 <code>responses</code>
             </td>
             <td>
@@ -3642,7 +3664,9 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>flask_openapi/openapi.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">664</span>
+              <div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">662</span>
+<span class="normal">663</span>
+<span class="normal">664</span>
 <span class="normal">665</span>
 <span class="normal">666</span>
 <span class="normal">667</span>
@@ -3715,7 +3739,8 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
 <span class="normal">734</span>
 <span class="normal">735</span>
 <span class="normal">736</span>
-<span class="normal">737</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span>
+<span class="normal">737</span>
+<span class="normal">738</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">rule</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
@@ -3728,6 +3753,7 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
     <span class="n">security</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">servers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Server</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">openapi_extensions</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">request_body</span><span class="p">:</span> <span class="n">RequestBody</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">responses</span><span class="p">:</span> <span class="n">ResponseDict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">validate_response</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">doc_ui</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -3748,6 +3774,7 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
 <span class="sd">        security: A declaration of which security mechanisms can be used for this operation.</span>
 <span class="sd">        servers: An alternative server array to service this operation.</span>
 <span class="sd">        openapi_extensions: Allows extensions to the OpenAPI Schema.</span>
+<span class="sd">        request_body: Advanced configuration in OpenAPI.</span>
 <span class="sd">        responses: API responses should be either a subclass of BaseModel, a dictionary, or None.</span>
 <span class="sd">        validate_response: Verify the response body.</span>
 <span class="sd">        doc_ui: Declares this operation to be shown. Default to True.</span>
@@ -3762,11 +3789,12 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
             <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
             <span class="n">external_docs</span><span class="o">=</span><span class="n">external_docs</span><span class="p">,</span>
             <span class="n">operation_id</span><span class="o">=</span><span class="n">operation_id</span><span class="p">,</span>
-            <span class="n">responses</span><span class="o">=</span><span class="n">responses</span><span class="p">,</span>
             <span class="n">deprecated</span><span class="o">=</span><span class="n">deprecated</span><span class="p">,</span>
             <span class="n">security</span><span class="o">=</span><span class="n">security</span><span class="p">,</span>
             <span class="n">servers</span><span class="o">=</span><span class="n">servers</span><span class="p">,</span>
             <span class="n">openapi_extensions</span><span class="o">=</span><span class="n">openapi_extensions</span><span class="p">,</span>
+            <span class="n">request_body</span><span class="o">=</span><span class="n">request_body</span><span class="p">,</span>
+            <span class="n">responses</span><span class="o">=</span><span class="n">responses</span><span class="p">,</span>
             <span class="n">doc_ui</span><span class="o">=</span><span class="n">doc_ui</span><span class="p">,</span>
             <span class="n">method</span><span class="o">=</span><span class="n">HTTPMethod</span><span class="o">.</span><span class="n">DELETE</span><span class="p">,</span>
         <span class="p">)</span>
@@ -4035,7 +4063,15 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>flask_openapi/openapi.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">439</span>
+              <div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">431</span>
+<span class="normal">432</span>
+<span class="normal">433</span>
+<span class="normal">434</span>
+<span class="normal">435</span>
+<span class="normal">436</span>
+<span class="normal">437</span>
+<span class="normal">438</span>
+<span class="normal">439</span>
 <span class="normal">440</span>
 <span class="normal">441</span>
 <span class="normal">442</span>
@@ -4100,15 +4136,7 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
 <span class="normal">501</span>
 <span class="normal">502</span>
 <span class="normal">503</span>
-<span class="normal">504</span>
-<span class="normal">505</span>
-<span class="normal">506</span>
-<span class="normal">507</span>
-<span class="normal">508</span>
-<span class="normal">509</span>
-<span class="normal">510</span>
-<span class="normal">511</span>
-<span class="normal">512</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span>
+<span class="normal">504</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">rule</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
@@ -4155,11 +4183,11 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
             <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
             <span class="n">external_docs</span><span class="o">=</span><span class="n">external_docs</span><span class="p">,</span>
             <span class="n">operation_id</span><span class="o">=</span><span class="n">operation_id</span><span class="p">,</span>
-            <span class="n">responses</span><span class="o">=</span><span class="n">responses</span><span class="p">,</span>
             <span class="n">deprecated</span><span class="o">=</span><span class="n">deprecated</span><span class="p">,</span>
             <span class="n">security</span><span class="o">=</span><span class="n">security</span><span class="p">,</span>
             <span class="n">servers</span><span class="o">=</span><span class="n">servers</span><span class="p">,</span>
             <span class="n">openapi_extensions</span><span class="o">=</span><span class="n">openapi_extensions</span><span class="p">,</span>
+            <span class="n">responses</span><span class="o">=</span><span class="n">responses</span><span class="p">,</span>
             <span class="n">doc_ui</span><span class="o">=</span><span class="n">doc_ui</span><span class="p">,</span>
             <span class="n">method</span><span class="o">=</span><span class="n">HTTPMethod</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span>
         <span class="p">)</span>
@@ -4192,7 +4220,7 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
 
 
 <h3 id="flask_openapi.OpenAPI.patch" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">patch</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">summary</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">external_docs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">operation_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">deprecated</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">security</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">servers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">openapi_extensions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">responses</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validate_response</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">doc_ui</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">patch</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">summary</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">external_docs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">operation_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">deprecated</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">security</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">servers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">openapi_extensions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">request_body</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">responses</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validate_response</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">doc_ui</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span></code>
 
 <a href="#flask_openapi.OpenAPI.patch" class="headerlink" title="Permanent link">⚓︎</a></h3>
 
@@ -4376,6 +4404,22 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
           </tr>
           <tr class="doc-section-item">
             <td>
+                <code>request_body</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="RequestBody (flask_openapi.models.RequestBody)" href="../Models/#flask_openapi.models.RequestBody">RequestBody</a> | <span title="dict">dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>] | None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Advanced configuration in OpenAPI.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
                 <code>responses</code>
             </td>
             <td>
@@ -4428,8 +4472,7 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>flask_openapi/openapi.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">739</span>
-<span class="normal">740</span>
+              <div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">740</span>
 <span class="normal">741</span>
 <span class="normal">742</span>
 <span class="normal">743</span>
@@ -4501,7 +4544,11 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
 <span class="normal">809</span>
 <span class="normal">810</span>
 <span class="normal">811</span>
-<span class="normal">812</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">patch</span><span class="p">(</span>
+<span class="normal">812</span>
+<span class="normal">813</span>
+<span class="normal">814</span>
+<span class="normal">815</span>
+<span class="normal">816</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">patch</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">rule</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
@@ -4514,6 +4561,7 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
     <span class="n">security</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">servers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Server</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">openapi_extensions</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">request_body</span><span class="p">:</span> <span class="n">RequestBody</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">responses</span><span class="p">:</span> <span class="n">ResponseDict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">validate_response</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">doc_ui</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -4534,6 +4582,7 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
 <span class="sd">        security: A declaration of which security mechanisms can be used for this operation.</span>
 <span class="sd">        servers: An alternative server array to service this operation.</span>
 <span class="sd">        openapi_extensions: Allows extensions to the OpenAPI Schema.</span>
+<span class="sd">        request_body: Advanced configuration in OpenAPI.</span>
 <span class="sd">        responses: API responses should be either a subclass of BaseModel, a dictionary, or None.</span>
 <span class="sd">        validate_response: Verify the response body.</span>
 <span class="sd">        doc_ui: Declares this operation to be shown. Default to True.</span>
@@ -4548,11 +4597,12 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
             <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
             <span class="n">external_docs</span><span class="o">=</span><span class="n">external_docs</span><span class="p">,</span>
             <span class="n">operation_id</span><span class="o">=</span><span class="n">operation_id</span><span class="p">,</span>
-            <span class="n">responses</span><span class="o">=</span><span class="n">responses</span><span class="p">,</span>
             <span class="n">deprecated</span><span class="o">=</span><span class="n">deprecated</span><span class="p">,</span>
             <span class="n">security</span><span class="o">=</span><span class="n">security</span><span class="p">,</span>
             <span class="n">servers</span><span class="o">=</span><span class="n">servers</span><span class="p">,</span>
             <span class="n">openapi_extensions</span><span class="o">=</span><span class="n">openapi_extensions</span><span class="p">,</span>
+            <span class="n">request_body</span><span class="o">=</span><span class="n">request_body</span><span class="p">,</span>
+            <span class="n">responses</span><span class="o">=</span><span class="n">responses</span><span class="p">,</span>
             <span class="n">doc_ui</span><span class="o">=</span><span class="n">doc_ui</span><span class="p">,</span>
             <span class="n">method</span><span class="o">=</span><span class="n">HTTPMethod</span><span class="o">.</span><span class="n">PATCH</span><span class="p">,</span>
         <span class="p">)</span>
@@ -4585,7 +4635,7 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
 
 
 <h3 id="flask_openapi.OpenAPI.post" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">post</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">summary</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">external_docs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">operation_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">deprecated</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">security</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">servers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">openapi_extensions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">responses</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validate_response</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">doc_ui</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">post</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">summary</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">external_docs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">operation_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">deprecated</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">security</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">servers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">openapi_extensions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">request_body</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">responses</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validate_response</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">doc_ui</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span></code>
 
 <a href="#flask_openapi.OpenAPI.post" class="headerlink" title="Permanent link">⚓︎</a></h3>
 
@@ -4769,6 +4819,22 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
           </tr>
           <tr class="doc-section-item">
             <td>
+                <code>request_body</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="RequestBody (flask_openapi.models.RequestBody)" href="../Models/#flask_openapi.models.RequestBody">RequestBody</a> | <span title="dict">dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>] | None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Advanced configuration in OpenAPI.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
                 <code>responses</code>
             </td>
             <td>
@@ -4821,7 +4887,15 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>flask_openapi/openapi.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">514</span>
+              <div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">506</span>
+<span class="normal">507</span>
+<span class="normal">508</span>
+<span class="normal">509</span>
+<span class="normal">510</span>
+<span class="normal">511</span>
+<span class="normal">512</span>
+<span class="normal">513</span>
+<span class="normal">514</span>
 <span class="normal">515</span>
 <span class="normal">516</span>
 <span class="normal">517</span>
@@ -4889,12 +4963,7 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
 <span class="normal">579</span>
 <span class="normal">580</span>
 <span class="normal">581</span>
-<span class="normal">582</span>
-<span class="normal">583</span>
-<span class="normal">584</span>
-<span class="normal">585</span>
-<span class="normal">586</span>
-<span class="normal">587</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">post</span><span class="p">(</span>
+<span class="normal">582</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">post</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">rule</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
@@ -4907,6 +4976,7 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
     <span class="n">security</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">servers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Server</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">openapi_extensions</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">request_body</span><span class="p">:</span> <span class="n">RequestBody</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">responses</span><span class="p">:</span> <span class="n">ResponseDict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">validate_response</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">doc_ui</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -4927,6 +4997,7 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
 <span class="sd">        security: A declaration of which security mechanisms can be used for this operation.</span>
 <span class="sd">        servers: An alternative server array to service this operation.</span>
 <span class="sd">        openapi_extensions: Allows extensions to the OpenAPI Schema.</span>
+<span class="sd">        request_body: Advanced configuration in OpenAPI.</span>
 <span class="sd">        responses: API responses should be either a subclass of BaseModel, a dictionary, or None.</span>
 <span class="sd">        validate_response: Verify the response body.</span>
 <span class="sd">        doc_ui: Declares this operation to be shown. Default to True.</span>
@@ -4941,11 +5012,12 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
             <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
             <span class="n">external_docs</span><span class="o">=</span><span class="n">external_docs</span><span class="p">,</span>
             <span class="n">operation_id</span><span class="o">=</span><span class="n">operation_id</span><span class="p">,</span>
-            <span class="n">responses</span><span class="o">=</span><span class="n">responses</span><span class="p">,</span>
             <span class="n">deprecated</span><span class="o">=</span><span class="n">deprecated</span><span class="p">,</span>
             <span class="n">security</span><span class="o">=</span><span class="n">security</span><span class="p">,</span>
             <span class="n">servers</span><span class="o">=</span><span class="n">servers</span><span class="p">,</span>
             <span class="n">openapi_extensions</span><span class="o">=</span><span class="n">openapi_extensions</span><span class="p">,</span>
+            <span class="n">request_body</span><span class="o">=</span><span class="n">request_body</span><span class="p">,</span>
+            <span class="n">responses</span><span class="o">=</span><span class="n">responses</span><span class="p">,</span>
             <span class="n">doc_ui</span><span class="o">=</span><span class="n">doc_ui</span><span class="p">,</span>
             <span class="n">method</span><span class="o">=</span><span class="n">HTTPMethod</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span>
         <span class="p">)</span>
@@ -4978,7 +5050,7 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
 
 
 <h3 id="flask_openapi.OpenAPI.put" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">put</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">summary</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">external_docs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">operation_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">deprecated</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">security</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">servers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">openapi_extensions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">responses</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validate_response</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">doc_ui</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">put</span><span class="p">(</span><span class="n">rule</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">summary</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">external_docs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">operation_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">deprecated</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">security</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">servers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">openapi_extensions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">request_body</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">responses</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validate_response</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">doc_ui</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span></code>
 
 <a href="#flask_openapi.OpenAPI.put" class="headerlink" title="Permanent link">⚓︎</a></h3>
 
@@ -5162,6 +5234,22 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
           </tr>
           <tr class="doc-section-item">
             <td>
+                <code>request_body</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="RequestBody (flask_openapi.models.RequestBody)" href="../Models/#flask_openapi.models.RequestBody">RequestBody</a> | <span title="dict">dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>] | None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Advanced configuration in OpenAPI.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
                 <code>responses</code>
             </td>
             <td>
@@ -5214,7 +5302,12 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>flask_openapi/openapi.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">589</span>
+              <div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">584</span>
+<span class="normal">585</span>
+<span class="normal">586</span>
+<span class="normal">587</span>
+<span class="normal">588</span>
+<span class="normal">589</span>
 <span class="normal">590</span>
 <span class="normal">591</span>
 <span class="normal">592</span>
@@ -5285,9 +5378,7 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
 <span class="normal">657</span>
 <span class="normal">658</span>
 <span class="normal">659</span>
-<span class="normal">660</span>
-<span class="normal">661</span>
-<span class="normal">662</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">put</span><span class="p">(</span>
+<span class="normal">660</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">put</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">rule</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
@@ -5300,6 +5391,7 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
     <span class="n">security</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">servers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Server</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">openapi_extensions</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">request_body</span><span class="p">:</span> <span class="n">RequestBody</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">responses</span><span class="p">:</span> <span class="n">ResponseDict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">validate_response</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">doc_ui</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -5320,6 +5412,7 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
 <span class="sd">        security: A declaration of which security mechanisms can be used for this operation.</span>
 <span class="sd">        servers: An alternative server array to service this operation.</span>
 <span class="sd">        openapi_extensions: Allows extensions to the OpenAPI Schema.</span>
+<span class="sd">        request_body: Advanced configuration in OpenAPI.</span>
 <span class="sd">        responses: API responses should be either a subclass of BaseModel, a dictionary, or None.</span>
 <span class="sd">        validate_response: Verify the response body.</span>
 <span class="sd">        doc_ui: Declares this operation to be shown. Default to True.</span>
@@ -5334,11 +5427,12 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
             <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
             <span class="n">external_docs</span><span class="o">=</span><span class="n">external_docs</span><span class="p">,</span>
             <span class="n">operation_id</span><span class="o">=</span><span class="n">operation_id</span><span class="p">,</span>
-            <span class="n">responses</span><span class="o">=</span><span class="n">responses</span><span class="p">,</span>
             <span class="n">deprecated</span><span class="o">=</span><span class="n">deprecated</span><span class="p">,</span>
             <span class="n">security</span><span class="o">=</span><span class="n">security</span><span class="p">,</span>
             <span class="n">servers</span><span class="o">=</span><span class="n">servers</span><span class="p">,</span>
             <span class="n">openapi_extensions</span><span class="o">=</span><span class="n">openapi_extensions</span><span class="p">,</span>
+            <span class="n">request_body</span><span class="o">=</span><span class="n">request_body</span><span class="p">,</span>
+            <span class="n">responses</span><span class="o">=</span><span class="n">responses</span><span class="p">,</span>
             <span class="n">doc_ui</span><span class="o">=</span><span class="n">doc_ui</span><span class="p">,</span>
             <span class="n">method</span><span class="o">=</span><span class="n">HTTPMethod</span><span class="o">.</span><span class="n">PUT</span><span class="p">,</span>
         <span class="p">)</span>
@@ -5445,8 +5539,7 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>flask_openapi/openapi.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">277</span>
-<span class="normal">278</span>
+              <div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">278</span>
 <span class="normal">279</span>
 <span class="normal">280</span>
 <span class="normal">281</span>
@@ -5481,7 +5574,8 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
 <span class="normal">310</span>
 <span class="normal">311</span>
 <span class="normal">312</span>
-<span class="normal">313</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">register_api</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api</span><span class="p">:</span> <span class="n">APIBlueprint</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">313</span>
+<span class="normal">314</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">register_api</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api</span><span class="p">:</span> <span class="n">APIBlueprint</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Register an APIBlueprint.</span>
 
@@ -5603,8 +5697,7 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>flask_openapi/openapi.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">315</span>
-<span class="normal">316</span>
+              <div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">316</span>
 <span class="normal">317</span>
 <span class="normal">318</span>
 <span class="normal">319</span>
@@ -5639,7 +5732,8 @@ More information goto <a href="https://spec.openapis.org/oas/v3.1.0#operation-ob
 <span class="normal">348</span>
 <span class="normal">349</span>
 <span class="normal">350</span>
-<span class="normal">351</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">register_api_view</span><span class="p">(</span>
+<span class="normal">351</span>
+<span class="normal">352</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">register_api_view</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">api_view</span><span class="p">:</span> <span class="n">APIView</span><span class="p">,</span> <span class="n">url_prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">view_kwargs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
