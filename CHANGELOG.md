@@ -1,3 +1,9 @@
+## v4.3.2 2026-05-09
+
+- Fix `summary` and `description` in `__doc__` by @luolingchun in #264
+- Fix the trailing / caused by register_api with url_prefix by @luolingchun in #265
+- Fix crash when header not present by @luolingchun in #266
+
 ## v4.3.1 2026-01-12
 
 - Allow const to be Any type by @alchzh in #248
