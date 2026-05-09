@@ -3,6 +3,7 @@
 # @Time    : 2021/5/1 21:34
 
 import inspect
+import posixpath
 import re
 import sys
 from enum import Enum
@@ -605,13 +606,11 @@ def run_validate_response(response: Any, responses: ResponseDict | None = None) 
 
 
 def parse_rule(rule: str, url_prefix=None) -> str:
-    trail_slash = rule.endswith("/")
-
     # Merge url_prefix and uri
-    uri = url_prefix.rstrip("/") + "/" + rule.lstrip("/") if url_prefix else rule
-
-    if not trail_slash:
-        uri = uri.rstrip("/")
+    if rule:
+        uri = posixpath.join(url_prefix, rule.lstrip("/")) if url_prefix else rule
+    else:
+        uri = url_prefix or ""
 
     # Convert a route parameter format from /pet/<petId> to /pet/{petId}
     uri = re.sub(r"<([^<:]+:)?", "{", uri).replace(">", "}")
