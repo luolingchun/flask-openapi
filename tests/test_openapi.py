@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pytest
+from openapi_spec_validator import validate
 from pydantic import BaseModel
 
 from flask_openapi import APIBlueprint, OpenAPI, ValidationErrorModel
@@ -84,4 +85,5 @@ app.register_api(api)
 def test_openapi(client):
     response = client.get("/openapi/openapi.json")
     assert response.status_code == 200
-    client.get("/openapi/openapi.json")
+    _json = response.json
+    validate(_json)

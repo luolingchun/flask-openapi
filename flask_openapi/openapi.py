@@ -254,7 +254,7 @@ class OpenAPI(Flask):
         spec.components = self.components
 
         # Convert spec to JSON
-        self.spec_json = spec.model_dump(mode="json", by_alias=True, exclude_unset=True, warnings=False)
+        self.spec_json = spec.model_dump(mode="json", by_alias=True, exclude_none=True, warnings=False)
 
         # Update with OpenAPI extensions
         self.spec_json.update(**self.openapi_extensions)
