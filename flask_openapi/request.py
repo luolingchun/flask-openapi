@@ -61,7 +61,7 @@ def _validate_header(header: Type[BaseModel], func_kwargs: dict):
         if value is not None:
             header_dict[key] = value
         if model_field_schema.get("type") == "null":
-            header_dict[key] = value
+            header_dict[key] = value or None
     # extra keys
     for key, value in request_headers.items():
         if key not in header_dict.keys():
@@ -98,7 +98,7 @@ def _validate_query(query: Type[BaseModel], func_kwargs: dict):
         if value is not None and value != []:
             query_dict[key] = value
         if model_field_schema.get("type") == "null":
-            query_dict[key] = value
+            query_dict[key] = value or None
     # extra keys
     for key, value in request_args.items():
         if key not in query_dict.keys():
@@ -117,6 +117,8 @@ def _validate_form(form: Type[BaseModel], func_kwargs: dict):
             if model_field_schema.get("items") == {"format": "binary", "type": "string"}:
                 # list[FileStorage]
                 key, value = _get_list_value(form, request_files, model_field_key, model_field_value)
+            elif model_field_schema.get("items").get("type") == "string":
+                key, value = _get_list_value(form, request_form, model_field_key, model_field_value)
             else:
                 value = []
                 key, value_list = _get_list_value(form, request_form, model_field_key, model_field_value)
@@ -128,6 +130,8 @@ def _validate_form(form: Type[BaseModel], func_kwargs: dict):
         elif model_field_schema.get("type") == "string" and model_field_schema.get("format") == "binary":
             # FileStorage
             key, value = _get_value(form, request_files, model_field_key, model_field_value)
+        elif model_field_schema.get("type") == "string":
+            key, value = _get_value(form, request_form, model_field_key, model_field_value)
         else:
             key, _value = _get_value(form, request_form, model_field_key, model_field_value)
             try:
@@ -137,7 +141,7 @@ def _validate_form(form: Type[BaseModel], func_kwargs: dict):
         if value is not None and value != []:
             form_dict[key] = value
         if model_field_schema.get("type") == "null":
-            form_dict[key] = value
+            form_dict[key] = value or None
     # extra keys
     for key, value in {**dict(request_form), **dict(request_files)}.items():
         if key not in form_dict.keys():
