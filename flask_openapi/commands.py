@@ -22,7 +22,7 @@ def openapi_command(output, _format, indent):
                 import yaml
             except ImportError:  # pragma: no cover
                 raise ImportError("pyyaml must be installed.")
-            openapi = yaml.safe_dump(obj, allow_unicode=True)
+            openapi = yaml.safe_dump(obj, allow_unicode=True, sort_keys=False)
         else:
             openapi = json.dumps(obj, indent=indent, ensure_ascii=False)
 
