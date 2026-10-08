@@ -5,7 +5,7 @@ from .media_type import MediaType
 
 class RequestBody(BaseModel):
     """
-    https://spec.openapis.org/oas/v3.1.0#request-body-object
+    https://spec.openapis.org/oas/v3.2.0#request-body-object
     """
 
     description: str | None = None

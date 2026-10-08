@@ -11,7 +11,7 @@ from .schema import Schema
 
 class Parameter(BaseModel):
     """
-    https://spec.openapis.org/oas/v3.1.0#parameter-object
+    https://spec.openapis.org/oas/v3.2.0#parameter-object
     """
 
     name: str

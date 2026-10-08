@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 class License(BaseModel):
     """
-    https://spec.openapis.org/oas/v3.1.0#license-object
+    https://spec.openapis.org/oas/v3.2.0#license-object
     """
 
     name: str

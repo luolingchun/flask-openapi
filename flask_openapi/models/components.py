@@ -6,6 +6,7 @@ from .callback import Callback
 from .example import Example
 from .header import Header
 from .link import Link
+from .media_type import MediaType
 from .parameter import Parameter
 from .path_item import PathItem
 from .reference import Reference
@@ -17,7 +18,7 @@ from .security_scheme import SecurityScheme
 
 class Components(BaseModel):
     """
-    https://spec.openapis.org/oas/v3.1.0#components-object
+    https://spec.openapis.org/oas/v3.2.0#components-object
     """
 
     schemas: dict[str, Reference | Schema] | None = None
@@ -30,5 +31,6 @@ class Components(BaseModel):
     links: dict[str, Link | Reference] | None = None
     callbacks: dict[str, Callback | Reference] | None = None
     pathItems: dict[str, PathItem | Reference] | None = None
+    mediaTypes: dict[str, MediaType | Reference] | None = None
 
     model_config = {"extra": "allow"}

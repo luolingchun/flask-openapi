@@ -6,7 +6,7 @@ from .security_scheme_in_type import SecuritySchemeInType
 
 class SecurityScheme(BaseModel):
     """
-    https://spec.openapis.org/oas/v3.1.0#security-scheme-object
+    https://spec.openapis.org/oas/v3.2.0#security-scheme-object
     """
 
     type: str
@@ -17,5 +17,7 @@ class SecurityScheme(BaseModel):
     bearerFormat: str | None = None
     flows: OAuthFlows | None = None
     openIdConnectUrl: str | None = None
+    oauth2MetadataUrl: str | None = None
+    deprecated: bool | None = None
 
     model_config = {"extra": "allow", "populate_by_name": True}

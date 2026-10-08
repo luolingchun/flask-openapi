@@ -117,7 +117,7 @@ class APIView:
     ) -> Callable:
         """
         Decorator for view method.
-        More information goto https://spec.openapis.org/oas/v3.1.0#operation-object
+        More information goto https://spec.openapis.org/oas/v3.2.0#operation-object
 
         Args:
             tags: Adds metadata to a single tag.

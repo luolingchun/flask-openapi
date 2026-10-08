@@ -1,12 +1,12 @@
 """
-OpenAPI v3.1.0 schema types, created according to the specification:
-https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md
+OpenAPI v3.2.0 schema types, created according to the specification:
+https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.2.0.md
 
 The type orders are according to the contents of the specification:
-https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#table-of-contents
+https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.2.0.md#table-of-contents
 """
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from .callback import Callback
 from .components import Components
@@ -47,19 +47,21 @@ OPENAPI3_REF_TEMPLATE = OPENAPI3_REF_PREFIX + "/{model}"
 
 
 class OpenAPISpec(BaseModel):
-    """https://spec.openapis.org/oas/v3.1.0#openapi-object"""
+    """https://spec.openapis.org/oas/v3.2.0#openapi-object"""
 
     openapi: str
+    self: str | None = Field(default=None, alias="$self")
     info: Info
+    jsonSchemaDialect: str | None = None
     servers: list[Server] | None = None
     paths: Paths
+    webhooks: dict[str, PathItem | Reference] | None = None
     components: Components | None = None
     security: list[SecurityRequirement] | None = None
     tags: list[Tag] | None = None
     externalDocs: ExternalDocumentation | None = None
-    webhooks: dict[str, PathItem | Reference] | None = None
 
-    model_config = {"extra": "allow"}
+    model_config = {"extra": "allow", "populate_by_name": True}
 
 
 class OAuthConfig(BaseModel):

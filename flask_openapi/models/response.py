@@ -8,10 +8,11 @@ from .reference import Reference
 
 class Response(BaseModel):
     """
-    https://spec.openapis.org/oas/v3.1.0#response-object
+    https://spec.openapis.org/oas/v3.2.0#response-object
     """
 
-    description: str
+    description: str | None = None
+    summary: str | None = None
     headers: dict[str, Header | Reference] | None = None
     content: dict[str, MediaType] | None = None
     links: dict[str, Link | Reference] | None = None
