@@ -50,6 +50,7 @@ class Schema(BaseModel):
     xml: XML | None = None
     externalDocs: ExternalDocumentation | None = None
     example: Any | None = None
+    examples: Any | None = None
     deprecated: bool | None = None
     const: Any | None = None
 
