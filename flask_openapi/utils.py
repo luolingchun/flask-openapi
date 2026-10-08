@@ -72,7 +72,7 @@ def get_operation(
     operation_dict.update(openapi_extensions or {})
 
     # Create and return the Operation object
-    operation = Operation(**operation_dict)
+    operation = Operation.model_validate(operation_dict)
 
     return operation
 

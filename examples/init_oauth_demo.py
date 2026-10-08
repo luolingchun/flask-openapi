@@ -2,7 +2,7 @@ from flask_openapi import Info, OpenAPI
 
 info = Info(title="oauth API", version="1.0.0")
 
-# https://spec.openapis.org/oas/v3.1.0#implicit-oauth2-sample
+# https://spec.openapis.org/oas/v3.2.0#implicit-oauth2-sample
 oauth2 = {
     "type": "oauth2",
     "flows": {
@@ -21,7 +21,7 @@ app = OpenAPI(__name__, info=info, security_schemes=security_schemes)
 oauth_config = {"clientId": "xxx", "clientSecret": "xxx"}
 app.config["OAUTH_CONFIG"] = oauth_config
 
-# https://spec.openapis.org/oas/v3.1.0#oauth2-security-requirement
+# https://spec.openapis.org/oas/v3.2.0#oauth2-security-requirement
 security = [{"oauth2": ["write:pets", "read:pets"]}]
 
 

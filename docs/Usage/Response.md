@@ -94,6 +94,6 @@ app = OpenAPI(__name__, validate_response=True, validate_response_callback=valid
 
 ## More information about OpenAPI responses
 
-- [OpenAPI Responses Object](https://spec.openapis.org/oas/v3.1.0#responses-object), it includes the Response Object.
-- [OpenAPI Response Object](https://spec.openapis.org/oas/v3.1.0#response-object).
+- [OpenAPI Responses Object](https://spec.openapis.org/oas/v3.2.0#responses-object), it includes the Response Object.
+- [OpenAPI Response Object](https://spec.openapis.org/oas/v3.2.0#response-object).
 
