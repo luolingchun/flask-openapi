@@ -10,6 +10,7 @@
 - fix (Schema): add examples field to capture Field (examples=[...]) by @Jah-yee in #279
 - fix: keep Field (examples=[...]) on parameter models in the schema by @mayuriphad in #280
 - Upgrade openapi version 3.2.0 by @luolingchun in #281
+- Support for Python 3.15 by @luolingchun in #283
 
 ## v4.3.2 2026-05-09
 
