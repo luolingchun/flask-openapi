@@ -1,3 +1,16 @@
+## v5.0.0 2026-10-10
+
+- **Rename flask-openapi3 to flask-openapi**
+- Support multi content type in request body and responses by @luolingchun in #214
+- Fix the trailing `/` caused by `register_api` with `url_prefix` by @luolingchun in #268
+- Add test with openapi-spec-validator by @luolingchun in #269
+- Fix `summary` and `description` in `__doc__` by @luolingchun in #270
+- Fix non-strict value in form by @luolingchun in #275
+- fix: set sort_keys=False in yaml.safe_dump for consistency with json.dumps by @Jah-yee in #278
+- fix (Schema): add examples field to capture Field (examples=[...]) by @Jah-yee in #279
+- fix: keep Field (examples=[...]) on parameter models in the schema by @mayuriphad in #280
+- Upgrade openapi version 3.2.0 by @luolingchun in #281
+
 ## v4.3.2 2026-05-09
 
 - Fix `summary` and `description` in `__doc__` by @luolingchun in #264
@@ -30,7 +43,7 @@
 
 ## v4.2.0 2025-06-21
 
-- fix(models): enable 'populate_by_name' to alias fields correctly by @omikader in #221
+- fix (models): enable 'populate_by_name' to alias fields correctly by @omikader in #221
 - operation_id_callback with blueprint name and func name by @luolingchun in #224
 - Delay throwing validation error by @luolingchun in #223
 
@@ -199,7 +212,7 @@
 
 ## v2.4.0 2023-06-04
 
-- [#72](https://github.com/luolingchun/flask-openapi/pull/72) security_schemes(SecurityScheme) supports a json format.
+- [#72](https://github.com/luolingchun/flask-openapi/pull/72) security_schemes (SecurityScheme) supports a json format.
 - [#68](https://github.com/luolingchun/flask-openapi/pull/68) feat: Add operation_id_callback. Thanks, @BoyanYK.
 - [#64](https://github.com/luolingchun/flask-openapi/pull/64) Explains the usage of flask openapi command more clearly.
   Thanks, @candleindark.
@@ -362,7 +375,7 @@
 
 ## v0.9.6 2021-08-18
 
-- Export to markdown(Experimental)
+- Export to markdown (Experimental)
 
 ## v0.9.5 2021-07-11
 
@@ -397,7 +410,7 @@
 - json-->body
 - set 422 Content-Type application/json
 - raise response validate exception
-- fix: TypeError: issubclass() arg 1 must be a class
+- fix: TypeError: issubclass () arg 1 must be a class
 
 ## v0.9.0 2021-05-13
 
