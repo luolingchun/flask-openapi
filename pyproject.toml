@@ -33,6 +33,9 @@ dependencies = ["Flask>=2.0", "pydantic>=2.4"]
 [project.urls]
 Homepage = "https://github.com/luolingchun/flask-openapi"
 Documentation = "https://luolingchun.github.io/flask-openapi"
+Repository = "https://github.com/luolingchun/flask-openapi"
+Issues = "https://github.com/luolingchun/flask-openapi/issues"
+Changelog = "https://luolingchun.github.io/flask-openapi/latest/Changelog/"
 
 [project.optional-dependencies]
 yaml = ["pyyaml"]
