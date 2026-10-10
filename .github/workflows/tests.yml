@@ -13,6 +13,9 @@ on:
       - "flask_openapi/**"
       - "tests/**"
 
+permissions:
+  contents: read
+
 jobs:
   tests:
     runs-on: ubuntu-latest
