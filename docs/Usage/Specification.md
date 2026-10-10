@@ -13,8 +13,7 @@ flask --app IMPORT openapi
 where `IMPORT` is the Flask application, in our case an OpenAPI application, to loan.
 For example, if your OpenAPI application is `app` defined in `hello.py`,
 as in the example in [Quickstart](../Quickstart.md#rest-api), the command is
-`flask --app hello:app openapi `.
-(For more information about the command line interface of Flask, please check out
+`flask --app hello:app openapi `. (For more information about the command line interface of Flask, please check out
 the [Flask CLI documentation](https://flask.palletsprojects.com/en/latest/cli/#application-discovery).)
 
 Execute `flask --app IMPORT openapi --help` for more information about the command:
@@ -53,10 +52,10 @@ pip install pyyaml
 **`flask-openapi`**
 provide [Swagger UI](https://github.com/swagger-api/swagger-ui), [Redoc](https://github.com/Redocly/redoc)
 and [RapiDoc](https://github.com/rapi-doc/RapiDoc) interactive documentation.
-Before that, you should know something about the [OpenAPI Specification](https://spec.openapis.org/oas/v3.1.0).
+Before that, you should know something about the [OpenAPI Specification](https://spec.openapis.org/oas/v3.2.0).
 
 You must import **`Info`** from **`flask-openapi`**, it needs some parameters: **`title`**, **`version`**... , more
-information sees the [OpenAPI Specification Info Object](https://spec.openapis.org/oas/v3.1.0#info-object).
+information sees the [OpenAPI Specification Info Object](https://spec.openapis.org/oas/v3.2.0#info-object).
 
 ```python hl_lines="4 5"
 from flask_openapi import Info
@@ -79,38 +78,38 @@ run it, and go to http://127.0.0.1:5000/openapi, you will see the documentation.
 
 There are some examples for Security Scheme Object,
 more features see
-the [OpenAPI Specification Security Scheme Object](https://spec.openapis.org/oas/v3.1.0#security-scheme-object).
+the [OpenAPI Specification Security Scheme Object](https://spec.openapis.org/oas/v3.2.0#security-scheme-object).
 
 ```python
 # Basic Authentication Sample
 basic = {
-  "type": "http",
-  "scheme": "basic"
+    "type": "http",
+    "scheme": "basic"
 }
 # JWT Bearer Sample
 jwt = {
-  "type": "http",
-  "scheme": "bearer",
-  "bearerFormat": "JWT"
+    "type": "http",
+    "scheme": "bearer",
+    "bearerFormat": "JWT"
 }
 # API Key Sample
 api_key = {
-  "type": "apiKey",
-  "name": "api_key",
-  "in": "header"
+    "type": "apiKey",
+    "name": "api_key",
+    "in": "header"
 }
 # Implicit OAuth2 Sample
 oauth2 = {
-  "type": "oauth2",
-  "flows": {
-    "implicit": {
-      "authorizationUrl": "https://example.com/api/oauth/dialog",
-      "scopes": {
-        "write:pets": "modify pets in your account",
-        "read:pets": "read your pets"
-      }
+    "type": "oauth2",
+    "flows": {
+        "implicit": {
+            "authorizationUrl": "https://example.com/api/oauth/dialog",
+            "scopes": {
+                "write:pets": "modify pets in your account",
+                "read:pets": "read your pets"
+            }
+        }
     }
-  }
 }
 security_schemes = {"jwt": jwt, "api_key": api_key, "oauth2": oauth2, "basic": basic}
 ```
@@ -170,8 +169,8 @@ class Unauthorized(BaseModel):
 
 
 api = APIBlueprint(
-    "/book", 
-    __name__, 
+    "/book",
+    __name__,
     url_prefix="/api",
     abp_responses={401: Unauthorized}
 )
@@ -180,6 +179,7 @@ api_view = APIView(
     "/book",
     view_responses={401: Unauthorized}
 )
+
 
 @api.get(...)
 def endpoint():
@@ -203,6 +203,7 @@ api = APIBlueprint(
     __name__,
     doc_ui=False
 )
+
 
 # or
 
@@ -231,7 +232,7 @@ app = OpenAPI(__name__, info=info, servers=servers)
 Allows referencing an external resource for extended documentation.
 
 More information to
-see [External Documentation Object](https://spec.openapis.org/oas/v3.1.0#external-documentation-object).
+see [External Documentation Object](https://spec.openapis.org/oas/v3.2.0#external-documentation-object).
 
 ```python
 from flask_openapi import OpenAPI, ExternalDocumentation
@@ -247,7 +248,7 @@ app = OpenAPI(__name__, info=info, external_docs=external_docs)
 
 While the OpenAPI Specification tries to accommodate most use cases,
 additional data can be added to extend the specification at certain points.
-See [Specification Extensions](https://spec.openapis.org/oas/v3.1.0#specification-extensions).
+See [Specification Extensions](https://spec.openapis.org/oas/v3.2.0#specification-extensions).
 
 It can also be available in **APIBlueprint** and **APIView**, goto [Operation](Route_Operation.md#openapi_extensions).
 

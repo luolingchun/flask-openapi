@@ -12,7 +12,7 @@ else:
 
 class Encoding(BaseModel):
     """
-    https://spec.openapis.org/oas/v3.1.0#encoding-object
+    https://spec.openapis.org/oas/v3.2.0#encoding-object
     """
 
     contentType: str | None = None
@@ -20,5 +20,7 @@ class Encoding(BaseModel):
     style: str | None = None
     explode: bool | None = None
     allowReserved: bool = False
+    prefixEncoding: Union["Encoding", Reference] | None = None
+    itemEncoding: Union["Encoding", Reference] | None = None
 
     model_config = {"extra": "allow"}

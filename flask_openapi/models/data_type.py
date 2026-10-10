@@ -3,7 +3,7 @@ from enum import Enum
 
 class DataType(str, Enum):
     """
-    https://spec.openapis.org/oas/v3.1.0#data-types
+    https://spec.openapis.org/oas/v3.2.0#data-types
     """
 
     STRING = "string"

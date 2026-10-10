@@ -10,10 +10,11 @@ from .schema import Schema
 
 class MediaType(BaseModel):
     """
-    https://spec.openapis.org/oas/v3.1.0#media-type-object
+    https://spec.openapis.org/oas/v3.2.0#media-type-object
     """
 
     media_type_schema: Reference | Schema | None = Field(default=None, alias="schema")
+    itemSchema: Reference | Schema | None = None
     example: Any | None = None
     examples: dict[str, Example | Reference] | None = None
     encoding: dict[str, Encoding] | None = None

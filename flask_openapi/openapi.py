@@ -72,17 +72,17 @@ class OpenAPI(Flask):
         Args:
             import_name: The import name for the Flask application.
             info: Information about the API (title, version, etc.).
-                See https://spec.openapis.org/oas/v3.1.0#info-object.
+                See https://spec.openapis.org/oas/v3.2.0#info-object.
             security_schemes: Security schemes for the API.
-                See https://spec.openapis.org/oas/v3.1.0#security-scheme-object.
+                See https://spec.openapis.org/oas/v3.2.0#security-scheme-object.
             servers: An array of Server objects providing connectivity information to a target server.
             external_docs: External documentation for the API.
-                See: https://spec.openapis.org/oas/v3.1.0#external-documentation-object.
+                See: https://spec.openapis.org/oas/v3.2.0#external-documentation-object.
             operation_id_callback: Callback function for custom operation ID generation.
                 Receives name (str), path (str), and method (str) parameters.
                 Defaults to `get_operation_id_for_path` from utils.
             openapi_extensions: Extensions to the OpenAPI Schema.
-                See https://spec.openapis.org/oas/v3.1.0#specification-extensions.
+                See https://spec.openapis.org/oas/v3.2.0#specification-extensions.
             validation_error_status:
                 HTTP Status of the response given when a validation error is detected by pydantic.
                 Defaults to 422.
@@ -103,7 +103,7 @@ class OpenAPI(Flask):
         super(OpenAPI, self).__init__(import_name, **kwargs)
 
         # Set OpenAPI version and API information
-        self.openapi_version = "3.1.0"
+        self.openapi_version = "3.2.0"
         self.info = info or Info(title="OpenAPI", version="1.0.0")
 
         # Set security schemes, responses, paths and components
@@ -453,7 +453,7 @@ class OpenAPI(Flask):
     ) -> Callable:
         """
         Decorator for defining a REST API endpoint with the HTTP GET method.
-        More information goto https://spec.openapis.org/oas/v3.1.0#operation-object
+        More information goto https://spec.openapis.org/oas/v3.2.0#operation-object
 
         Args:
             rule: The URL rule string.
@@ -529,7 +529,7 @@ class OpenAPI(Flask):
     ) -> Callable:
         """
         Decorator for defining a REST API endpoint with the HTTP POST method.
-        More information goto https://spec.openapis.org/oas/v3.1.0#operation-object
+        More information goto https://spec.openapis.org/oas/v3.2.0#operation-object
 
         Args:
             rule: The URL rule string.
@@ -607,7 +607,7 @@ class OpenAPI(Flask):
     ) -> Callable:
         """
         Decorator for defining a REST API endpoint with the HTTP PUT method.
-        More information goto https://spec.openapis.org/oas/v3.1.0#operation-object
+        More information goto https://spec.openapis.org/oas/v3.2.0#operation-object
 
         Args:
             rule: The URL rule string.
@@ -685,7 +685,7 @@ class OpenAPI(Flask):
     ) -> Callable:
         """
         Decorator for defining a REST API endpoint with the HTTP DELETE method.
-        More information goto https://spec.openapis.org/oas/v3.1.0#operation-object
+        More information goto https://spec.openapis.org/oas/v3.2.0#operation-object
 
         Args:
             rule: The URL rule string.
@@ -763,7 +763,7 @@ class OpenAPI(Flask):
     ) -> Callable:
         """
         Decorator for defining a REST API endpoint with the HTTP PATCH method.
-        More information goto https://spec.openapis.org/oas/v3.1.0#operation-object
+        More information goto https://spec.openapis.org/oas/v3.2.0#operation-object
 
         Args:
             rule: The URL rule string.

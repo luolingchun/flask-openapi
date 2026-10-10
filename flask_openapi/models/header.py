@@ -4,7 +4,7 @@ from .parameter_in_type import ParameterInType
 
 class Header(Parameter):
     """
-    https://spec.openapis.org/oas/v3.1.0#header-object
+    https://spec.openapis.org/oas/v3.2.0#header-object
     """
 
     name: str | None = None

@@ -69,7 +69,7 @@ def get_book(path: BookPath, query: BookBody):
 Allows referencing an external resource for extended documentation.
 
 More information to
-see [External Documentation Object](https://spec.openapis.org/oas/v3.1.0#external-documentation-object).
+see [External Documentation Object](https://spec.openapis.org/oas/v3.2.0#external-documentation-object).
 
 ```python hl_lines="10"
 from flask_openapi import OpenAPI, ExternalDocumentation
@@ -116,7 +116,9 @@ The example shows setting the default `operation_id` to be the function name, in
 def get_operation_id_for_path(*, bp_name: str = None, name: str, path: str, method: str) -> str:
     return name
 
+
 api = APIBlueprint('book', __name__, url_prefix='/api', operation_id_callback=get_operation_id_for_path)
+
 
 @api.post('/book/')
 def create_book(body: BookBody):
@@ -148,33 +150,33 @@ There are many kinds of security supported here:
 ```python
 # Basic Authentication Sample
 basic = {
-  "type": "http",
-  "scheme": "basic"
+    "type": "http",
+    "scheme": "basic"
 }
 # JWT Bearer Sample
 jwt = {
-  "type": "http",
-  "scheme": "bearer",
-  "bearerFormat": "JWT"
+    "type": "http",
+    "scheme": "bearer",
+    "bearerFormat": "JWT"
 }
 # API Key Sample
 api_key = {
-  "type": "apiKey",
-  "name": "api_key",
-  "in": "header"
+    "type": "apiKey",
+    "name": "api_key",
+    "in": "header"
 }
 # Implicit OAuth2 Sample
 oauth2 = {
-  "type": "oauth2",
-  "flows": {
-    "implicit": {
-      "authorizationUrl": "https://example.com/api/oauth/dialog",
-      "scopes": {
-        "write:pets": "modify pets in your account",
-        "read:pets": "read your pets"
-      }
+    "type": "oauth2",
+    "flows": {
+        "implicit": {
+            "authorizationUrl": "https://example.com/api/oauth/dialog",
+            "scopes": {
+                "write:pets": "modify pets in your account",
+                "read:pets": "read your pets"
+            }
+        }
     }
-  }
 }
 security_schemes = {"jwt": jwt, "api_key": api_key, "oauth2": oauth2, "basic": basic}
 
@@ -185,6 +187,7 @@ security = [
     {"oauth2": ["write:pets", "read:pets"]},
     {"basic": []}
 ]
+
 
 @app.get(
     '/book/<int:bid>',
@@ -239,7 +242,7 @@ def get_book(path: BookPath):
 
 While the OpenAPI Specification tries to accommodate most use cases,
 additional data can be added to extend the specification at certain points.
-See [Specification Extensions](https://spec.openapis.org/oas/v3.1.0#specification-extensions).
+See [Specification Extensions](https://spec.openapis.org/oas/v3.2.0#specification-extensions).
 
 ```python  hl_lines="3 12 19 28 42"
 from flask_openapi import OpenAPI, APIBlueprint, APIView
@@ -308,6 +311,7 @@ api = APIBlueprint(
     __name__,
     doc_ui=False
 )
+
 
 # or
 

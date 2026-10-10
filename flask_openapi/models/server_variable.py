@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 
 class ServerVariable(BaseModel):
     """
-    https://spec.openapis.org/oas/v3.1.0#server-variable-object
+    https://spec.openapis.org/oas/v3.2.0#server-variable-object
     """
 
     enum: list[str] | None = Field(None, min_length=1)

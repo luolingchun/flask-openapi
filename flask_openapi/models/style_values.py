@@ -9,3 +9,4 @@ class StyleValues(str, Enum):
     spaceDelimited = "spaceDelimited"
     pipeDelimited = "pipeDelimited"
     deepObject = "deepObject"
+    cookie = "cookie"

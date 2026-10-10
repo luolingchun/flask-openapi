@@ -56,23 +56,6 @@ class FormParameters(BaseModel):
 class FormParameter(BaseModel):
     obj: dict[Any, Any]
 
-    model_config = dict(
-        openapi_extra={
-            "encoding": {
-                "historyMetadata": {"contentType": "application/xml; charset=utf-8"},
-                "profileImage": {
-                    "contentType": "image/png, image/jpeg",
-                    "headers": {
-                        "X-Rate-Limit-Limit": {
-                            "description": "The number of allowed requests in the current period",
-                            "schema": {"type": "integer"},
-                        }
-                    },
-                },
-            }
-        }
-    )
-
 
 @app.post("/example")
 def complex_form_example(form: FormParameters):

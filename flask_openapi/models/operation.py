@@ -14,7 +14,7 @@ from .server import Server
 
 class Operation(BaseModel):
     """
-    https://spec.openapis.org/oas/v3.1.0#operation-object
+    https://spec.openapis.org/oas/v3.2.0#operation-object
     """
 
     tags: list[str] | None = None

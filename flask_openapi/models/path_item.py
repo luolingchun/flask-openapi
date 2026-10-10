@@ -13,7 +13,7 @@ if typing.TYPE_CHECKING:  # pragma: no cover
 
 class PathItem(BaseModel):
     """
-    https://spec.openapis.org/oas/v3.1.0#path-item-object
+    https://spec.openapis.org/oas/v3.2.0#path-item-object
     """
 
     ref: str | None = Field(default=None, alias="$ref")
@@ -27,6 +27,7 @@ class PathItem(BaseModel):
     head: Optional["Operation"] = None
     patch: Optional["Operation"] = None
     trace: Optional["Operation"] = None
+    additionalOperations: dict[str, "Operation"] | None = None
     servers: list[Server] | None = None
     parameters: list[Parameter | Reference] | None = None
 

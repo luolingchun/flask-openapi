@@ -8,3 +8,4 @@ class ParameterInType(str, Enum):
     PATH = "path"
     HEADER = "header"
     COOKIE = "cookie"
+    QUERYSTRING = "querystring"

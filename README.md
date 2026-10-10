@@ -29,9 +29,10 @@ The key features are:
 
 - **Easy to code:** Easy to use and easy to learn
 
-- **Standard document specification:** Based on [OpenAPI Specification](https://spec.openapis.org/oas/v3.1.0)
+- **Standard document specification:** Based on [OpenAPI Specification](https://spec.openapis.org/oas/v3.2.0)
 
-- **Interactive OpenAPI documentation:** [Swagger](https://github.com/swagger-api/swagger-ui), [Redoc](https://github.com/Redocly/redoc), [RapiDoc](https://github.com/rapi-doc/RapiDoc), [RapiPdf](https://mrin9.github.io/RapiPdf/), [Scalar](https://github.com/scalar/scalar), [Elements](https://github.com/stoplightio/elements)
+- **Interactive OpenAPI
+  documentation:** [Swagger](https://github.com/swagger-api/swagger-ui), [Redoc](https://github.com/Redocly/redoc), [RapiDoc](https://github.com/rapi-doc/RapiDoc), [RapiPdf](https://mrin9.github.io/RapiPdf/), [Scalar](https://github.com/scalar/scalar), [Elements](https://github.com/stoplightio/elements)
 
 - **Data validation:** Fast data verification based on [Pydantic](https://github.com/pydantic/pydantic)
 
@@ -192,7 +193,8 @@ if __name__ == "__main__":
 
 ## API Document
 
-Run the [simple example](https://github.com/luolingchun/flask-openapi/blob/master/examples/simple_demo.py), and go to http://127.0.0.1:5000/openapi.
+Run the [simple example](https://github.com/luolingchun/flask-openapi/blob/master/examples/simple_demo.py), and go
+to http://127.0.0.1:5000/openapi.
 
 > OpenAPI UI plugins are optional dependencies that require manual installation.
 >

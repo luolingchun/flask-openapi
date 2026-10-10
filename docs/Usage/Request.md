@@ -8,9 +8,9 @@ from pydantic import BaseModel
 
 ### path
 
-Request parameter in rules，**`@app.get('/book/<int:bid>')`**.
+Request parameter in rules, **`@app.get('/book/<int:bid>')`**.
 
-You have to declare **path** model as a class that inherits from  **`BaseModel`**:
+You have to declare **path** model as a class that inherits from **`BaseModel`**:
 
 ```python hl_lines="6"
 class BookPath(BaseModel):
@@ -160,7 +160,7 @@ class BookQuery(BaseModel):
 More information to see [BaseModel](https://docs.pydantic.dev/latest/usage/models/), and you
 can [Customize the Field](https://docs.pydantic.dev/latest/usage/fields/).
 
-However, you can also use **Field** to extend [Parameter Object](https://spec.openapis.org/oas/v3.1.0#parameter-object).
+However, you can also use **Field** to extend [Parameter Object](https://spec.openapis.org/oas/v3.2.0#parameter-object).
 Here is an example:
 
 `age` with **`example`** and `author` with **`deprecated`**.
@@ -175,8 +175,7 @@ Magic:
 
 ![](../assets/Snipaste_2022-09-04_10-10-03.png)
 
-More available fields to see [Parameter Object Fixed Fields](https://spec.openapis.org/oas/v3.1.0#fixed-fields-9).
-
+More available fields to see [Parameter Object Fixed Fields](https://spec.openapis.org/oas/v3.2.0#fixed-fields-9).
 
 ## RequestBody
 
