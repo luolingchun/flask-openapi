@@ -126,7 +126,7 @@ class OpenAPI(Flask):
         self.doc_url = doc_url
 
         # Set servers and external documentation
-        self.severs = servers
+        self.servers = servers
         self.external_docs = external_docs
 
         # Set the operation ID callback function
@@ -227,8 +227,8 @@ class OpenAPI(Flask):
             self.info = Info.model_validate(self.info)
         spec = OpenAPISpec(openapi=self.openapi_version, info=self.info, paths=self.paths)
 
-        if self.severs:
-            spec.servers = [Server(**server) if isinstance(server, dict) else server for server in self.severs]
+        if self.servers:
+            spec.servers = [Server(**server) if isinstance(server, dict) else server for server in self.servers]
 
         if self.external_docs:
             if isinstance(self.external_docs, dict):
